@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'logres.dart';
@@ -30,26 +31,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     BoardingModel(
         image: 'assets/images/img_3.png',
         title1: 'Bliss Mate',
-        title: "لماذا",
+        title: "لماذا".tr,
         body: ""),
     BoardingModel(
         image: 'assets/images/img_4.png',
         title1: 'Bliss Mate',
-        title: "تولي مسؤولية رفاهيتك",
+        title: "تولي مسؤولية رفاهيتك".tr,
         body:
-            'Bliss Mate موجود هنا لدعمك في رحلتك نحو تحسين الصحة العقلية والرفاهية. بفضل مجموعة من الميزات والموارد، نساعدك على إعطاء الأولوية للرعاية الذاتية وإدارة التوتر وتعزيز التوازن العاطفي.'),
+            'Bliss Mate موجود هنا لدعمك في رحلتك نحو تحسين الصحة العقلية والرفاهية. بفضل مجموعة من الميزات والموارد، نساعدك على إعطاء الأولوية للرعاية الذاتية وإدارة التوتر وتعزيز التوازن العاطفي.'.tr),
     BoardingModel(
         image: 'assets/images/img_5.png',
         title1: 'Bliss Mate',
-        title: "ابحث عن السلام مع",
+        title: "ابحث عن السلام مع".tr,
         body:
-            'استكشف مكتبتنا من جلسات التأمل الموجهة المصممة لتقليل التوتر وتحسين التركيز وتعزيز الاسترخاء من خلال التقنيات التي يمكن أن تساعدك على تنمية الوعي باللحظة الحالية والعثور على الهدوء الداخلي وتعزيز'),
+            'استكشف مكتبتنا من جلسات التأمل الموجهة المصممة لتقليل التوتر وتحسين التركيز وتعزيز الاسترخاء من خلال التقنيات التي يمكن أن تساعدك على تنمية الوعي باللحظة الحالية والعثور على الهدوء الداخلي وتعزيز'.tr),
     BoardingModel(
         image: 'assets/images/img_6.png',
         title1: 'Bliss Mate',
-        title: "تواصل مع دكاتره متخصصين في",
+        title: "تواصل مع دكاتره متخصصين في".tr,
         body:
-            'انضم إلى المناقشات، واطلب المشورة، معًا، يمكننا تقديم الدعم والتشجيع والإلهام في طريقك إلى العافية. أنـت لست وحيدا في هذا.'),
+            'انضم إلى المناقشات، واطلب المشورة، معًا، يمكننا تقديم الدعم والتشجيع والإلهام في طريقك إلى العافية. أنـت لست وحيدا في هذا.'.tr),
   ];
 
   var boardController = PageController();
@@ -127,7 +128,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    " تخطى ",
+                    " تخطى ".tr,
                     style: Theme.of(context).textTheme.button,
                   ),
                 ),

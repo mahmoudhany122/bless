@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'login.dart';
 import 'bottom_nav.dart';
@@ -37,7 +38,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
 
       // User signup successful
       setState(() {
-        _signupMessage = 'لقد تم تسجيل حسابك بنجاح ..اذهب وسجل دخولك';
+        _signupMessage = 'لقد تم تسجيل حسابك بنجاح ..اذهب وسجل دخولك'.tr;
       });
 
       // Show the message in a SnackBar
@@ -62,7 +63,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
     } catch (error) {
       // Signup failed, handle the error
       setState(() {
-        _signupMessage = 'فشل تسجيل حسابك ! حاول مره اخرى ';
+        _signupMessage = 'فشل تسجيل حسابك ! حاول مره اخرى '.tr;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -99,7 +100,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
                     height: 8,
                   ),
                   Text(
-                    "اشتراك",
+                    "اشتراك".tr,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   const SizedBox(
@@ -110,10 +111,10 @@ class _ResighterScreenState extends State<ResighterScreen> {
                       keyboardType: TextInputType.text,
                       controller: SnameController,
                       validator: (value) {
-                        return value!.isEmpty ? "ادخل اسمك الاول " : null;
+                        return value!.isEmpty ? "ادخل اسمك الاول " .tr: null;
                       },
                       decoration: InputDecoration(
-                        labelText: 'الاسم الأول',
+                        labelText: 'الاسم الأول'.tr,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(
@@ -141,10 +142,10 @@ class _ResighterScreenState extends State<ResighterScreen> {
                       keyboardType: TextInputType.text,
                       controller: FnameController,
                       validator: (value) {
-                        return value!.isEmpty ? "ادخل اسمك الثانى" : null;
+                        return value!.isEmpty ? "ادخل اسمك الثانى" .tr: null;
                       },
                       decoration: InputDecoration(
-                        labelText: 'الاسم الثانى',
+                        labelText: 'الاسم الثانى'.tr,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(
@@ -172,7 +173,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
                       validator: (value) {
-                        return value!.isEmpty ? "ادخل البريد الالكترونى" : null;
+                        return value!.isEmpty ? "ادخل البريد الالكترونى".tr : null;
                       },
                       onFieldSubmitted: (value) {
                         print(value);
@@ -181,7 +182,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
                         print(value);
                       },
                       decoration: InputDecoration(
-                        labelText: "بريد إلكتروني",
+                        labelText: "بريد إلكتروني".tr,
                         prefixIcon: Container(
                           child: Icon(Icons.email),
                         ),
@@ -216,15 +217,15 @@ class _ResighterScreenState extends State<ResighterScreen> {
                         final passwordRegex =
                             r'^(?=.*?[0-9])(?=.*?[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{10,}$';
                         if (value!.isEmpty) {
-                          return "ادخل كلمه المرور";
+                          return "ادخل كلمه المرور".tr;
                         } else if (!RegExp(passwordRegex).hasMatch(value)) {
-                          return "  ادخل على الاققل 10 حروف و ارقام و ورمز خاص ";
+                          return "  ادخل على الاققل 10 حروف و ارقام و ورمز خاص ".tr;
                         }
                         return null;
                       },
                       onFieldSubmitted: (value) {},
                       decoration: InputDecoration(
-                        labelText: "كلمة المرور",
+                        labelText: "كلمة المرور".tr,
                         prefixIcon: Container(
                           child: Icon(
                             Icons.lock,
@@ -273,15 +274,15 @@ class _ResighterScreenState extends State<ResighterScreen> {
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "ادخل تاكيد كلمه المرور";
+                          return "ادخل تاكيد كلمه المرور".tr;
                         } else if (value != passwordController.text) {
-                          return " كلمه المرور غير متطابقه";
+                          return " كلمه المرور غير متطابقه".tr;
                         }
                         return null;
                       },
                       onFieldSubmitted: (value) {},
                       decoration: InputDecoration(
-                        labelText: " تاكيد كلمه المرور",
+                        labelText: " تاكيد كلمه المرور".tr,
                         prefixIcon: Container(
                           child: Icon(
                             Icons.lock,
@@ -330,8 +331,8 @@ class _ResighterScreenState extends State<ResighterScreen> {
                         color: HexColor('00B4D8'),
                       ),
                       child: MaterialButton(
-                        child: const Text(
-                          "اشتراك",
+                        child: Text(
+                          "اشتراك".tr,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../models/chatmodel.dart';
 import '../services/chatservices.dart';
@@ -47,7 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
         setState(() {
           messages.remove(sendingMessage);
           messages.add(Message(
-              text: 'لا يوجد اجابه حاول مره اخرى', isUserMessage: false));
+              text: 'لا يوجد اجابه حاول مره اخرى'.tr, isUserMessage: false));
           isLoading = false;
         });
       }
@@ -55,11 +56,11 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         isLoading = false;
         messages.remove(sendingMessage);
-        messages.add(Message(text: 'خطا فى صيغه السؤال', isUserMessage: false));
+        messages.add(Message(text: 'خطا فى صيغه السؤال'.tr, isUserMessage: false));
       });
     }
   }
-
+  String _selectedLanguage = 'ar';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +71,9 @@ class _ChatScreenState extends State<ChatScreen> {
               width: 75,
             ),
             Text(
-              "معالج بليس ميت",
+              "معالج بليس ميت".tr,
               style: Theme.of(context).textTheme.bodyText1,
-              textAlign: TextAlign.right,
+
             ),
             SizedBox(
               width: 15,
@@ -126,7 +127,9 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           Container(
             padding: EdgeInsets.all(5.0),
-            child: Row(
+             child: Directionality(
+             textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
+              child: Row(
               children: [
                 Container(
                   height: 60,
@@ -135,7 +138,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: TextField(
                       controller: _textEditingController,
                       decoration: InputDecoration(
-                        hintText: '...أكتب رسالتك هنا',
+                        hintText: '...أكتب رسالتك هنا'.tr,
                         hintStyle: Theme.of(context).textTheme.bodyText1,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -164,7 +167,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ],
             ),
-          ),
+          ),)
         ],
       ),
     );

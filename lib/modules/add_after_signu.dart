@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'bottom_nav.dart';
 
 class AddInSignUp extends StatefulWidget {
+
   @override
   _AddInSignUpState createState() => _AddInSignUpState();
 }
@@ -91,7 +93,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
       ),
     );
   }
-
+  String _selectedLanguage = 'ar';
   @override
   void dispose() {
     _nameController.dispose();
@@ -107,11 +109,11 @@ class _AddInSignUpState extends State<AddInSignUp> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            "تعديل الملف الشخصي",
+            "تعديل الملف الشخصي".tr,
             style: Theme.of(context).textTheme.bodyText1,
-            textAlign: TextAlign.right,
           ),
         ),
+        backgroundColor: Colors.white,
         elevation: 2,
       ),
       body: Center(
@@ -119,6 +121,8 @@ class _AddInSignUpState extends State<AddInSignUp> {
           scrollDirection: Axis.vertical,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child :Directionality(
+          textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,11 +135,11 @@ class _AddInSignUpState extends State<AddInSignUp> {
                         child: imageSelect != null
                             ? Image.file(
                                 imageSelect!,
-                                width: 500,
-                                height: 500,
+                                width: 50,
+                                height: 50,
                                 fit: BoxFit.fill,
                               )
-                            : Image.asset("assets/images/R.jpg"),
+                            : Image.asset( "assets/images/img_12.png",),
                         radius: 80,
                       ),
                     ),
@@ -160,68 +164,67 @@ class _AddInSignUpState extends State<AddInSignUp> {
                   height: 25.0,
                 ),
                 Container(
-                  width: double.infinity,
+
+                  padding: EdgeInsets.all(15),
+                  width: 336,
+                  height: 379,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
+                    border:  Border.all (color: Colors.grey),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: TextField(
-                      controller: _nameController,
-                      keyboardType: TextInputType.text,
-                      textAlign: TextAlign.right,
-                      decoration: InputDecoration(
-                        hintText: 'اسم المستخدم',
+                   child :Directionality(
+                       textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
+                    child:Column (
+                      children: [
+                      TextField(
+                        textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
+                        controller: _nameController,
+                        keyboardType: TextInputType.text,
+
+                        decoration: InputDecoration(
+                          hintText: 'اسم المستخدم'.tr,
+                        ),
                       ),
-                    ),
-                  ),
+                        TextField(
+                          textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
+                          controller: _diseaseController,
+                          onTap: selectDate,
+                          decoration: InputDecoration(
+                            hintText: 'بريد إلكترونى'.tr,
+                          ),
+                        ),
+                        TextField(
+                          textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
+                          controller: _countryController,
+                          onTap: selectDate,
+                          decoration: InputDecoration(
+                            hintText: 'هاتف'.tr,
+                          ),
+                        ),
+                        TextField(
+                          textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
+                          controller: _ageController,
+                          onTap: selectDate,
+                          decoration: InputDecoration(
+                            hintText: 'تاريخ الميلاد '.tr,
+                          ),
+                        ),
+                        TextField(
+                          textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
+                          controller: _diseaseController,
+                          onTap: selectDate,
+                          decoration: InputDecoration(
+                            hintText: 'عنوان'.tr,
+                          ),
+                        ),
+
+                    ],)
+
+
+                   )
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: TextField(
-                      controller: _ageController,
-                      onTap: selectDate,
-                      textAlign: TextAlign.right,
-                      decoration: InputDecoration(
-                        hintText: '       العمر',
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: TextField(
-                      controller: _ageController,
-                      onTap: selectDate,
-                      textAlign: TextAlign.right,
-                      decoration: InputDecoration(
-                        hintText: '       الهاتف',
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
+
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
@@ -231,8 +234,8 @@ class _AddInSignUpState extends State<AddInSignUp> {
                       color: HexColor('00B4D8'),
                     ),
                     child: MaterialButton(
-                      child: const Text(
-                        "حفظ",
+                      child:  Text(
+                        "حفظ".tr,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -248,6 +251,6 @@ class _AddInSignUpState extends State<AddInSignUp> {
           ),
         ),
       ),
-    );
+      )  );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart'
     as hex; // aliasing the external HexColor class
 
@@ -32,7 +33,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("تعديل كلمه المرور"),
+        title: Text("تعديل كلمه المرور".tr),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -52,13 +53,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       obscureText: isShowedCurrent,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "ادخل كلمة المرور الحالية";
+                          return "ادخل كلمة المرور الحالية".tr;
                         }
                         // إضافة اللوجيك للتحقق من صحة كلمة المرور الحالية
                         return null;
                       },
                       decoration: InputDecoration(
-                        labelText: "كلمة المرور الحالية",
+                        labelText: "كلمة المرور الحالية".tr,
                         prefixIcon: Container(
                           child: Icon(Icons.lock),
                         ),
@@ -98,13 +99,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       obscureText: isShowedNew,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "ادخل كلمة المرور الجديدة";
+                          return "ادخل كلمة المرور الجديدة".tr;
                         }
                         // إضافة اللوجيك للتحقق من صحة كلمة المرور الجديدة
                         return null;
                       },
                       decoration: InputDecoration(
-                        labelText: "كلمة المرور الجديدة",
+                        labelText: "كلمة المرور الجديدة".tr,
                         prefixIcon: Container(
                           child: Icon(Icons.lock),
                         ),
@@ -144,15 +145,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       obscureText: isShowedConfirm,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "ادخل تأكيد كلمة المرور الجديدة";
+                          return "ادخل تأكيد كلمة المرور الجديدة".tr;
                         } else if (value != newPasswordController.text) {
-                          return "كلمة المرور غير متطابقة";
+                          return "كلمة المرور غير متطابقة".tr;
                         }
                         // إضافة اللوجيك للتحقق من تأكيد كلمة المرور الجديدة
                         return null;
                       },
                       decoration: InputDecoration(
-                        labelText: "تأكيد كلمة المرور الجديدة",
+                        labelText: "تأكيد كلمة المرور الجديدة".tr,
                         prefixIcon: Container(
                           child: Icon(Icons.lock),
                         ),
@@ -195,8 +196,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         color: myColor,
                       ),
                       child: MaterialButton(
-                        child: const Text(
-                          "تأكيد التغييرات",
+                        child:  Text(
+                          "تأكيد التغييرات".tr,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

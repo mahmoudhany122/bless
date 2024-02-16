@@ -1,10 +1,11 @@
 import 'package:blessmate/modules/musiq.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:blessmate/modules/imagine.dart';
 
 class HomeScreen extends StatelessWidget {
-  List ScreensName = ['موسيقى', 'التامل', 'اليوجا', 'الكل'];
+  List ScreensName = ['موسيقى'.tr, 'التامل'.tr, 'اليوجا'.tr, 'الكل'.tr];
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

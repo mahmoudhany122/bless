@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
@@ -58,7 +59,7 @@ class _MusiqState extends State<Musiq> {
       print('تم اختيار ملف صوتي: ${result.files.first.name}');
     } else {
       // المستخدم لم يقم بتحديد ملف صوتي
-      print('لم يتم اختيار أي ملف صوتي.');
+      print('لم يتم اختيار أي ملف صوتي.'.tr);
     }
   }
 
@@ -75,7 +76,7 @@ class _MusiqState extends State<Musiq> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  "اضافة قائمة تشغيل جديدة",
+                  "اضافة قائمة تشغيل جديدة".tr,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 SizedBox(
@@ -90,13 +91,13 @@ class _MusiqState extends State<Musiq> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('إضافة قائمة جديدة'),
+                            title: Text('إضافة قائمة جديدة'.tr),
                             content: TextField(
                               onChanged: (value) {
                                 // يمكنك استخدام القيمة المدخلة هنا
                               },
                               decoration: InputDecoration(
-                                hintText: 'اسم القائمة',
+                                hintText: 'اسم القائمة'.tr,
                               ),
                             ),
                             actions: [
@@ -104,15 +105,15 @@ class _MusiqState extends State<Musiq> {
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text('إلغاء'),
+                                child: Text('إلغاء'.tr),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                   // استخدم القيمة المدخلة لإضافة القائمة
-                                  addPlaylist('اسم القائمة');
+                                  addPlaylist('اسم القائمة'.tr);
                                 },
-                                child: Text('إضافة'),
+                                child: Text('إضافة'.tr),
                               ),
                             ],
                           );
@@ -145,7 +146,7 @@ class _MusiqState extends State<Musiq> {
                     );
                   },
                   child: Text(
-                    "الموسيقى المفضلة لديك",
+                    "الموسيقى المفضلة لديك".tr,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -179,7 +180,7 @@ class _MusiqState extends State<Musiq> {
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                "استكشف",
+                "استكشف".tr,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -254,14 +255,14 @@ class _MusiqState extends State<Musiq> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("إضافة قائمة تشغيل جديدة"),
+          title: Text("إضافة قائمة تشغيل جديدة".tr),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: playlistNameController,
                 decoration: InputDecoration(
-                  hintText: "اسم القائمة",
+                  hintText: "اسم القائمة".tr,
                 ),
               ),
               SizedBox(height: 10),
@@ -276,7 +277,7 @@ class _MusiqState extends State<Musiq> {
                     });
                   }
                 },
-                child: Text("اختيار ملف صوتي"),
+                child: Text("اختيار ملف صوتي".tr),
               ),
             ],
           ),
@@ -285,7 +286,7 @@ class _MusiqState extends State<Musiq> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("إلغاء"),
+              child: Text("إلغاء".tr),
             ),
             TextButton(
               onPressed: () {
@@ -295,7 +296,7 @@ class _MusiqState extends State<Musiq> {
                 // يمكنك استخدام filePath و playlistName للقيام باللازم
                 Navigator.pop(context);
               },
-              child: Text("إضافة"),
+              child: Text("إضافة".tr),
             ),
           ],
         );
@@ -373,7 +374,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "لمحة عامة",
+                    "لمحة عامة".tr,
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headline1,
                   ),
@@ -395,7 +396,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
                     }
                   });
                 },
-                child: Text(_controller.value.isPlaying ? 'إيقاف' : 'تشغيل'),
+                child: Text(_controller.value.isPlaying ? 'إيقاف'.tr : 'تشغيل'.tr),
               ),
             ],
           ),
@@ -415,7 +416,7 @@ class FavoriteItemsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('الموسيقى المفضلة لديك'),
+        title: Text('الموسيقى المفضلة لديك'.tr),
       ),
       body: ListView.builder(
         itemCount: favoriteItemsDetails.length,

@@ -1,6 +1,7 @@
 import 'package:blessmate/modules/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'bottom_nav.dart';
 import 'login.dart';
@@ -43,7 +44,7 @@ class LogRes extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        "مرحبا بك في",
+                        "مرحبا بك في".tr,
                         style: Theme
                             .of(context)
                             .textTheme
@@ -63,7 +64,7 @@ class LogRes extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      "أخبرنا عن مشاكلك، ونحن سوف نساعدك",
+                      "أخبرنا عن مشاكلك، ونحن سوف نساعدك".tr,
                       style: Theme
                           .of(context)
                           .textTheme
@@ -91,7 +92,7 @@ class LogRes extends StatelessWidget {
                   ),
                   child: TextButton(
                     child: Text(
-                      "تسجيل الدخول",
+                      "تسجيل الدخول".tr,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -123,7 +124,7 @@ class LogRes extends StatelessWidget {
                   ),
                   child: TextButton(
                     child: Text(
-                      "اشتراك",
+                      "اشتراك".tr,
                       style: TextStyle(
                         color: HexColor('00B4D8'),
                         fontWeight: FontWeight.bold,
@@ -142,7 +143,7 @@ class LogRes extends StatelessWidget {
                   height: 15.0,
                 ),
                  Text(
-                  ": تابع حسابتنا على وسائل التواصل الاجتماعى  ",
+                  ": تابع حسابتنا على وسائل التواصل الاجتماعى  ".tr,
                   style:Theme.of(context).textTheme.headline6,
                 ),
                 Row(

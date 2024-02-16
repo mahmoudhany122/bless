@@ -2,20 +2,22 @@ import 'package:blessmate/modules/change_password.dart';
 import 'package:blessmate/modules/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart'
     as hex; // aliasing the external HexColor class
 import 'add_after_signu.dart';
 
 var myColor = hex.HexColor('00B4D8');
 
-class ProfileScreen extends StatelessWidget {
+ class ProfileScreen extends StatelessWidget {
+  String _selectedLanguage = 'ar';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Center(
           child: Text(
-            "حساب تعريفي",
+            "الملف الشخصي",
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.right,
           ),
@@ -25,6 +27,10 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
+           child:Container(
+             width: MediaQuery.of(context).size.width,
+               child: Directionality(
+                textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
           child: Column(
             children: [
               Container(
@@ -32,85 +38,68 @@ class ProfileScreen extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.grey[200],
+                  color: myColor,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: TextButton(
                     onPressed: () {},
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Linda",
-                                textAlign: TextAlign.right,
-                                style: Theme.of(context).textTheme.bodyText1),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text("mh6263653@gmail.com",
-                                style: Theme.of(context).textTheme.headline6),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
                         Image(
                           image: AssetImage(
                             "assets/images/img_12.png",
                           ),
                         ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("ليلى",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.bold)),
+
+                            Text("عرض و تحرير ملفك الشخصي",
+                                style: TextStyle(fontSize: 16,color: Colors.white)),
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(Icons.arrow_forward_ios,color: Colors.white,),
+
                       ],
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 15,
-              ),
+
+            Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            Row(
+            children: [
+          SizedBox(width: 5,),
+          Text(
+         "الإعدادات العامة  ",
+          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+          ),],),
               Container(
                 width: double.infinity,
-                height: 432,
+                height: 326,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.grey[200],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 10),
+                       vertical: 10),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ChangePasswordScreen(),
-                                ));
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Icon(
-                                Icons.lock_outline,
-                                color: myColor,
-                              ),
-                              Spacer(),
-                              Text("تغيير كلمة السر",
-                                  style: Theme.of(context).textTheme.headline6),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                        color: Colors.black,
-                      ),
                       Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: TextButton(
@@ -122,15 +111,17 @@ class ProfileScreen extends StatelessWidget {
                                 ));
                           },
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(
                                 Icons.edit_outlined,
                                 color: myColor,
                               ),
+                              SizedBox(width: 5,),
+                              Text("تحرير الملف الشخصي",
+                                  style: TextStyle(fontSize: 16,color: Colors.black)),
                               Spacer(),
-                              Text("تعديل الملف الشخصي",
-                                  style: Theme.of(context).textTheme.headline6),
+                              Icon(Icons.arrow_forward_ios,color: Colors.black,),
                             ],
                           ),
                         ),
@@ -144,15 +135,21 @@ class ProfileScreen extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {},
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(
-                                Icons.price_change_outlined,
+                                Icons.notifications_none,
                                 color: myColor,
                               ),
-                              Spacer(),
-                              Text("الاعتمادات والكوبونات",
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("إشعارات".tr,
                                   style: Theme.of(context).textTheme.headline6),
+
+                              Spacer(),
+                              Icon(Icons.arrow_forward_ios,color: Colors.black,),
+
                             ],
                           ),
                         ),
@@ -164,61 +161,40 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+
+                          },
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(
-                                Icons.person_add_alt,
+                                Icons.language_outlined,
                                 color: myColor,
                               ),
-                              Spacer(),
-                              Text("اضافه الاصدقاء",
-                                  style: Theme.of(context).textTheme.headline6),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                        color: Colors.black,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Icon(
-                                Icons.info_outline,
-                                color: myColor,
+                              SizedBox(
+                                width: 5,
                               ),
-                              Spacer(),
-                              Text("مركز المساعده",
+                              Text("اللغه".tr,
                                   style: Theme.of(context).textTheme.headline6),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                        color: Colors.black,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Icon(
-                                Icons.monetization_on_outlined,
-                                color: myColor,
-                              ),
                               Spacer(),
-                              Text("المدفوعات",
-                                  style: Theme.of(context).textTheme.headline6),
+
+                              DropdownButton(
+                                items: [
+                                DropdownMenuItem(
+                                    child: Text("اللغه الانجليزيه".tr,style: TextStyle(color:myColor, ),),
+                                    value : 'en'),
+                                DropdownMenuItem(
+                                    child: Text("اللغه العربيه".tr,style: TextStyle(color:myColor, ),),
+                                    value : 'ar'),
+                              ],
+                                value: _selectedLanguage,
+                                onChanged: (value){
+                                  {
+                                    _selectedLanguage = value!;
+                                  };
+                                  Get.updateLocale(Locale(_selectedLanguage));
+                                },),
+
                             ],
                           ),
                         ),
@@ -234,31 +210,42 @@ class ProfileScreen extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Settings(),
+                                  builder: (context) => ChangePasswordScreen(),
                                 ));
                           },
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(
-                                Icons.settings_outlined,
+                                Icons.lock_outline,
                                 color: myColor,
                               ),
+                             SizedBox(width: 5,),
+                              Text("تغيير كلمة المرور",
+                                  style: TextStyle(fontSize: 16,color: Colors.black)),
                               Spacer(),
-                              Text("اعدادات",
-                                  style: Theme.of(context).textTheme.headline6),
+                              Icon(Icons.arrow_forward_ios,color: Colors.black,),
                             ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+                      Divider(
+                        height: 1,
+                        color: Colors.black,
+                      ),
+
+            ]
           ),
         ),
       ),
-    );
+            ]
+          )
+      )]
+    )))
+    )));
   }
+
+
+
+  
 }

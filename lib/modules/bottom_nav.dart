@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:blessmate/modules/productscreen.dart';
 import 'package:blessmate/modules/profile.dart';
+import 'package:blessmate/modules/profile1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../main.dart';
 import 'add_after_signu.dart';
@@ -23,11 +25,11 @@ class _BottomNavState extends State<BottomNav> {
   int currentindex = 4;
 
   List<Widget> screens = [
-    ProfileScreen(),
-    CommunityScreen(),
-    Explore(),
-    ChatScreen(),
     HomeScreen(),
+    ChatScreen(),
+    Explore(),
+    CommunityScreen(),
+    ProfileScreen1(),
   ];
 
   @override
@@ -50,24 +52,24 @@ class _BottomNavState extends State<BottomNav> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: "حساب تعريفي",
+            icon: Icon(Icons.home),
+            label: "الرئيسية".tr,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline),
+            label: "محادثه".tr,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.explore_outlined),
+            label: "يستكشف".tr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_outlined),
-            label: "تعيينات",
+            label: "تعيينات".tr,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: "يستكشف",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message_outlined),
-            label: "محادثه",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "الرئيسية",
+            icon: Icon(Icons.account_circle_outlined),
+            label: "الملف الشخصي".tr,
           ),
         ],
       ),

@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:get/get.dart';
 
 class ExerciseScreen extends StatelessWidget {
+  String _selectedLanguage = 'ar';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          child:Directionality(
+           textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
+           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'تمارين',
+                'تمارين'.tr,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(height: 10),
@@ -33,7 +37,7 @@ class ExerciseScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                'التمارين المتاحة',
+                'التمارين المتاحة'.tr,
                 style: Theme.of(context).textTheme.headline6,
               ),
               SizedBox(height: 10),
@@ -53,7 +57,7 @@ class ExerciseScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ),)
     );
   }
 

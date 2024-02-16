@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Explore extends StatelessWidget {
@@ -98,7 +99,7 @@ class DetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "لمحه عامه",
+                  "لمحه عامه".tr,
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.headline1,
                   textDirection: TextDirection.rtl,
@@ -119,34 +120,34 @@ class DetailPage extends StatelessWidget {
 
 List<Map<String, dynamic>> items = [
   {
-    'name': 'الاكتئاب',
+    'name': 'الاكتئاب'.tr,
     'imageFileName': 'explore/img.png',
-    'description': 'لاضطراب الاكتئابي (المعروف أيضاً باسم الاكتئاب) هو اضطراب',
+    'description': 'لاضطراب الاكتئابي (المعروف أيضاً باسم الاكتئاب) هو اضطراب'.tr,
   },
   {
-    'name': 'قلق',
+    'name': 'قلق'.tr,
     'imageFileName': 'explore/img_7.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا',
+    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
   },
   {
-    'name': "إختلال النوم",
+    'name': "إختلال النوم".tr,
     'imageFileName': 'explore/img_10.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا',
+    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
   },
   {
-    'name': 'ضغط',
+    'name': 'ضغط'.tr,
     'imageFileName': 'explore/img_8.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا',
+    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
   },
   {
-    'name': 'رهاب',
+    'name': 'رهاب'.tr,
     'imageFileName': 'explore/img_4.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا',
+    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
   },
   {
-    'name': 'اضطراب في الشخصية',
+    'name': 'اضطراب في الشخصية'.tr,
     'imageFileName': 'explore/img_9.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا',
+    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
   },
   // Add more items with different data
 ];

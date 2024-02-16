@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class _ResighterScreenState extends State<LoginScreen> {
 
         // User sign-in successful
         setState(() {
-          _signupMessage = 'لقد تم تسجيل دخولك بنجاح';
+          _signupMessage = 'لقد تم تسجيل دخولك بنجاح'.tr;
         });
 
         // Show the message in a SnackBar
@@ -84,7 +85,7 @@ class _ResighterScreenState extends State<LoginScreen> {
 
       // User signup successful
       setState(() {
-        _signupMessage = 'لقد تم تسجيل دخولك بنجاح';
+        _signupMessage = 'لقد تم تسجيل دخولك بنجاح'.tr;
       });
 
       // Show the message in a SnackBar
@@ -109,7 +110,7 @@ class _ResighterScreenState extends State<LoginScreen> {
     } catch (error) {
       // Signup failed, handle the error
       setState(() {
-        _signupMessage = 'هذا الحساب غير موجود حاول  مره ثانيه';
+        _signupMessage = 'هذا الحساب غير موجود حاول  مره ثانيه'.tr;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -146,7 +147,7 @@ class _ResighterScreenState extends State<LoginScreen> {
                     height: 20,
                   ),
                   Text(
-                    "تسجيل الدخول",
+                    "تسجيل الدخول".tr,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   const SizedBox(
@@ -157,7 +158,7 @@ class _ResighterScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
                       validator: (value) {
-                        return value!.isEmpty ? "ادخل البريد الالكترونى" : null;
+                        return value!.isEmpty ? "ادخل البريد الالكترونى".tr : null;
                       },
                       onFieldSubmitted: (value) {
                         print(value);
@@ -166,7 +167,7 @@ class _ResighterScreenState extends State<LoginScreen> {
                         print(value);
                       },
                       decoration: InputDecoration(
-                        labelText: "بريد إلكتروني",
+                        labelText: "بريد إلكتروني".tr,
                         prefixIcon: Container(
                           child: Icon(Icons.email),
                         ),
@@ -201,15 +202,15 @@ class _ResighterScreenState extends State<LoginScreen> {
                         final passwordRegex =
                             r'^(?=.*?[0-9])(?=.*?[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{10,}$';
                         if (value!.isEmpty) {
-                          return "ادخل كلمه المرور";
+                          return "ادخل كلمه المرور".tr;
                         } else if (!RegExp(passwordRegex).hasMatch(value)) {
-                          return "  ادخل على الاققل 10 حروف و ارقام و ورمز خاص ";
+                          return "  ادخل على الاققل 10 حروف و ارقام و ورمز خاص ".tr;
                         }
                         return null;
                       },
                       onFieldSubmitted: (value) {},
                       decoration: InputDecoration(
-                        labelText: "كلمة المرور",
+                        labelText: "كلمة المرور".tr,
                         prefixIcon: Container(
                           child: Icon(
                             Icons.lock,
@@ -258,8 +259,8 @@ class _ResighterScreenState extends State<LoginScreen> {
                         color: HexColor('00B4D8'),
                       ),
                       child: MaterialButton(
-                        child: const Text(
-                          "تسجيل الدخول",
+                        child: Text(
+                          "تسجيل الدخول".tr,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

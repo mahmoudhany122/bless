@@ -38,6 +38,7 @@ ThemeData darkTheme =ThemeData(
     ),
     headline6: TextStyle(
       color: Colors.white,
+      fontSize: 17,
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
