@@ -132,6 +132,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
                   children: [
                     ClipOval(
                       child: CircleAvatar(
+                        backgroundColor:  Colors.grey.shade400,
                         child: imageSelect != null
                             ? Image.file(
                                 imageSelect!,
@@ -139,7 +140,9 @@ class _AddInSignUpState extends State<AddInSignUp> {
                                 height: 50,
                                 fit: BoxFit.fill,
                               )
-                            : Image.asset( "assets/images/img_12.png",),
+                            : Image.asset( "assets/images/img_12.png",
+                        width: 800,
+                        height: 800,),
                         radius: 80,
                       ),
                     ),

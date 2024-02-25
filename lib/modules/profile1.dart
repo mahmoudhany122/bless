@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:blessmate/modules/dark.dart';
 import 'package:blessmate/modules/logres.dart';
 import 'package:blessmate/modules/notification.dart';
@@ -9,8 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart'
 as hex; // aliasing the external HexColor class
+import 'package:hexcolor/hexcolor.dart';
+import 'package:share_plus/share_plus.dart';
 import 'add_after_signu.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 var myColor = hex.HexColor('00B4D8');
 
 class ProfileScreen1 extends StatefulWidget {
@@ -106,8 +110,10 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           width: double.infinity,
                                           height: 300,
                                           decoration: BoxDecoration(
+                                              color: Colors.grey[200],
                                             borderRadius: BorderRadius.circular(15),
-                                            border: Border.all(color: Colors.grey)
+
+
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -292,8 +298,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                 width: double.infinity,
                                 height: 250,
                                 decoration: BoxDecoration(
+                                  color: Colors.grey[200],
                                   borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(color: Colors.grey),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -353,7 +359,154 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                       Padding(
                                         padding: const EdgeInsets.all(0),
                                         child: TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context)=>AlertDialog(
+                                                actions: [
+                                                Column(
+                                                  children: [
+                                                    Divider(color: Colors.grey,),
+                                                    Row(
+                                                      children: [
+                                                        Text("مشاركة عبر ",style: TextStyle(fontSize: 18),),
+                                                        Icon(Icons.share_outlined)
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 10,),
+
+                                                    Row(
+                                                      children: [
+                                                        Column(
+                                                          children: [
+
+                                                            Container(
+                                                                margin: EdgeInsets.only(right: 10,left: 10),
+                                                                height: 45,
+                                                                width: 45,
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.circular(28),
+                                                                    boxShadow: [
+                                                                      BoxShadow(color:HexColor("D9D9D9"),
+                                                                          blurRadius: 10,
+                                                                          offset: Offset(1, 1)
+                                                                      ),
+                                                                    ]
+                                                                ),
+                                                                child:
+                                                                FloatingActionButton(
+                                                                  child: FaIcon(FontAwesomeIcons.link,color: myColor,size: 20,),
+                                                                  backgroundColor: Colors.white,
+                                                                  onPressed: () {
+                                                                  },
+                                                                ),
+
+                                                            ),
+                                                            SizedBox(height: 8,),
+                                                            Text("نسخ الرابط",style: TextStyle(color: myColor,fontSize: 12),)
+                                                          ],
+                                                        ),Column(
+                                                          children: [
+
+                                                            Container(
+                                                                margin: EdgeInsets.only(right: 10,left: 10),
+                                                                height: 45,
+                                                                width: 45,
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.circular(28),
+                                                                    boxShadow: [
+                                                                      BoxShadow(color:HexColor("D9D9D9"),
+                                                                          blurRadius: 10,
+                                                                          offset: Offset(1, 1)
+                                                                      ),
+                                                                    ]
+                                                                ),
+                                                                child:
+                                                                FloatingActionButton(
+                                                                  child: FaIcon(FontAwesomeIcons.instagram,color: myColor,),
+                                                                  backgroundColor: Colors.white,
+                                                                  onPressed: () {
+                                                                  },
+                                                                ),
+
+                                                            ),
+                                                            SizedBox(height: 8,),
+                                                            Text("انستجرام",style: TextStyle(fontSize: 12),)
+                                                          ],
+                                                        ),Column(
+                                                          children: [
+
+                                                            Container(
+                                                                margin: EdgeInsets.only(right: 10,left: 10),
+                                                                height: 45,
+                                                                width: 45,
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.circular(28),
+                                                                    boxShadow: [
+                                                                      BoxShadow(color:HexColor("D9D9D9"),
+                                                                          blurRadius: 10,
+                                                                          offset: Offset(1, 1)
+                                                                      ),
+                                                                    ]
+                                                                ),
+                                                                child:
+                                                                FloatingActionButton(
+                                                                  child: FaIcon(FontAwesomeIcons.facebookF,color: myColor,),
+                                                                  backgroundColor: Colors.white,
+                                                                  onPressed: () {
+                                                                  },
+                                                                ),
+
+                                                            ),
+                                                            SizedBox(height: 8,),
+                                                            Text("فيسبوك",style: TextStyle(fontSize: 12),)
+                                                          ],
+                                                        ),Column(
+                                                          children: [
+
+                                                            Container(
+                                                                margin: EdgeInsets.only(right: 10,left: 10),
+                                                                height: 45,
+                                                                width: 45,
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.circular(28),
+                                                                    boxShadow: [
+                                                                      BoxShadow(color:HexColor("D9D9D9"),
+                                                                          blurRadius: 10,
+                                                                          offset: Offset(1, 1)
+                                                                      ),
+                                                                    ]
+                                                                ),
+                                                                child:
+                                                                FloatingActionButton(
+                                                                  child: FaIcon(FontAwesomeIcons.whatsapp,color: myColor,),
+                                                                  backgroundColor: Colors.white,
+                                                                  onPressed: () async{
+                                                                    await  Share.share('com.example.untitled');
+                                                                  },
+                                                                ),
+                                                            ),
+                                                            SizedBox(height: 8,),
+                                                            Text("واتساب",style: TextStyle(fontSize: 12),)
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+
+                                                  ],
+                                                )
+                                                ],
+                                                 title: Text("ادعو أصدقاء",style: TextStyle(color:myColor,fontSize: 24,fontWeight: FontWeight.bold ),
+                                                 textAlign: TextAlign.center),
+
+                                                )
+                                            );
+
+                                          },
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [  Icon(
@@ -468,35 +621,44 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           builder: (context)=>AlertDialog(
                                               actions: [
 
+                                               Column(
+                                                 children: [
+                                                   Divider(color: Colors.grey,),
+                                                   Row(
+                                                     children: [
+                                                       ElevatedButton(onPressed: (){ Navigator.pushAndRemoveUntil(
+                                                           context,MaterialPageRoute(builder: (context) => LogRes(),),(route) => false);},
+                                                         child: Text ("نعم. قم بتسجيل الخروج".tr,style: TextStyle(color:Colors.white,fontSize: 14),),
+                                                         style: ElevatedButton.styleFrom(
+                                                             backgroundColor: myColor
+                                                         ),
 
-                                                ElevatedButton(onPressed: (){ Navigator.push(
-                                                    context,MaterialPageRoute(builder: (context) => LogRes(),));},
-                                                  child: Text ("نعم. قم بتسجيل الخروج".tr,style: TextStyle(color:Colors.white,fontSize: 14),),
-                                                  style: ElevatedButton.styleFrom(
-                                                      backgroundColor: myColor
-                                                  ),
+                                                       ),
+                                                       Container(
+                                                           width : 80,
+                                                           height : 40,
+                                                           decoration: BoxDecoration(
+                                                               border: Border.all(color: myColor),
+                                                               borderRadius: BorderRadius.circular(50)
+                                                           )
+                                                           ,
 
-                                                ),
-                                                Container(
-                                                  width : 80,
-                                                  height : 40,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(color: myColor),
-                                                      borderRadius: BorderRadius.circular(50)
-                                                    )
-                                                  ,
+                                                           child:
+                                                           TextButton (
+                                                             onPressed: (){  Navigator.pushAndRemoveUntil(
+                                                                 context,MaterialPageRoute(builder: (context) => ProfileScreen1(),),(route) => false);},
+                                                             child: Text(
+                                                               "الغاء".tr,style: TextStyle(fontSize:16,color: Colors.black),
 
-                                                  child:
-                                                    TextButton (
-                                                     onPressed: (){  Navigator.push(
-                                                                                     context,MaterialPageRoute(builder: (context) => ProfileScreen1(),));},
-                                                         child: Text(
-                                                        "الغاء".tr,style: TextStyle(fontSize:16,color: Colors.black),
+                                                             ),
+                                                           )
 
-                                                    ),
-                                                )
-
-                                                ) ]
+                                                       )
+                                                     ],
+                                                   )
+                                                 ],
+                                               )
+                                              ]
                                               , title:
                                           Center(
                                             child: Text ("تسجيل خروج".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 28),
@@ -514,7 +676,9 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                         ),
                     ),
                 ),
-            ) ));
+            )
+        )
+    );
   }
 
 

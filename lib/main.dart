@@ -1,8 +1,15 @@
 import 'package:blessmate/language/translate.dart';
+import 'package:blessmate/modules/doctor1.dart';
+import 'package:blessmate/modules/doctor2.dart';
+import 'package:blessmate/modules/doctor3.dart';
+import 'package:blessmate/modules/edit_profile_doctor.dart';
+import 'package:blessmate/modules/home_doctor.dart';
 import 'package:blessmate/modules/notification.dart';
+import 'package:blessmate/modules/notification_doctor.dart';
 import 'package:blessmate/modules/onboardingscreen.dart';
 import 'package:blessmate/modules/profile.dart';
 import 'package:blessmate/modules/profile1.dart';
+import 'package:blessmate/modules/tap_bar_doctor.dart';
 import 'package:blessmate/themes/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +56,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home: LogoScreen(),
+      home: TabBarScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

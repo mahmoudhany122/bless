@@ -20,154 +20,248 @@ class _NotificationScreenState extends State<NotificationScreen> {
         title: Text("الإشعارات".tr,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 24),),
         centerTitle: true,
       ),
-      body: ListView(
-        padding: EdgeInsets.all(10),
+      body:  ListView(
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: double.infinity,
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.grey[200],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("نغمة المحادثات".tr,
-                              textAlign: TextAlign.right,
-                              style: Theme.of(context).textTheme.bodyText1),
-
-                          Text("تشغيل الأصوات للرسائل الواردة والصادرة".tr,
-                              style: Theme.of(context).textTheme.headline6),
-                        ],
-                      ),
-                      Spacer(),
-                      Switch(
-                          value: _value,
-                          activeColor: myColor,
-                          activeTrackColor: Colors.white,
-                          inactiveTrackColor: Colors.white,
-                          inactiveThumbColor: myColor,
-                          onChanged: (_newvalue){
-                            setState(() {
-                              _value = _newvalue;
-
-                            }
-
-                            );
-                          }
-                      ),
-
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
+                margin: EdgeInsets.all(10),
+                child:  Text("اليوم-20مايو2024",style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,),),
               ),
               Container(
-                width: double.infinity,
-                height: 300,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.grey[200],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0
-                  ,vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  height: 101,
+                  width: double.infinity,
+                  color:HexColor('D1F1F8'),
+                  child:Column(
                     children: [
                       Row(
-                          children: [
-                            SizedBox(width: 20,height: 10,),
-                            Text(
-                              "الرسائل".tr,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),]),
-                      Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(color:HexColor("D9D9D9"),
+                                      blurRadius: 4,
+                                      offset: Offset(1, 1)
+                                  ),
 
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Column(children: [
-                                Text("نغمة الاشعارات".tr,
-                                    style: Theme.of(context).textTheme.headline6),
-                                Text("voyager".tr,
-                                    style: TextStyle(color: Colors.grey)),
-                              ],),
-
-                              Spacer(),
-                              Icon(Icons.arrow_forward_ios,color: Colors.black,),
-                            ],
+                                ]
+                            ),
+                            child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                        color: Colors.black,
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(children: [
-                                Text("اهتزاز".tr,
-                                    style: Theme.of(context).textTheme.headline6),
-                                Text("التلقائي".tr,style: TextStyle(color: Colors.grey),)
-                              ],),
-
-                              Spacer(),
-                              Icon(Icons.arrow_forward_ios,color: Colors.black,),
-                            ],
+                          Container(
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 8) ,
+                            width: 340,
+                            height: 100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(
+                                  onPressed: (){},
+                                  child:Text(
+                                    "لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                                ),
+                                Text("الآن",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,)
+                                ,
+                              ],
+                            ) ,
                           ),
-                        ),
+                        ],
                       ),
-
-                      Divider(
-                        height: 1,
-                        color: Colors.black,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-
-
-                              SizedBox(
-                                width: 5,
-                              ),
-
-                              Spacer(),
-                              Icon(Icons.arrow_forward_ios,color: Colors.black,),
-                            ],
-                          ),
-                        ),
-                      ),
+                      Divider(color: Colors.grey,height: 1,),
                     ],
-                  ),
-                ),
+                  )
+
+              ), Container(
+                  height: 101,
+                  width: double.infinity,
+                  color:HexColor('D1F1F8'),
+                  child:Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(color:HexColor("D9D9D9"),
+                                      blurRadius: 4,
+                                      offset: Offset(1, 1)
+                                  ),
+
+                                ]
+                            ),
+                            child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 8) ,
+                            width: 340,
+                            height: 100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(onPressed: (){}, child: Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
+                                Text("منذ 25 دقيقة",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
+                              ],
+                            ) ,
+                          ),
+                        ],
+                      ),
+                      Divider(color: Colors.grey,height: 1,),
+                    ],
+                  )
+
+              ), Container(
+                  height: 101,
+                  width: double.infinity,
+                  child:Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(color:HexColor("D9D9D9"),
+                                      blurRadius: 4,
+                                      offset: Offset(1, 1)
+                                  ),
+
+                                ]
+                            ),
+                            child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            width: 340,
+                            height: 100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(onPressed: (){}, child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+
+                                  ],
+                                ),
+                                ),
+                                Text("منذ 2 ساعات",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ,fontWeight: FontWeight.bold)) ,
+                              ],
+                            ) ,
+                          ),
+                        ],
+                      ),
+                      Divider(color: Colors.grey,height: 1,),
+                    ],
+                  )
+
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child:  Text("19أبريل2024",style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,),),
+              ),
+              Container(
+                  height: 101,
+                  width: double.infinity,
+                  child:Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(color:HexColor("D9D9D9"),
+                                      blurRadius: 4,
+                                      offset: Offset(1, 1)
+                                  ),
+
+                                ]
+                            ),
+                            child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 8) ,
+                            width: 340,
+                            height: 100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(onPressed: (){}, child:Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
+                                Text("أمس.7:58 صباحآ",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
+                              ],
+                            ) ,
+                          ),
+                        ],
+                      ),
+                      Divider(color: Colors.grey,height: 1,),
+                    ],
+                  )
+
+              ), Container(
+                  height: 101,
+                  width: double.infinity,
+                  child:Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(color:HexColor("D9D9D9"),
+                                      blurRadius: 4,
+                                      offset: Offset(1, 1)
+                                  ),
+
+                                ]
+                            ),
+                            child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 8) ,
+                            width: 340,
+                            height: 100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(onPressed: (){}, child: Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة5:00 م",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
+                                Text("أمس.9:58 صباحآ",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
+                              ],
+                            ) ,
+                          ),
+                        ],
+                      ),
+                      Divider(color: Colors.grey,height: 1,),
+                    ],
+                  )
               ),
             ],
           )
