@@ -106,8 +106,10 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           width: double.infinity,
                                           height: 300,
                                           decoration: BoxDecoration(
+                                              color: Colors.grey[200],
                                             borderRadius: BorderRadius.circular(15),
-                                            border: Border.all(color: Colors.grey)
+
+
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -292,8 +294,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                 width: double.infinity,
                                 height: 250,
                                 decoration: BoxDecoration(
+                                  color: Colors.grey[200],
                                   borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(color: Colors.grey),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 0.0),
