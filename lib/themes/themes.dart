@@ -146,6 +146,11 @@ ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.w300,
       color: HexColor('00B4D8'),
     ) ,
+    headline2:TextStyle(
+      fontSize:35.0,
+      fontWeight: FontWeight.w300,
+      color: HexColor('00B4D8'),
+    ) ,
     headline6: TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.w400,

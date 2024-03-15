@@ -3,7 +3,6 @@ import 'package:blessmate/modules/logres.dart';
 import 'package:blessmate/modules/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:blessmate/modules/change_password.dart';
-import 'package:blessmate/modules/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,7 +88,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                   ),
                                 ),
                               ),
-
                               Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 10),
                                   child: Column(
@@ -142,7 +140,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                       ),
                                                     ),
                                                   ),
-
                                                   Padding(
                                                     padding: const EdgeInsets.all(0.0),
                                                     child: TextButton(
@@ -173,7 +170,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                       ),
                                                     ),
                                                   ),
-
                                                   Padding(
                                                     padding: const EdgeInsets.all(0),
                                                     child: TextButton(
@@ -216,7 +212,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                       ),
                                                     ),
                                                   ),
-
                                                   Padding(
                                                     padding: const EdgeInsets.all(0),
                                                     child: TextButton(
@@ -243,7 +238,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                       ),
                                                     ),
                                                   ),
-
                                                   Padding(
                                                     padding: const EdgeInsets.all(0),
                                                     child: TextButton(
@@ -282,14 +276,15 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                       ]
                                   )
                               ),
-
                               Row(
                                   children: [
                                     Text(
                                       " إعدادات الحساب ".tr,
                                       style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,),
                                     ),]),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Container(
                                 width: double.infinity,
                                 height: 250,
@@ -326,8 +321,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           ),
                                         ),
                                       ),
-
-
                                       Padding(
                                         padding: const EdgeInsets.all(0),
                                         child: TextButton(
@@ -350,8 +343,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           ),
                                         ),
                                       ),
-
-
                                       Padding(
                                         padding: const EdgeInsets.all(0),
                                         child: TextButton(
@@ -373,8 +364,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           ),
                                         ),
                                       ),
-
-
                                       Padding(
                                         padding: const EdgeInsets.all(0),
                                         child: TextButton(
@@ -397,7 +386,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           ),
                                         ),
                                       ),
-
                                       Padding(
                                         padding: const EdgeInsets.all(0),
                                         child: TextButton(
@@ -471,13 +459,19 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                               actions: [
 
 
-                                                ElevatedButton(onPressed: (){ Navigator.push(
-                                                    context,MaterialPageRoute(builder: (context) => LogRes(),));},
-                                                  child: Text ("نعم. قم بتسجيل الخروج".tr,style: TextStyle(color:Colors.white,fontSize: 14),),
-                                                  style: ElevatedButton.styleFrom(
-                                                      backgroundColor: myColor
-                                                  ),
+                                                Container(
+                                          decoration:
+                                          BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50)
+                                      ),
+                                                  child: ElevatedButton(onPressed: (){ Navigator.push(
+                                                      context,MaterialPageRoute(builder: (context) => LogRes(),));},
+                                                    child: Text ("نعم. قم بتسجيل الخروج".tr,style: TextStyle(color:Colors.white,fontSize: 14),),
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor: myColor
+                                                    ),
 
+                                                  ),
                                                 ),
                                                 Container(
                                                   width : 80,
@@ -507,7 +501,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
 
                                           ),
                                               content: Text( "هل أنت متأكد أنك تريد تسجيل الخروج ".tr,  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
-                                          )  );
+                                          )
+                                      );
                                     },
                                   ),
                                 ),
@@ -516,7 +511,9 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                         ),
                     ),
                 ),
-            ) ));
+            )
+        )
+    );
   }
 
 

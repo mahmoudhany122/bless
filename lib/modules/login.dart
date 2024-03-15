@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'bottom_nav.dart';
 import 'package:material_color_utilities/material_color_utilities.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -26,21 +27,45 @@ class _ResighterScreenState extends State<LoginScreen> {
   IconData suffix = Icons.visibility;
   String _signupMessage = '';
 
+  // SharedPreferences key for storing login state
+  final String _loginKey = 'isLoggedIn';
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  // Function to check login status
+  void _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool(_loginKey) ?? false;
+    if (isLoggedIn) {
+      // Redirect to BottomNav screen if user is logged in
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BottomNav(),
+        ),
+      );
+    }
+  }
+
   // Function to handle Google Sign-In
   Future<UserCredential?> _signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+      await googleSignIn.signIn();
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+        await googleSignInAccount.authentication;
         final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleSignInAuthentication.accessToken,
           idToken: googleSignInAuthentication.idToken,
         );
 
         UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
+        await _auth.signInWithCredential(credential);
 
         // User sign-in successful
         setState(() {
@@ -67,6 +92,10 @@ class _ResighterScreenState extends State<LoginScreen> {
           ),
         );
 
+        // Store login state
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool(_loginKey, true);
+
         return userCredential;
       }
     } catch (error) {
@@ -78,7 +107,7 @@ class _ResighterScreenState extends State<LoginScreen> {
   void _signup() async {
     try {
       UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
@@ -105,8 +134,13 @@ class _ResighterScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => BottomNav(),
+
         ),
       );
+
+      // Store login state
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_loginKey, true);
     } catch (error) {
       // Signup failed, handle the error
       setState(() {
@@ -126,7 +160,6 @@ class _ResighterScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Center(

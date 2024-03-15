@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'bottom_nav.dart';
+import 'login.dart';
 import 'onboardingscreen.dart';
+// استيراد شاشة تسجيل الدخول
 
 class LogoScreen extends StatefulWidget {
   LogoScreen({super.key});
@@ -16,12 +19,32 @@ class _LogoScreenState extends State<LogoScreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OnBoardingScreen(),
-          ));
+      _checkLoginStatus(); // التحقق من حالة تسجيل الدخول بعد فترة زمنية
     });
+  }
+
+  // التحقق من حالة تسجيل الدخول المحلية
+  void _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    // إذا كان المستخدم قد سجل الدخول بالفعل، قم بتوجيهه إلى شاشة BottomNav
+    if (isLoggedIn) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BottomNav(),
+        ),
+      );
+    } else {
+      // إذا لم يكن المستخدم قد سجل الدخول بعد، قم بتوجيهه إلى شاشة تسجيل الدخول
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OnBoardingScreen(),
+        ),
+      );
+    }
   }
 
   @override

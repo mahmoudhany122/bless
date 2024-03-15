@@ -1,3 +1,4 @@
+import 'package:blessmate/modules/signindoctor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,7 +68,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LogRes(),
+          builder: (context) => SignInDoc(),
         ),
       );
     }
@@ -115,7 +116,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LogRes(),
+                    builder: (context) => SignInDoc(),
                   ),
                 );
               },

@@ -100,7 +100,7 @@ class LogRes extends StatelessWidget {
                       ),
                     ),
                     onPressed: () =>
-                        Navigator.push(context,
+                        Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => LoginScreen(),
                           ),
                         ),
@@ -132,7 +132,7 @@ class LogRes extends StatelessWidget {
                       ),
                     ),
                     onPressed: () =>
-                        Navigator.push(context,
+                        Navigator.pushReplacement(context,
                           MaterialPageRoute(
                             builder: (context) => ResighterScreen(),
                           ),

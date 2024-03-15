@@ -1,8 +1,8 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:video_player/video_player.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Musiq extends StatefulWidget {
   @override
@@ -10,45 +10,57 @@ class Musiq extends StatefulWidget {
 }
 
 class _MusiqState extends State<Musiq> {
-  final List<String> itemNames = [
-    'Meditation et Relaxation',
-    'The Sound of Rain',
-    'A Gentle Sunlight',
-    'Dandelions',
-    'Chasing Clouds',
-  ];
-
-  final List<String> itemImages = [
-    'assets/musiq/img.png',
-    'assets/musiq/img_1.png',
-    'assets/musiq/img_2.png',
-    'assets/musiq/img_6.png',
-    'assets/musiq/img.png',
-  ];
-
-  final List<String> itemVideos = [
-    'assets/videos/VID_20231124_232251_830.mp4',
-    'assets/videos/VID_20231124_232251_830.mp4',
-    'assets/videos/VID_20231124_232251_830.mp4',
-    'assets/videos/VID_20231124_232251_830.mp4',
-    'assets/videos/VID_20231124_232251_830.mp4',
-  ];
-
-  final List<String> itemDescriptions = [
-    'وصف الفيديو 1 يأتي هنا...',
-    'وصف الفيديو 2 يأتي هنا...',
-    'وصف الفيديو 3 يأتي هنا...',
-    'وصف الفيديو 4 يأتي هنا...',
-    'وصف الفيديو 5 يأتي هنا...',
-  ];
-
+  late FirebaseFirestore _firestore;
+  late CollectionReference _musiqCollection;
   Map<String, String> favoriteItemsDetails = {};
 
-  void addPlaylist(String playlistName) {
-    // يمكنك هنا تنفيذ الإجراءات الخاصة بإضافة القائمة الجديدة
-    print('تمت إضافة قائمة جديدة: $playlistName');
+
+  @override
+  void initState() {
+    super.initState();
+    _firestore = FirebaseFirestore.instance;
+    _musiqCollection = _firestore.collection('musiq');
+    _loadMusiqData();
   }
 
+  List<String> itemNames = [];
+  List<String> itemImages = [];
+  List<String> itemVideos = [];
+  List<String> itemDescriptions = [];
+
+
+  Future<void> _loadMusiqData() async {
+    try {
+      QuerySnapshot musiqSnapshot = await _musiqCollection.get();
+
+      if (musiqSnapshot.size > 0) {
+        musiqSnapshot.docs.forEach((doc) {
+          itemNames.add(doc['name']);
+          itemImages.add(doc['image']);
+          itemVideos.add(doc['videoUrl']);
+          itemDescriptions.add(doc['description']);
+        });
+
+        setState(() {
+          // Update state with fetched data
+          this.itemNames = itemNames;
+          this.itemImages = itemImages;
+          this.itemVideos = itemVideos;
+          this.itemDescriptions = itemDescriptions;
+        });
+      } else {
+        print('No data available in Firestore.');
+      }
+    } catch (e) {
+      print('Error loading musiq data: $e');
+    }
+  }
+
+
+  void addPlaylist(String playlistName) {
+    // Your existing addPlaylist logic
+    print('تمت إضافة قائمة جديدة: $playlistName');
+  }
   Future<void> pickAudioFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.audio,
@@ -59,152 +71,158 @@ class _MusiqState extends State<Musiq> {
       print('تم اختيار ملف صوتي: ${result.files.first.name}');
     } else {
       // المستخدم لم يقم بتحديد ملف صوتي
-      print('لم يتم اختيار أي ملف صوتي.'.tr);
+      print('لم يتم اختيار أي ملف صوتي.');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.all(20),
-      child: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Text(
-                  "اضافة قائمة تشغيل جديدة".tr,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                CircleAvatar(
-                  backgroundColor: HexColor('06B4D8'),
-                  child: TextButton(
-                    onPressed: () {
-                      // عند الضغط على زرار الإضافة قائمة جديدة
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('إضافة قائمة جديدة'.tr),
-                            content: TextField(
-                              onChanged: (value) {
-                                // يمكنك استخدام القيمة المدخلة هنا
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'اسم القائمة'.tr,
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text('إلغاء'.tr),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  // استخدم القيمة المدخلة لإضافة القائمة
-                                  addPlaylist('اسم القائمة'.tr);
-                                },
-                                child: Text('إضافة'.tr),
-                              ),
-                            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "اضافة قائمة تشغيل جديدة",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: HexColor('06B4D8'),
+                      child: TextButton(
+                        onPressed: () {
+                          // عند الضغط على زرار الإضافة قائمة جديدة
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('إضافة قائمة جديدة'),
+                                content: TextField(
+                                  onChanged: (value) {
+                                    // يمكنك استخدام القيمة المدخلة هنا
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: 'اسم القائمة',
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('إلغاء'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      // استخدم القيمة المدخلة لإضافة القائمة
+                                      addPlaylist('اسم القائمة');
+                                    },
+                                    child: Text('إضافة'),
+                                  ),
+                                ],
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FavoriteItemsPage(
-                          favoriteItemsDetails: favoriteItemsDetails,
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
                         ),
                       ),
-                    );
-                  },
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FavoriteItemsPage(
+                              favoriteItemsDetails: favoriteItemsDetails,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "الموسيقى المفضلة لديك",
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: HexColor('06B4D8'),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FavoriteItemsPage(favoriteItemsDetails: {},
+
+                              ),
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          Icons.favorite_border_outlined,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
                   child: Text(
-                    "الموسيقى المفضلة لديك".tr,
+                    "استكشف",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
                 SizedBox(
-                  width: 5,
+                  height: 20,
                 ),
-                CircleAvatar(
-                  backgroundColor: HexColor('06B4D8'),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FavoriteItemsPage(
-                            favoriteItemsDetails: favoriteItemsDetails,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Icon(
-                      Icons.favorite_border_outlined,
-                      color: Colors.white,
-                    ),
+                Expanded(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) =>
+                        buildItem(context, index),
+                    separatorBuilder: (context, index) => Divider(),
+                    itemCount: itemNames.length,
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "استكشف".tr,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) =>
-                    buildItem(context, index),
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: itemNames.length,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
   Widget buildItem(context, int index) {
+    // Your existing buildItem logic
     final String itemName = itemNames[index];
-    final String imagePath = itemImages[index];
+    final String imageUrl = itemImages[index];
     final bool isFavorite = favoriteItemsDetails.containsKey(itemName);
 
     return GestureDetector(
@@ -214,7 +232,7 @@ class _MusiqState extends State<Musiq> {
           MaterialPageRoute(
             builder: (context) => VideoDetailPage(
               title: itemName,
-              imagePath: imagePath,
+              imagePath: imageUrl,
               description: itemDescriptions[index],
               videoUrl: itemVideos[index],
             ),
@@ -223,10 +241,13 @@ class _MusiqState extends State<Musiq> {
       },
       child: ListTile(
         title: Text(itemName, style: Theme.of(context).textTheme.headline6),
-        leading: Image.asset(
-          imagePath,
-          height: 50,
-          width: 50,
+        contentPadding: EdgeInsets.all(0),
+        leading: Container(
+          width: 80,  // Set the width according to your preference
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.fill,
+          ),
         ),
         trailing: GestureDetector(
           onTap: () {
@@ -234,7 +255,7 @@ class _MusiqState extends State<Musiq> {
               if (isFavorite) {
                 favoriteItemsDetails.remove(itemName);
               } else {
-                favoriteItemsDetails[itemName] = imagePath;
+                favoriteItemsDetails[itemName] =imageUrl ;
               }
             });
           },
@@ -246,66 +267,9 @@ class _MusiqState extends State<Musiq> {
       ),
     );
   }
-
-  void _showAddPlaylistDialog(BuildContext context) async {
-    TextEditingController playlistNameController = TextEditingController();
-    String? filePath;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("إضافة قائمة تشغيل جديدة".tr),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: playlistNameController,
-                decoration: InputDecoration(
-                  hintText: "اسم القائمة".tr,
-                ),
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () async {
-                  FilePickerResult? result =
-                      await FilePicker.platform.pickFiles(type: FileType.audio);
-
-                  if (result != null) {
-                    setState(() {
-                      filePath = result.files.single.path;
-                    });
-                  }
-                },
-                child: Text("اختيار ملف صوتي".tr),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("إلغاء".tr),
-            ),
-            TextButton(
-              onPressed: () {
-                String playlistName = playlistNameController.text;
-                // قم بتنفيذ الخطوات اللازمة لحفظ القائمة والملف الصوتي (filePath)
-                // TODO: يجب تحقيق ذلك في طبقة إدارة الحالة أو بواسطة مدير حالة إذا كنت تستخدمه
-                // يمكنك استخدام filePath و playlistName للقيام باللازم
-                Navigator.pop(context);
-              },
-              child: Text("إضافة".tr),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
 
-class VideoDetailPage extends StatefulWidget {
+class VideoDetailPage extends StatelessWidget {
   final String title;
   final String imagePath;
   final String description;
@@ -320,91 +284,147 @@ class VideoDetailPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _VideoDetailPageState createState() => _VideoDetailPageState();
-}
-
-class _VideoDetailPageState extends State<VideoDetailPage> {
-  late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.asset(widget.videoUrl)
-      ..initialize().then((_) {
-        // تأكد من عرض الإطار الأول بعد تهيئة الفيديو.
-        setState(() {});
-      });
-
-    // استخدم البرنامج التحكم لتكرار الفيديو.
-    _controller.setLooping(true);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title,
+        style: Theme.of(context).textTheme.headline1),
+        centerTitle: true,
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _controller.value.isInitialized
-                  ? AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    )
-                  : Container(),
-              SizedBox(height: 16),
-              Text(
-                widget.title,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              SizedBox(height: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "لمحة عامة".tr,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  Text(
-                    widget.description,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    if (_controller.value.isPlaying) {
-                      _controller.pause();
-                    } else {
-                      _controller.play();
-                    }
-                  });
-                },
-                child: Text(_controller.value.isPlaying ? 'إيقاف'.tr : 'تشغيل'.tr),
-              ),
-            ],
-          ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            VideoPlayerScreen(videoUrl: videoUrl), // تمرير عنوان الفيديو
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'ملخص:',
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            SizedBox(height: 10),
+            Text(
+              description,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+class VideoPlayerScreen extends StatefulWidget {
+  final String videoUrl;
+
+  VideoPlayerScreen({required this.videoUrl});
+
+  @override
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+}
+
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(widget.videoUrl)
+      ..initialize().then((_) {
+        setState(() {});
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _controller.value.isInitialized
+        ? Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.width /
+          _controller.value.aspectRatio,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: VideoPlayer(_controller),
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.6),
+            height: 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.fullscreen, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      _controller.setLooping(true);
+                      _controller.setVolume(2.0);
+                      _controller.setPlaybackSpeed(1.0);
+                      _controller.play();
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.fast_forward, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      _controller.seekTo(Duration(
+                          seconds: _controller.value.position.inSeconds +
+                              10));
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.stop, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      _controller.pause();
+                      _controller.seekTo(Duration.zero);
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.fast_rewind, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      _controller.seekTo(Duration(
+                          seconds: _controller.value.position.inSeconds -
+                              10));
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.play_arrow, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      if (_controller.value.isPlaying) {
+                        _controller.pause();
+                      } else {
+                        _controller.play();
+                      }
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    )
+        : Center(child: CircularProgressIndicator());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+}
+
 
 class FavoriteItemsPage extends StatelessWidget {
   final Map<String, String> favoriteItemsDetails;
@@ -416,7 +436,7 @@ class FavoriteItemsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('الموسيقى المفضلة لديك'.tr),
+        title: Text('الموسيقى المفضلة لديك'),
       ),
       body: ListView.builder(
         itemCount: favoriteItemsDetails.length,
@@ -426,11 +446,13 @@ class FavoriteItemsPage extends StatelessWidget {
 
           return ListTile(
             title: Text(itemName),
-            leading: Image.asset(
-              imagePath!,
-              height: 50,
-              width: 50,
-            ),
+              leading: Container(
+                width: 80,  // Set the width according to your preference
+                child: Image.network(
+                  imagePath!,
+                  fit: BoxFit.fill,
+                ),
+              )
             // إضافة تفاصيل إضافية إذا لزم الأمر
           );
         },
@@ -438,3 +460,5 @@ class FavoriteItemsPage extends StatelessWidget {
     );
   }
 }
+
+

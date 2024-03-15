@@ -1,7 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.untitled">
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- إذا كان التطبيق يستخدم Firebase، يجب إضافة هذه الصلاحية أيضًا -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
-        android:label="Team Project"
+        android:label="Bless Mate"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

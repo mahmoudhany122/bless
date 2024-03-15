@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:blessmate/modules/productscreen.dart';
-import 'package:blessmate/modules/profile.dart';
+
 import 'package:blessmate/modules/profile1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../main.dart';
 import 'add_after_signu.dart';
-import 'categoryscreen.dart';
+import 'appointment_view.dart';
 import 'chat.dart';
 import 'dark.dart';
 import 'drawer.dart';
@@ -22,13 +22,13 @@ class BottomNav extends StatefulWidget {
 final ValueNotifier<bool> isDark = ValueNotifier<bool>(false);
 
 class _BottomNavState extends State<BottomNav> {
-  int currentindex = 4;
+  int currentindex = 0;
 
   List<Widget> screens = [
     HomeScreen(),
     ChatScreen(),
     Explore(),
-    CommunityScreen(),
+    AppointmentView(),
     ProfileScreen1(),
   ];
 
@@ -52,7 +52,7 @@ class _BottomNavState extends State<BottomNav> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             label: "الرئيسية".tr,
           ),
           BottomNavigationBarItem(
@@ -64,7 +64,7 @@ class _BottomNavState extends State<BottomNav> {
             label: "يستكشف".tr,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat_outlined),
+            icon: Icon(Icons.date_range_sharp),
             label: "تعيينات".tr,
           ),
           BottomNavigationBarItem(

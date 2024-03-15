@@ -18,6 +18,7 @@ class Explore extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 8.0,
             mainAxisSpacing: 8.0,
+            childAspectRatio: 1.0,
           ),
           itemCount: items.length,
           itemBuilder: (BuildContext context, int index) {
@@ -33,7 +34,7 @@ class Explore extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: HexColor('00B4D8'), width: 2.0),
-                  borderRadius: BorderRadius.circular(20.0),
+
                 ),
                 child: GridItem(item: items[index]),
               ),
@@ -126,17 +127,17 @@ List<Map<String, dynamic>> items = [
   },
   {
     'name': 'قلق'.tr,
-    'imageFileName': 'explore/img_7.png',
+    'imageFileName': 'explore/img_5.png',
     'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
   },
   {
     'name': "إختلال النوم".tr,
-    'imageFileName': 'explore/img_10.png',
+    'imageFileName': 'explore/img_13.png',
     'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
   },
   {
     'name': 'ضغط'.tr,
-    'imageFileName': 'explore/img_8.png',
+    'imageFileName': 'explore/img_7.png',
     'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
   },
   {

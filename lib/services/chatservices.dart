@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class ChatService {
   Future<String> getBotResponse(String message) async {
-    final url = Uri.parse('http://10.0.2.2:5000/ChatBot/?msg=$message');
+    final url = Uri.parse('https://blissmate-chatbot.onrender.com/ChatBot?msg=$message');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
