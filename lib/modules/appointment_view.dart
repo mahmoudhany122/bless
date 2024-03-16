@@ -53,7 +53,6 @@ class AppointmentView extends StatelessWidget {
                     fontSize: 13,
                     text: "Search",
                     onPressed: (anim) {
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => MyTabbedScreen(),));
                     },
                   ),
                 ],

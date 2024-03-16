@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppointmentDate {
   final int id;
@@ -61,17 +60,17 @@ List<PaymentMethod> paymentMethod = [
   ),
   PaymentMethod(
     id: 1,
-    icon: FontAwesomeIcons.googlePay,
+    icon: Icons.gpp_good_outlined,
     name: "Google Pay",
   ),
   PaymentMethod(
     id: 2,
-    icon: FontAwesomeIcons.applePay,
+    icon: Icons.apple_outlined,
     name: "Apple Pay",
   ),
   PaymentMethod(
     id: 3,
-    icon: FontAwesomeIcons.paypal,
+    icon: Icons.paypal,
     name: "PayPal",
   ),
 ];

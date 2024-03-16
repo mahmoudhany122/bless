@@ -3,7 +3,6 @@ import 'package:blessmate/modules/logres.dart';
 import 'package:blessmate/modules/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:blessmate/modules/change_password.dart';
-import 'package:blessmate/modules/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

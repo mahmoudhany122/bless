@@ -4,6 +4,8 @@ import 'package:blessmate/modules/doctor3.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import 'docchat.dart';
+
 class HomeDoctorScreen extends StatefulWidget {
   const HomeDoctorScreen({super.key});
 
@@ -158,7 +160,10 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                         ),
                       )),
                   SizedBox(width: 10,),
-                  TextButton(onPressed: (){},
+                  TextButton(onPressed: (){
+
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => MyTabbedScreen(),));
+                  },
                       child:Container(
                         padding: EdgeInsets.only(top: 30,bottom: 10,right: 10,left: 10),
                        width: 160,

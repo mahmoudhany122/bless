@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class _ResighterScreenState extends State<ResighterScreen> {
   String _signupMessage = '';
   String confirmPassword = '';
 
+// Firebase Firestore instance
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   void _signup() async {
     try {
       UserCredential userCredential =
@@ -35,6 +38,13 @@ class _ResighterScreenState extends State<ResighterScreen> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+
+      await _firestore.collection('users').doc(userCredential.user!.uid).set({
+        'fname': FnameController.text.trim(),
+        'sname': SnameController.text.trim(),
+        'email': emailController.text.trim(),
+        'password': passwordController.text.trim(),
+      });
 
       // User signup successful
       setState(() {
