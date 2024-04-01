@@ -2,7 +2,6 @@ import 'package:blessmate/modules/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-
 import 'id.dart';
 import 'logres.dart';
 
