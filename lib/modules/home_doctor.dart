@@ -20,10 +20,12 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
       body: ListView(
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 40,),
-              TextButton(onPressed: (){},
+              SizedBox(
+                height: 40,),
+              TextButton(
+                  onPressed: (){},
                   child:
                   Container(
                     padding:  EdgeInsets.only(right: 10,left: 10),
@@ -66,8 +68,10 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                     ),)
                ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(onPressed: (){
+                  TextButton(
+                      onPressed: (){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -96,8 +100,10 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                           ],
                         ),
                       )),
-                  SizedBox(width: 10,),
-                  TextButton(onPressed: (){
+                  SizedBox(
+                    width: 10,),
+                  TextButton(
+                      onPressed: (){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -129,8 +135,10 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                 ],
               )  ,
               Row(
+               mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(onPressed: (){
+                  TextButton(
+                      onPressed: (){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -159,8 +167,10 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                           ],
                         ),
                       )),
-                  SizedBox(width: 10,),
-                  TextButton(onPressed: (){
+                  SizedBox(
+                    width: 10,),
+                  TextButton(
+                      onPressed: (){
 
                     Navigator.push(context,MaterialPageRoute(builder: (context) => MyTabbedScreen(),));
                   },
@@ -191,7 +201,6 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
               )
             ],
           )
-
         ],
       )
       ,
