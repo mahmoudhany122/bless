@@ -55,3 +55,11 @@ class HealthCondition {
 
   HealthCondition({required this.name, required this.description});
 }
+
+
+class User {
+  final String firstName;
+  final String email;
+
+  User({required this.firstName, required this.email});
+}

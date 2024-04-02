@@ -11,6 +11,7 @@ import 'modules/add_after_signu.dart';
 import 'modules/bottom_nav.dart';
 import 'modules/id.dart';
 import 'modules/logres.dart';
+import 'modules/signindoctor.dart';
 import 'modules/signup.dart';
 import 'modules/login.dart';
 import 'modules/dark.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home:TabBarScreen(),
+      home:SignInDoc(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

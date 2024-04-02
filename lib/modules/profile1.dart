@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart'
 as hex; // aliasing the external HexColor class
+import 'package:shared_preferences/shared_preferences.dart';
 import 'add_after_signu.dart';
 
 var myColor = hex.HexColor('00B4D8');
@@ -24,6 +25,25 @@ class _ProfileScreenState extends State<ProfileScreen1> {
   bool _switch = false;
 
   String _selectedLanguage = 'ar';
+
+  String _firstName = '';
+  String _lastName = '';
+  String _email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _firstName = prefs.getString('firstName') ?? '';
+      _lastName = prefs.getString('lastName') ?? '';
+      _email = prefs.getString('email') ?? '';
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,11 +92,11 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text("ليلى".tr,
+                                            Text(_firstName + ' ' + _lastName.tr,
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.bold)),
 
-                                            Text("عرض و تحرير ملفك الشخصي".tr,
+                                            Text(_email.tr,
                                                 style: TextStyle(fontSize: 16,color: Colors.white)),
                                           ],
                                         ),

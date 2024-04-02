@@ -1,31 +1,27 @@
-import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'bottom_nav.dart';
-import 'package:material_color_utilities/material_color_utilities.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/chatmodel.dart';
+import 'bottom_nav.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State createState() => _ResighterScreenState();
+  State createState() => _LoginScreenState();
 }
 
-class _ResighterScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
+  final FnameController = TextEditingController();
+  final SnameController = TextEditingController();
   var emailController = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   bool isShowed = true;
   IconData suffix = Icons.visibility;
-  String _signupMessage = '';
+  String _loginMessage = '';
 
   // SharedPreferences key for storing login state
   final String _loginKey = 'isLoggedIn';
@@ -42,118 +38,100 @@ class _ResighterScreenState extends State<LoginScreen> {
     bool isLoggedIn = prefs.getBool(_loginKey) ?? false;
     if (isLoggedIn) {
       // Redirect to BottomNav screen if user is logged in
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => BottomNav(),
+          builder: (context) => BottomNav(
+
+          ),
         ),
       );
+
     }
   }
 
-  // Function to handle Google Sign-In
-  Future<UserCredential?> _signInWithGoogle() async {
+  // Function to handle login
+  void _login() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-      await googleSignIn.signIn();
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,
-        );
+      var url = Uri.parse('https://blessmate.onrender.com/Auth/Login');
+      var body = jsonEncode({
+        "email": emailController.text.trim(),
+        "password": passwordController.text.trim(),
+      });
 
-        UserCredential userCredential =
-        await _auth.signInWithCredential(credential);
+      var response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: body,
+      );
 
-        // User sign-in successful
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        if (responseData['isAuth']) {
+          // Login successful
+          setState(() {
+            _loginMessage = 'تم تسجيل الدخول بنجاح';
+          });
+
+          // Show the message in a SnackBar
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(_loginMessage),
+              duration: Duration(seconds: 5),
+              backgroundColor: Colors.green,
+            ),
+          );
+
+          // Delay the navigation to the desired screen
+          await Future.delayed(Duration(seconds: 5));
+
+          // Navigate to the desired screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BottomNav(),
+            ),
+          );
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('firstName', FnameController.text.trim());
+          prefs.setString('lastName', SnameController.text.trim());
+          prefs.setString('email', responseData['email']); // حفظ البريد الإلكتروني كما هو
+
+
+
+
+          // Store login state
+
+          await prefs.setBool(_loginKey, true);
+        } else {
+          setState(() {
+            _loginMessage = 'فشل تسجيل الدخول، البريد الإلكتروني أو كلمة المرور غير صحيحة';
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(_loginMessage),
+              duration: Duration(seconds: 5),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      } else {
         setState(() {
-          _signupMessage = 'لقد تم تسجيل دخولك بنجاح'.tr;
+          _loginMessage = 'حدث خطأ أثناء تسجيل الدخول';
         });
-
-        // Show the message in a SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(_signupMessage),
+            content: Text(_loginMessage),
             duration: Duration(seconds: 5),
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.red,
           ),
         );
-
-        // Delay the navigation to the desired screen
-        await Future.delayed(Duration(seconds: 5));
-
-        // Navigate to the desired screen
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BottomNav(),
-          ),
-        );
-
-        // Store login state
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setBool(_loginKey, true);
-
-        return userCredential;
       }
     } catch (error) {
-      print('Google Sign-In Error: $error');
-    }
-    return null;
-  }
-
-  void _signup() async {
-    try {
-      UserCredential userCredential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-
-      // User signup successful
-      setState(() {
-        _signupMessage = 'لقد تم تسجيل دخولك بنجاح'.tr;
-      });
-
-      // Show the message in a SnackBar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(_signupMessage),
-          duration: Duration(seconds: 5),
-          backgroundColor: Colors.green,
-        ),
-      );
-
-      // Delay the navigation to the desired screen
-      await Future.delayed(Duration(seconds: 5));
-
-      // Navigate to the desired screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => BottomNav(),
-
-        ),
-      );
-
-      // Store login state
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(_loginKey, true);
-    } catch (error) {
-      // Signup failed, handle the error
-      setState(() {
-        _signupMessage = 'هذا الحساب غير موجود حاول  مره ثانيه'.tr;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(_signupMessage),
-          duration: Duration(seconds: 5),
-          backgroundColor: Colors.red,
-        ),
-      );
-      print('Signup Error: $error');
+      print('Login Error: $error');
     }
   }
 
@@ -180,7 +158,7 @@ class _ResighterScreenState extends State<LoginScreen> {
                     height: 20,
                   ),
                   Text(
-                    "تسجيل الدخول".tr,
+                    "تسجيل الدخول",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   const SizedBox(
@@ -191,34 +169,12 @@ class _ResighterScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
                       validator: (value) {
-                        return value!.isEmpty ? "ادخل البريد الالكترونى".tr : null;
-                      },
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      onChanged: (value) {
-                        print(value);
+                        return value!.isEmpty ? "ادخل البريد الإلكتروني" : null;
                       },
                       decoration: InputDecoration(
-                        labelText: "بريد إلكتروني".tr,
+                        labelText: "البريد الإلكتروني",
                         prefixIcon: Container(
                           child: Icon(Icons.email),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            color: HexColor('00B4D8'),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            color: HexColor('00B4D8'),
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: Colors.red),
                         ),
                       ),
                     ),
@@ -232,49 +188,21 @@ class _ResighterScreenState extends State<LoginScreen> {
                       controller: passwordController,
                       obscureText: isShowed,
                       validator: (value) {
-                        final passwordRegex =
-                            r'^(?=.*?[0-9])(?=.*?[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{10,}$';
-                        if (value!.isEmpty) {
-                          return "ادخل كلمه المرور".tr;
-                        } else if (!RegExp(passwordRegex).hasMatch(value)) {
-                          return "  ادخل على الاققل 10 حروف و ارقام و ورمز خاص ".tr;
-                        }
-                        return null;
+                        return value!.isEmpty ? "ادخل كلمة المرور" : null;
                       },
-                      onFieldSubmitted: (value) {},
                       decoration: InputDecoration(
-                        labelText: "كلمة المرور".tr,
+                        labelText: "كلمة المرور",
                         prefixIcon: Container(
-                          child: Icon(
-                            Icons.lock,
-                          ),
+                          child: Icon(Icons.lock),
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(suffix),
                           onPressed: () {
                             setState(() {
                               isShowed = !isShowed;
-                              suffix = isShowed
-                                  ? Icons.remove_red_eye
-                                  : Icons.visibility_off;
+                              suffix = isShowed ? Icons.visibility : Icons.visibility_off;
                             });
                           },
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            color: HexColor('00B4D8'),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            color: HexColor('00B4D8'),
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: Colors.red),
                         ),
                       ),
                     ),
@@ -293,7 +221,7 @@ class _ResighterScreenState extends State<LoginScreen> {
                       ),
                       child: MaterialButton(
                         child: Text(
-                          "تسجيل الدخول".tr,
+                          "تسجيل الدخول",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -302,7 +230,7 @@ class _ResighterScreenState extends State<LoginScreen> {
                         ),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            _signup();
+                            _login();
                           }
                         },
                       ),
@@ -331,8 +259,7 @@ class _ResighterScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          // Call the function for Google Sign-In
-                          await _signInWithGoogle();
+                          // Google Sign-In button pressed
                         },
                         child: Container(
                           color: HexColor("FFFFFF"),
@@ -369,3 +296,19 @@ class _ResighterScreenState extends State<LoginScreen> {
     );
   }
 }
+
+
+
+class UserProvider extends ChangeNotifier {
+  User? _user;
+
+  void setUser(User user) {
+    _user = user;
+    notifyListeners();
+  }
+
+  User? getUser() {
+    return _user;
+  }
+}
+

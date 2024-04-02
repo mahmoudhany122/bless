@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'login.dart';
+import 'package:http/http.dart' as http;
 import 'bottom_nav.dart';
 
 class ResighterScreen extends StatefulWidget {
@@ -29,62 +31,47 @@ class _ResighterScreenState extends State<ResighterScreen> {
   String _signupMessage = '';
   String confirmPassword = '';
 
-// Firebase Firestore instance
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   void _signup() async {
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
+    var url = Uri.parse('https://blessmate.onrender.com/Auth/PatientRegister');
 
-      await _firestore.collection('users').doc(userCredential.user!.uid).set({
-        'fname': FnameController.text.trim(),
-        'sname': SnameController.text.trim(),
-        'email': emailController.text.trim(),
-        'password': passwordController.text.trim(),
-      });
+    var body = jsonEncode({
+      "firstName": FnameController.text.trim(),
+      "lastName": SnameController.text.trim(),
+      "email": emailController.text.trim(),
+      "password": passwordController.text.trim(),
+      "isMale": false
+    });
 
-      // User signup successful
-      setState(() {
-        _signupMessage = 'لقد تم تسجيل حسابك بنجاح ..اذهب وسجل دخولك'.tr;
-      });
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: body,
+    );
 
-      // Show the message in a SnackBar
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(_signupMessage),
+          content: Text(responseData['messages'] ?? 'تم تسجيل الحساب بنجاح'),
           duration: Duration(seconds: 5),
           backgroundColor: Colors.green,
         ),
       );
-
-      // Delay the navigation to the desired screen
-      await Future.delayed(Duration(seconds: 5));
-
-      // Navigate to the desired screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ),
-      );
-    } catch (error) {
-      // Signup failed, handle the error
-      setState(() {
-        _signupMessage = 'فشل تسجيل حسابك ! حاول مره اخرى '.tr;
-      });
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(_signupMessage),
-          duration: Duration(seconds: 7),
+          content: Text('حدث خطأ أثناء عملية التسجيل'),
+          duration: Duration(seconds: 5),
           backgroundColor: Colors.red,
         ),
       );
-      print('Signup Error: $error');
+      print('Signup Error: ${response.reasonPhrase}');
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {

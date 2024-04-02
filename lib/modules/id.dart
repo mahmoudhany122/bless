@@ -4,6 +4,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
+import 'logres_doc.dart';
+
 class MyPage extends StatefulWidget {
   @override
   _MyPageState createState() => _MyPageState();
@@ -87,7 +89,7 @@ class _MyPageState extends State<MyPage> {
                     print('Image saved: $pickedImagePath');
                     // Add your save logic here
                   }
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => LogRes(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => LogResDoc(),));
                 },
                 child: const Text(
                   "اشتراك",
