@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'id.dart';
 import 'logres.dart';
+import 'logres_doc.dart';
 
 class SignInDoc extends StatelessWidget {
   const SignInDoc({super.key});
@@ -52,8 +53,8 @@ class SignInDoc extends StatelessWidget {
                 ),
               ),
               onPressed: () =>
-                  Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => MyPage(),
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>   LogResDoc(),
                     ),
                   ),
             ),
@@ -84,7 +85,7 @@ class SignInDoc extends StatelessWidget {
                 ),
               ),
               onPressed: () =>
-                  Navigator.pushReplacement(context,
+                  Navigator.push(context,
                     MaterialPageRoute(
                       builder: (context) => LogRes(),
                     ),

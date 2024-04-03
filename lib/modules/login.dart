@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isShowed = true;
   IconData suffix = Icons.visibility;
   String _loginMessage = '';
-
+/*
   // SharedPreferences key for storing login state
   final String _loginKey = 'isLoggedIn';
 
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     }
   }
-
+*/
   // Function to handle login
   void _login() async {
     try {
@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           // Store login state
 
-          await prefs.setBool(_loginKey, true);
+          //await prefs.setBool(_loginKey, true);
         } else {
           setState(() {
             _loginMessage = 'فشل تسجيل الدخول، البريد الإلكتروني أو كلمة المرور غير صحيحة';
@@ -299,16 +299,4 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-class UserProvider extends ChangeNotifier {
-  User? _user;
-
-  void setUser(User user) {
-    _user = user;
-    notifyListeners();
-  }
-
-  User? getUser() {
-    return _user;
-  }
-}
 

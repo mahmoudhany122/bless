@@ -63,3 +63,12 @@ class User {
 
   User({required this.firstName, required this.email});
 }
+class UserData {
+  final String firstName;
+  final String lastName;
+  final String email;
+
+  UserData({required this.firstName, required this.lastName, required this.email});
+}
+
+

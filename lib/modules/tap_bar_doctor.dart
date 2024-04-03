@@ -8,15 +8,34 @@ import 'package:blessmate/modules/profile_doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TabBarScreen extends StatefulWidget {
-  const TabBarScreen({super.key});
+
+
 
   @override
   State<TabBarScreen> createState() => _TabBarScreenState();
 }
 
 class _TabBarScreenState extends State<TabBarScreen> {
+  String _firstName = '';
+  String _lastName = '';
+  String _email = '';
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _firstName = prefs.getString('firstName') ?? '';
+      _lastName = prefs.getString('lastName') ?? '';
+      _email = prefs.getString('email') ?? '';
+    });
+  }
   String _selectedLanguage = 'ar';
   @override
   Widget build(BuildContext context) {
@@ -27,20 +46,6 @@ class _TabBarScreenState extends State<TabBarScreen> {
             title: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 50,
-              width: 65,
-              margin: EdgeInsets.only(right: 5, left: 5, top: 10),
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(18)),
-              child: Image(
-                height: 55,
-                width: 70,
-                image: AssetImage(
-                  "assets/images/img_15.png",
-                ),
-              ),
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -51,7 +56,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "مرحبآ",
+                      "مرحبآ دكتور",
                       style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
                     SizedBox(
@@ -66,13 +71,15 @@ class _TabBarScreenState extends State<TabBarScreen> {
                     ),
                   ],
                 ),
+
                 Text(
-                  "د. عادل عيسى",
+                  _email.tr,
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
-                )
+                ),
+
               ],
             ),
             Spacer(),
@@ -103,12 +110,13 @@ class _TabBarScreenState extends State<TabBarScreen> {
             unselectedLabelColor: Colors.black,
             tabs: [
               Tab(
-                child: Text(
-                  "الملف الشخصي",
+                child:Text(
+                  _firstName  ,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      fontSize: 200,
+                      fontWeight: FontWeight.bold,
+
+                      color: Colors.green),
                 ),
               ),
               Tab(

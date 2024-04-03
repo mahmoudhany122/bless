@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:blessmate/modules/id.dart';
+import 'package:blessmate/modules/tap_bar_doctor.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -23,10 +25,34 @@ class _LoginDocState extends State<LoginDoc> {
   bool isShowed = true;
   IconData suffix = Icons.visibility;
   String _loginMessage = '';
-
+/*
   // SharedPreferences key for storing login state
   final String _loginKey = 'isLoggedIn';
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginsStatus();
+  }
 
+  // Function to check login status
+  void _checkLoginsStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool(_loginKey) ?? false;
+    if (isLoggedIn) {
+
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TabBarScreen(
+
+          ),
+        ),
+      );
+
+    }
+  }
+*/
 
   // Function to handle login
   void _login() async {
@@ -65,26 +91,26 @@ class _LoginDocState extends State<LoginDoc> {
           // Delay the navigation to the desired screen
           await Future.delayed(Duration(seconds: 5));
 
-          // Navigate to the desired screen
+          // Extract therapist ID from the response
+          int therapistId = responseData['id'];
+
+          // Navigate to the desired screen and pass the therapist ID
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => DoctorDetailsScreen(
-
-              ),
+              builder: (context) => UploadImagePage(therapistId: therapistId),
             ),
           );
+
+          // Save user data and login state
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString('firstName', FnameController.text.trim());
-          prefs.setString('lastName', SnameController.text.trim());
-          prefs.setString('email', responseData['email']); // حفظ البريد الإلكتروني كما هو
-
-
-
-
-          // Store login state
-
-          await prefs.setBool(_loginKey, true);
+          prefs.setString('firstName', responseData['firstName']);
+          prefs.setString('lastName', responseData['lastName']);
+          prefs.setString('email', responseData['email']);
+          // Here, save the first and last names upon successful login
+          // prefs.setString('firstName', responseData['firstName']);
+          // prefs.setString('lastName', responseData['LastName']);
+          // await prefs.setBool(_loginKey, true);
         } else {
           setState(() {
             _loginMessage = 'فشل تسجيل الدخول، البريد الإلكتروني أو كلمة المرور غير صحيحة';
@@ -113,9 +139,11 @@ class _LoginDocState extends State<LoginDoc> {
       print('Login Error: $error');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Center(

@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,8 +27,22 @@ class _ResighterScreenState extends State<ResighterScreen> {
   IconData suffix1 = Icons.visibility;
   String _signupMessage = '';
   String confirmPassword = '';
+  @override
+
 
   void _signup() async {
+    // التحقق من قيم الحقول قبل إرسال الطلب POST
+    if(FnameController.text.isEmpty || SnameController.text.isEmpty || emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('يرجى ملء جميع الحقول'),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     var url = Uri.parse('https://blessmate.onrender.com/Auth/PatientRegister');
 
     var body = jsonEncode({
@@ -39,7 +50,6 @@ class _ResighterScreenState extends State<ResighterScreen> {
       "lastName": SnameController.text.trim(),
       "email": emailController.text.trim(),
       "password": passwordController.text.trim(),
-      "isMale": false
     });
 
     var response = await http.post(
@@ -51,6 +61,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
     );
 
     if (response.statusCode == 200) {
+      // إذا كانت الاستجابة صحيحة، انتقل إلى الشاشة التالية
       var responseData = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -58,7 +69,6 @@ class _ResighterScreenState extends State<ResighterScreen> {
           duration: Duration(seconds: 5),
           backgroundColor: Colors.green,
         ),
-
       );
       await Future.delayed(Duration(seconds: 5));
 
@@ -70,6 +80,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
         ),
       );
     } else {
+      // إذا كان هناك خطأ في الاستجابة، عرض رسالة خطأ
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('حدث خطأ أثناء عملية التسجيل'),
@@ -80,6 +91,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
       print('Signup Error: ${response.reasonPhrase}');
     }
   }
+
 
 
 

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'logindoc.dart';
 
@@ -70,6 +71,11 @@ class _SignUpDocState extends State<SignUpDoc> {
           builder: (context) => LoginDoc(),
         ),
       );
+      // Save user data and login state
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('firstName', responseData['firstName']);
+      prefs.setString('lastName', responseData['lastName']);
+      prefs.setString('email', responseData['email']);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

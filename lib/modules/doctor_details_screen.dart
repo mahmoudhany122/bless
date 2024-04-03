@@ -7,9 +7,9 @@ import '../widgets/progress_button.dart';
 import '../widgets/show_bottom_sheet.dart';
 import '../widgets/stars_bar.dart';
 import 'appointment_bottom_sheet.dart';
+import 'doctime.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
-
   const DoctorDetailsScreen({super.key});
 
   @override
@@ -19,18 +19,21 @@ class DoctorDetailsScreen extends StatefulWidget {
 class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   File? imageSelect;
   final _imagePicker = ImagePicker();
+  String bigContainerText = '';
+  String smallContainerText = '';
   Future<void> pickImageCamera() async {
     final pickedImage =
-    await _imagePicker.pickImage(source: ImageSource.camera);
+        await _imagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       if (pickedImage != null) {
         imageSelect = File(pickedImage.path);
       }
     });
   }
+
   Future<void> pickImageGallery() async {
     final pickedImage =
-    await _imagePicker.pickImage(source: ImageSource.gallery);
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedImage != null) {
         imageSelect = File(pickedImage.path);
@@ -46,6 +49,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
           "Therapist Details",
           style: TextStyle(
             fontWeight: FontWeight.w500,
+            color: Colors.black,
             fontSize: 20,
           ),
         ),
@@ -66,14 +70,16 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                     children: [
                       imageSelect != null
                           ? Image.file(
-                        imageSelect!,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.fill,
-                      )
-                          : Image.asset( "assets/images/img_12.png",
-                        width: 100,
-                        height: 100,),
+                              imageSelect!,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            )
+                          : Image.asset(
+                              "assets/images/img_12.png",
+                              width: 100,
+                              height: 100,
+                            ),
                       IconButton(
                         onPressed: () {
                           pickImageCamera();
@@ -131,170 +137,89 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                 ],
               ),
             ),
+            const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: Colors.cyan),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.star,
-                            color: Color(0xFFFFB600),
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white, // Set the background color to white
+                ),
+
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      height:100, // Set a specific height or use constraints to provide bounds
+                      child: Expanded(
+                        child: Container(
+                          height: 0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
+                            border: Border.all(color:  Colors.cyan, width: 2), // Define the border color and width
+                            color: Colors.white, // Set the background color to white
                           ),
-                          SizedBox(width: 6),
-                          Text(
-                            "(4.8) 176 reviews",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
+                          child: Center(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'اكتب نبذة مختصرة عنك',
+                                hintStyle: TextStyle(color: Colors.black),
+                              ),
+                              style: TextStyle(color: Colors.black),
+                              onChanged: (value) {
+                                // Handle text input here
+                              },
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: Colors.cyan),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Iconsax.tag,
-                            color: Color(0xFFFFB600),
+                    const SizedBox(height: 10),
+                    Container(
+                      height: 50, // Set a specific height or use constraints to provide bounds
+                      child: Flexible(
+                        child: Container(
+                          height: 0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
+                            border: Border.all(color:  Colors.cyan, width: 2), // Define the border color and width
+                            color: Colors.white, // Set the background color to white
                           ),
-                          SizedBox(width: 6),
-                          Text(
-                            "(4.8) 176 reviews",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
+                          child: Center(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'ادخل التعليم و التخصص',
+                                hintStyle: TextStyle(color: Colors.black),
+
+                              ),
+                              style: TextStyle(color: Colors.black),
+                              onChanged: (value) {
+                                // Handle text input here
+                              },
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 20),
+
             Center(
               child: AppProgressButton(
                 radius: 8,
-                text: "Check available appointment",
+                text: "قم بتحديد مواعيد العمل و الحجز المتاحة",
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
                   mainShowDialog(
                     context: context,
                     height: MediaQuery.of(context).size.height / 1.5,
-                    page: const AppointmentBottomSheet(),
+                    page: const Doctime(),
                   );
                 },
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "About",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    "I'm a trauma-informed Family Therapist from Egypt, I'm passionate about helping people reclaim the parts of themselves they have lost through challenges and traumas and assisting them in developing the insights and skills necessary to work through current challenges",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Specialization",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    "Counseling Psychology in Anxiety and Trauma",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Education",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    "BSc in Psychology",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                  Text(
-                    "MA in Psychology",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Contact Details",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    "+2001056259256",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                  Text(
-                    "Herbert29@gmail.com",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+
           ],
         ),
       ),

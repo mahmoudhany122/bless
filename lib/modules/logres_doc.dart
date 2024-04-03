@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import 'login.dart';
+import 'logindoc.dart';
 
 class LogResDoc extends StatelessWidget {
   const LogResDoc({super.key});
@@ -12,6 +13,7 @@ class LogResDoc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child:
@@ -100,8 +102,8 @@ class LogResDoc extends StatelessWidget {
                       ),
                     ),
                     onPressed: () =>
-                        Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginScreen(),
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LoginDoc(),
                           ),
                         ),
                   ),
@@ -132,7 +134,7 @@ class LogResDoc extends StatelessWidget {
                       ),
                     ),
                     onPressed: () =>
-                        Navigator.pushReplacement(context,
+                        Navigator.push(context,
                           MaterialPageRoute(
                             builder: (context) =>SignUpDoc(),
                           ),

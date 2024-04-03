@@ -1,20 +1,69 @@
-import 'package:blessmate/modules/logres.dart';
-import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'dart:io';
+import 'package:blessmate/modules/tap_bar_doctor.dart';
+import 'package:flutter/material.dart';
+import 'package:blessmate/modules/doctor_details_screen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
-import 'logres_doc.dart';
+class UploadImagePage extends StatefulWidget {
+  final int therapistId; // تحديد المتغير لاستقبال معرّف المعالج النفسي
 
-class MyPage extends StatefulWidget {
+  const UploadImagePage({Key? key, required this.therapistId}) : super(key: key);
+
   @override
-  _MyPageState createState() => _MyPageState();
+  _UploadImagePageState createState() => _UploadImagePageState();
 }
 
-class _MyPageState extends State<MyPage> {
+class _UploadImagePageState extends State<UploadImagePage> {
+  String? pickedImagePath;
 
-  late String? pickedImagePath = null;
+  Future<void> _uploadImage() async {
+    if (pickedImagePath == null) {
+      return;
+    }
 
+    final url = Uri.parse('https://blessmate.onrender.com/Therapist/TherapistCertificate?id=${widget.therapistId}'); // استخدام معرّف المعالج النفسي
+
+    try {
+      var request = http.MultipartRequest('POST', url);
+      request.files.add(await http.MultipartFile.fromPath('Certificate', pickedImagePath!));
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        // رفع الصورة بنجاح
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('تم رفع الصورة بنجاح، انتظر حتى يتم التأكيد'),
+            duration: Duration(seconds: 5),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => TabBarScreen()),
+        );
+      } else {
+        // فشل رفع الصورة
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('حدث خطأ أثناء رفع الصورة'),
+            duration: Duration(seconds: 5),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (error) {
+      // معالجة الخطأ
+      print('Error uploading image: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('حدث خطأ أثناء رفع الصورة'),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +76,8 @@ class _MyPageState extends State<MyPage> {
           children: [
             GestureDetector(
               onTap: () async {
-                final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+                final pickedFile =
+                await ImagePicker().getImage(source: ImageSource.gallery, maxWidth: 600, maxHeight: 600, imageQuality: 85);
                 if (pickedFile != null) {
                   setState(() {
                     pickedImagePath = pickedFile.path;
@@ -39,19 +89,17 @@ class _MyPageState extends State<MyPage> {
                 height: 180,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                    shape: BoxShape.rectangle,
+                  shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color:Colors.black,
-                      width: 3,
-                    ),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 3,
+                  ),
                 ),
                 child: Center(
                   child: Icon(
                     Icons.cloud_upload_outlined,
                     size: 60,
-
-
                     color: Colors.black,
                   ),
                 ),
@@ -60,46 +108,19 @@ class _MyPageState extends State<MyPage> {
             SizedBox(height: 20),
             if (pickedImagePath != null)
               Image.file(
-                // Display the picked image
                 File(pickedImagePath!),
                 width: 100,
                 height: 100,
               ),
-            SizedBox(
-                height: 20
-            ),
+            SizedBox(height: 20),
             Text(
-                "قم برفع ملف به صورة للبطاقة الشخصية و ما يثبت أنك معالج نفسي يمارس المهنة",
-              style: Theme.of(context).textTheme.bodyText1,
+              'قم برفع صورة لبطاقة الهوية أو أي وثيقة تثبت هويتك كمعالج نفسي',
+              style: TextStyle(fontSize: 16),
             ),
-            SizedBox(
-                height: 40
-            ),
-            Container(
-              width: double.infinity,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadiusDirectional.circular(17),
-                color: HexColor('00B4D8'),
-              ),
-              child: MaterialButton(
-                onPressed: () {
-                  // Add your logic to save the picked image
-                  if (pickedImagePath != null) {
-                    print('Image saved: $pickedImagePath');
-                    // Add your save logic here
-                  }
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => LogResDoc(),));
-                },
-                child: const Text(
-                  "اشتراك",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                  ),
-                ),
-              ),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: _uploadImage,
+              child: Text('تأكيد التسجيل'),
             ),
           ],
         ),
