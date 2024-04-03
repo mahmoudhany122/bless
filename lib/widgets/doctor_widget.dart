@@ -12,6 +12,8 @@ class DoctorWidget extends StatelessWidget {
     this.isSummry = false,
   }) : super(key: key);
   final bool isSummry;
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -19,7 +21,7 @@ class DoctorWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const DoctorDetailsScreen(),
+            builder: (context) =>  DoctorDetailsScreen(),
           ),
         );
       },

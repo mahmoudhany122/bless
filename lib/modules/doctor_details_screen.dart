@@ -1,15 +1,42 @@
-
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:iconsax/iconsax.dart';
-
-import '../main.dart';
+import 'package:image_picker/image_picker.dart';
 import '../widgets/progress_button.dart';
 import '../widgets/show_bottom_sheet.dart';
 import '../widgets/stars_bar.dart';
 import 'appointment_bottom_sheet.dart';
 
-class DoctorDetailsScreen extends StatelessWidget {
+class DoctorDetailsScreen extends StatefulWidget {
+
   const DoctorDetailsScreen({super.key});
+
+  @override
+  State<DoctorDetailsScreen> createState() => _DoctorDetailsScreenState();
+}
+
+class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
+  File? imageSelect;
+  final _imagePicker = ImagePicker();
+  Future<void> pickImageCamera() async {
+    final pickedImage =
+    await _imagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedImage != null) {
+        imageSelect = File(pickedImage.path);
+      }
+    });
+  }
+  Future<void> pickImageGallery() async {
+    final pickedImage =
+    await _imagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedImage != null) {
+        imageSelect = File(pickedImage.path);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,36 +61,31 @@ class DoctorDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                     '',
-                      fit: BoxFit.cover,
-                      width: 100,
-                      height: 100,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return const SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: CircularProgressIndicator.adaptive(),
-                            ),
-                          );
-                        }
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return const SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          ),
-                        );
-                      },
-                    ),
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      imageSelect != null
+                          ? Image.file(
+                        imageSelect!,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.fill,
+                      )
+                          : Image.asset( "assets/images/img_12.png",
+                        width: 100,
+                        height: 100,),
+                      IconButton(
+                        onPressed: () {
+                          pickImageCamera();
+                          pickImageGallery();
+                        },
+                        icon: Icon(
+                          Icons.camera_alt_rounded,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(width: 12),
                   const Expanded(

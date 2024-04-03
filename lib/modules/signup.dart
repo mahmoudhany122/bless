@@ -58,6 +58,16 @@ class _ResighterScreenState extends State<ResighterScreen> {
           duration: Duration(seconds: 5),
           backgroundColor: Colors.green,
         ),
+
+      );
+      await Future.delayed(Duration(seconds: 5));
+
+      // Navigate to the desired screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(),
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

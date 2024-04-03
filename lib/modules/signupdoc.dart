@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import 'logindoc.dart';
+
 class SignUpDoc extends StatefulWidget {
   const SignUpDoc({super.key});
 
@@ -15,6 +17,9 @@ class SignUpDoc extends StatefulWidget {
 class _SignUpDocState extends State<SignUpDoc> {
 
   final FnameController = TextEditingController();
+  final PhoneController = TextEditingController();
+  final clinicAddressController = TextEditingController();
+  final clinicNumberController = TextEditingController();
   final SnameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -28,14 +33,17 @@ class _SignUpDocState extends State<SignUpDoc> {
   String confirmPassword = '';
 
   void _signup() async {
-    var url = Uri.parse('https://blessmate.onrender.com/Auth/PatientRegister');
+    var url = Uri.parse('https://blessmate.onrender.com/Auth/TherapistRegister');
 
     var body = jsonEncode({
       "firstName": FnameController.text.trim(),
       "lastName": SnameController.text.trim(),
       "email": emailController.text.trim(),
       "password": passwordController.text.trim(),
-      "isMale": false
+      "isMale": false,
+      "phoneNumber": PhoneController.text.trim(),
+      "clinicAddress":clinicAddressController.text.trim(),
+      "clinicNumber":clinicNumberController.text.trim(),
     });
 
     var response = await http.post(
@@ -53,6 +61,13 @@ class _SignUpDocState extends State<SignUpDoc> {
           content: Text(responseData['messages'] ?? 'تم تسجيل الحساب بنجاح'),
           duration: Duration(seconds: 5),
           backgroundColor: Colors.green,
+        ),
+      );
+      await Future.delayed(Duration(seconds: 5));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginDoc(),
         ),
       );
     } else {
@@ -86,7 +101,7 @@ class _SignUpDocState extends State<SignUpDoc> {
                 children: [
                   Image(
                     image: AssetImage('assets/images/img_7.png'),
-                    height: 150,
+                    height: 100,
                     fit: BoxFit.cover,
                   ),
                   const SizedBox(
@@ -292,6 +307,99 @@ class _SignUpDocState extends State<SignUpDoc> {
                             });
                           },
                         ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: HexColor('00B4D8'),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: HexColor('00B4D8'),
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    child: TextFormField(
+                      keyboardType: TextInputType.phone,
+                      controller: PhoneController,
+                      validator: (value) {
+                        return value!.isEmpty ? "ادخل رقم الهاتف" .tr: null;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'رقم الهاتف'.tr,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: HexColor('00B4D8'),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: HexColor('00B4D8'),
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    child: TextFormField(
+                      keyboardType: TextInputType.streetAddress,
+                      controller: clinicAddressController,
+                      validator: (value) {
+                        return value!.isEmpty ? "ادخل عنوان العياده" .tr: null;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'عنوان العياده'.tr,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: HexColor('00B4D8'),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            color: HexColor('00B4D8'),
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: clinicNumberController,
+                      validator: (value) {
+                        return value!.isEmpty ? "ادخل رقم العياده" .tr: null;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'رقم العياده'.tr,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(

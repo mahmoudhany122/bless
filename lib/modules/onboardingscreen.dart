@@ -165,7 +165,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LogRes(),
+                          builder: (context) => SignInDoc(),
                         ),
                       );
                     } else {

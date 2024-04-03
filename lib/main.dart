@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'modules/add_after_signu.dart';
 import 'modules/bottom_nav.dart';
+import 'modules/doctor_details_screen.dart';
 import 'modules/id.dart';
 import 'modules/logres.dart';
 import 'modules/signindoctor.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home: MyPage(),
+      home: DoctorDetailsScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),
