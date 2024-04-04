@@ -65,17 +65,19 @@ class _SignUpDocState extends State<SignUpDoc> {
         ),
       );
       await Future.delayed(Duration(seconds: 5));
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('firstName', FnameController.text.trim());
+      prefs.setString('lastName', SnameController.text.trim());
+      prefs.setString('email', emailController.text.trim());
+      prefs.setString('phoneNumber', PhoneController.text.trim());
+      prefs.setString('clinicAddress', clinicAddressController.text.trim());
+      prefs.setString('clinicNumber', clinicNumberController.text.trim());
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => LoginDoc(),
         ),
       );
-      // Save user data and login state
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('firstName', responseData['firstName']);
-      prefs.setString('lastName', responseData['lastName']);
-      prefs.setString('email', responseData['email']);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

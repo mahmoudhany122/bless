@@ -38,9 +38,9 @@ class _UploadImagePageState extends State<UploadImagePage> {
             backgroundColor: Colors.green,
           ),
         );
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TabBarScreen()),
+          MaterialPageRoute(builder: (context) => DoctorDetailsScreen()),
         );
       } else {
         // فشل رفع الصورة

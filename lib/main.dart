@@ -17,6 +17,7 @@ import 'modules/signup.dart';
 import 'modules/login.dart';
 import 'modules/dark.dart';
 import 'modules/initsreen.dart';
+import 'modules/signupdoc.dart';
 import 'modules/tap_bar_doctor.dart';
 
 void main() async {
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home: BottomNav(),
+      home: DoctorDetailsScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),
