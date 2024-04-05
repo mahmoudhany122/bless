@@ -347,6 +347,18 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
             Center(
               child: AppProgressButton(
                 radius: 8,
+                text: " Have free chat with me ",
+                width: MediaQuery.of(context).size.width - 40,
+                onPressed: (anim) {
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => ChatScreenDoc(userData: {},),));
+
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            Center(
+              child: AppProgressButton(
+                radius: 8,
                 text: "Check available appointment",
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
