@@ -9,6 +9,7 @@ import '../widgets/show_bottom_sheet.dart';
 import 'doctime.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
+
   const DoctorDetailsScreen({Key? key}) : super(key: key);
 
   @override
@@ -214,7 +215,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                   mainShowDialog(
                     context: context,
                     height: MediaQuery.of(context).size.height / 1.5,
-                    page: const Doctime(),
+                    page:  Doctime(),
                   );
                 },
               ),

@@ -1,14 +1,14 @@
 import 'package:blessmate/modules/tap_bar_doctor.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../data/data.dart';
 import '../widgets/appointment_date_widget.dart';
 import '../widgets/appointment_time_widget.dart';
 import '../widgets/header_widget.dart';
 import '../widgets/progress_button.dart';
+import 'package:http/http.dart' as http;
 
 class Doctime extends StatefulWidget {
-  const Doctime({super.key});
+  const Doctime({Key? key}) : super(key: key);
 
   @override
   State<Doctime> createState() => _DoctimeState();
@@ -111,20 +111,35 @@ class _DoctimeState extends State<Doctime> {
           ],
         ),
         const SizedBox(height: 20),
-        AppProgressButton(
-          text: "تم $date $time",
-          width: MediaQuery.of(context).size.width,
-          onPressed: (anim) {
+        ElevatedButton(
+          onPressed: () async {
             if (selectedDate != null && selectedTime != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TabBarScreen(),
-                ),
+              final url = Uri.parse('https://blessmate.onrender.com/Therapist/AddTherapistAppointment');
+              final response = await http.post(
+                url,
+                body: {
+                  'therpistId': '123', // استبدل بمعرف المعالج النفسي الفعلي
+                  'inTime': '$date $time',
+                },
               );
+
+              if (response.statusCode == 200) {
+                // إذا نجح الطلب، يمكنك هنا إظهار رسالة نجاح أو تنفيذ أي عمليات إضافية
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TabBarScreen(),
+                  ),
+                );
+              } else {
+                // إذا فشل الطلب، يمكنك هنا إظهار رسالة خطأ للمستخدم أو معالجة الخطأ بطريقة مخصصة
+                print('Failed to add appointment: ${response.statusCode}');
+              }
             }
           },
+          child: Text("تم $date $time"),
         )
+
       ],
     );
   }

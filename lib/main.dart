@@ -7,14 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'modules/add_after_signu.dart';
-import 'modules/bottom_nav.dart';
-import 'modules/doctor_details_screen.dart';
-import 'modules/id.dart';
-import 'modules/logres.dart';
-import 'modules/signindoctor.dart';
-import 'modules/signup.dart';
-import 'modules/login.dart';
 import 'modules/dark.dart';
 import 'modules/initsreen.dart';
 import 'modules/signupdoc.dart';
@@ -53,10 +45,11 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home: DoctorDetailsScreen(),
+      home: LogoScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),
     );
+
   }
 }
