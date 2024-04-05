@@ -99,6 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
           prefs.setString('firstName', FnameController.text.trim());
           prefs.setString('lastName', SnameController.text.trim());
           prefs.setString('email', responseData['email']); // حفظ البريد الإلكتروني كما هو
+          prefs.setString('id', responseData['id']); //
 
 
 

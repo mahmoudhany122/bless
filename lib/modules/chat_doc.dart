@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-
 import '../models/chatmodel.dart'; // Import the updated MessageDoc class
+
 
 class ChatScreenDoc extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -16,6 +16,7 @@ class ChatScreenDoc extends StatefulWidget {
 class _ChatScreenDocState extends State<ChatScreenDoc> {
   late FirebaseFirestore _firestore;
   TextEditingController _textEditingController = TextEditingController();
+  String _currentMessage = ''; // تخزين النص المكتوب حالياً
 
   @override
   void initState() {
@@ -23,11 +24,19 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
     _firestore = FirebaseFirestore.instance;
   }
 
+  // دالة تحديث واجهة المستخدم لعرض النص الذي تم كتابته بشكل مستمر
+  void updateCurrentMessage(String value) {
+    setState(() {
+      _currentMessage = value;
+    });
+  }
+
   Future<void> sendMessage(String message) async {
     final userMessage = MessageDoc(
       text: message,
       isUserMessage: true,
-      senderId: 'currentUserId', // Replace 'currentUserId' with the actual sender's ID
+      senderId: 'currentUserId',  // Replace 'currentUserId' with the actual sender's ID
+      timestamp: DateTime.now(), // Set the timestamp here
     );
     try {
       await _firestore.collection('chat').add(userMessage.toJson());
@@ -61,7 +70,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('chat').snapshots(),
+              stream: _firestore.collection('chat').orderBy('timestamp').snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -72,6 +81,9 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                 final List<MessageDoc> messages = snapshot.data!.docs
                     .map((doc) => MessageDoc.fromJson(doc.data() as Map<String, dynamic>))
                     .toList();
+
+                // ترتيب الرسائل حسب الوقت الذي تم إرسال الرسالة فيه
+                messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
 
                 return ListView.builder(
                   itemCount: messages.length,
@@ -111,6 +123,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                     height: 60,
                     child: TextField(
                       controller: _textEditingController,
+                      onChanged: updateCurrentMessage, // استدعاء الدالة عندما يتم تغيير النص
                       decoration: InputDecoration(
                         hintText: 'أكتب رسالتك هنا...',
                         border: OutlineInputBorder(
@@ -127,7 +140,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                   child: IconButton(
                     icon: Icon(Icons.send_outlined, color: Colors.white),
                     onPressed: () {
-                      final message = _textEditingController.text.trim();
+                      final message = _currentMessage.trim(); // استخدام النص المحفوظ
                       if (message.isNotEmpty) {
                         sendMessage(message);
                       }
