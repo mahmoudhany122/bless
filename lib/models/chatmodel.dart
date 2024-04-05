@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Message {
   final String text;
   final bool isUserMessage;
@@ -25,14 +27,23 @@ class MessageDoc {
   late String text;
   late bool isUserMessage;
   late String senderId;
+  late DateTime timestamp;
 
-  MessageDoc({required this.text, required this.isUserMessage, required this.senderId});
+  MessageDoc({
+    required this.text,
+    required this.isUserMessage,
+    required this.senderId,
+    required this.timestamp,
+  });
 
   MessageDoc.fromJson(Map<String, dynamic> json) {
     if (json['text'] != null && json['isUserMessage'] != null) {
       text = json['text'] as String;
       isUserMessage = json['isUserMessage'] as bool;
-      senderId = json['senderId'] as String? ?? ''; // Provide a default value if senderId is not present
+      senderId = json['senderId'] as String? ?? '';
+
+      // Convert Firestore Timestamp to DateTime
+      timestamp = (json['timestamp'] as Timestamp).toDate();
     } else {
       throw Exception('Invalid message data: $json');
     }
@@ -44,9 +55,11 @@ class MessageDoc {
     data['text'] = text;
     data['isUserMessage'] = isUserMessage;
     data['senderId'] = senderId;
+    data['timestamp'] = timestamp; // Add timestamp field
     return data;
   }
 }
+
 
 
 class HealthCondition {

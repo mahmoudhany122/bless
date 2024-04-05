@@ -45,8 +45,6 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const DoctorWidget(isSummry: true),
-              const SizedBox(height: 12),
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.all(12),

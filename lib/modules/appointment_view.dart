@@ -351,7 +351,6 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
                   Navigator.push(context,MaterialPageRoute(builder: (context) => ChatScreenDoc(userData: {},),));
-
                 },
               ),
             ),
