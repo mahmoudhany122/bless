@@ -18,8 +18,6 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
   late FirebaseFirestore _firestore;
   TextEditingController _textEditingController = TextEditingController();
   String _currentMessage = ''; // تخزين النص المكتوب حالياً
-  String _firstName = '';
-  String _lastName = '';
   String _email = '';
 
 
@@ -34,8 +32,6 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
   void _loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _firstName = prefs.getString('firstName') ?? '';
-      _lastName = prefs.getString('lastName') ?? '';
       _email = prefs.getString('email') ?? '';
     });
   }
@@ -50,7 +46,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
     final userMessage = MessageDoc(
       text: message,
       isUserMessage: true,
-      senderId: 'currentUserId',  // Replace 'currentUserId' with the actual sender's ID
+      senderId: _email,  // Replace 'currentUserId' with the actual sender's ID
       timestamp: DateTime.now(), // Set the timestamp here
     );
     try {
@@ -85,7 +81,10 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('chat').orderBy('timestamp').snapshots(),
+              stream: _firestore.collection('chat')
+                  .where('senderId', isEqualTo: _email) // Filter messages by senderId matching current email
+                  .orderBy('timestamp')
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -97,19 +96,20 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                     .map((doc) => MessageDoc.fromJson(doc.data() as Map<String, dynamic>))
                     .toList();
 
-                // ترتيب الرسائل حسب الوقت الذي تم إرسال الرسالة فيه
+                // Sort messages based on the time they were sent
                 messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
 
                 return ListView.builder(
+                  reverse: false,
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index];
                     return Container(
                       padding: const EdgeInsets.all(8.0),
-                      alignment: message.isUserMessage ? Alignment.topRight : Alignment.topLeft,
+                      alignment: Alignment.topRight, // Messages sent by the current user will always be displayed on the right
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: message.isUserMessage ? HexColor('00B4D8') : Colors.grey.shade400,
+                          color: HexColor('00B4D8'), // Color for messages sent by the current user
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: Padding(
@@ -117,7 +117,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                           child: Text(
                             message.text,
                             style: TextStyle(
-                              color: message.isUserMessage ? Colors.white : Colors.black,
+                              color: Colors.white,
                               fontSize: 20,
                             ),
                           ),
@@ -128,6 +128,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                 );
               },
             ),
+
           ),
           Container(
             padding: EdgeInsets.all(5.0),

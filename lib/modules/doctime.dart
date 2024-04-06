@@ -134,6 +134,12 @@ class _DoctimeState extends State<Doctime> {
               } else {
                 // إذا فشل الطلب، يمكنك هنا إظهار رسالة خطأ للمستخدم أو معالجة الخطأ بطريقة مخصصة
                 print('Failed to add appointment: ${response.statusCode}');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TabBarScreen(),
+                  ),
+                );
               }
             }
           },

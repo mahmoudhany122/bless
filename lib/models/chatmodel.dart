@@ -40,7 +40,7 @@ class MessageDoc {
     if (json['text'] != null && json['isUserMessage'] != null) {
       text = json['text'] as String;
       isUserMessage = json['isUserMessage'] as bool;
-      senderId = json['senderId'] as String? ?? '';
+      senderId = json['email'] as String? ?? '';
 
       // Convert Firestore Timestamp to DateTime
       timestamp = (json['timestamp'] as Timestamp).toDate();
