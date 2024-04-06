@@ -12,6 +12,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _controller = ScrollController();
   List<Message> messages = [];
   bool isLoading = false;
   final ChatService chatService = ChatService();
@@ -121,6 +122,7 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: ListView.builder(
+              controller: _controller,
               reverse: false,
               itemCount: messages.length,
               itemBuilder: (BuildContext context, int index) {
@@ -237,6 +239,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         if (message.isNotEmpty) {
                           sendMessage(message);
                           _textEditingController.clear();
+                          _controller.animateTo(
+                              _controller.position.minScrollExtent,
+                              duration: Duration(milliseconds: 1000),
+                              curve: Curves.easeIn);
                         }
                       },
                     ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chatmodel.dart'; // Import the updated MessageDoc class
 
 
@@ -17,13 +18,27 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
   late FirebaseFirestore _firestore;
   TextEditingController _textEditingController = TextEditingController();
   String _currentMessage = ''; // تخزين النص المكتوب حالياً
+  String _firstName = '';
+  String _lastName = '';
+  String _email = '';
+
+
+
 
   @override
   void initState() {
     super.initState();
+    _loadUserData();
     _firestore = FirebaseFirestore.instance;
   }
-
+  void _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _firstName = prefs.getString('firstName') ?? '';
+      _lastName = prefs.getString('lastName') ?? '';
+      _email = prefs.getString('email') ?? '';
+    });
+  }
   // دالة تحديث واجهة المستخدم لعرض النص الذي تم كتابته بشكل مستمر
   void updateCurrentMessage(String value) {
     setState(() {
