@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/chatmodel.dart'; // Import the updated MessageDoc class
+import '../models/chatmodel.dart';
+import 'chat game/video.dart'; // Import the updated MessageDoc class
 
 
 class ChatScreenDoc extends StatefulWidget {
@@ -19,6 +20,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
   TextEditingController _textEditingController = TextEditingController();
   String _currentMessage = ''; // تخزين النص المكتوب حالياً
   String _email = '';
+
 
 
 
@@ -45,9 +47,9 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
   Future<void> sendMessage(String message) async {
     final userMessage = MessageDoc(
       text: message,
-      isUserMessage: true,
       senderId: _email,  // Replace 'currentUserId' with the actual sender's ID
       timestamp: DateTime.now(), // Set the timestamp here
+      receiverId: widget.userData["email"],
     );
     try {
       await _firestore.collection('chat').add(userMessage.toJson());
@@ -68,7 +70,9 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
         actions: [
           IconButton(
             icon: Icon(Icons.videocam, color: HexColor('00B4D8')),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context) => VideoCallScreen(),));
+            },
           ),
           IconButton(
             icon: Icon(Icons.call, color: HexColor('00B4D8')),
@@ -82,9 +86,11 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: _firestore.collection('chat')
-                  .where('senderId', isEqualTo: _email) // Filter messages by senderId matching current email
+                  .where('senderId', isEqualTo: _email)
+                  .where('receiverId', isEqualTo: widget.userData["email"])
                   .orderBy('timestamp')
                   .snapshots(),
+
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -96,20 +102,19 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                     .map((doc) => MessageDoc.fromJson(doc.data() as Map<String, dynamic>))
                     .toList();
 
-                // Sort messages based on the time they were sent
+                // ترتيب الرسائل حسب الوقت الذي تم إرسال الرسالة فيه
                 messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
 
                 return ListView.builder(
-                  reverse: false,
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index];
                     return Container(
                       padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.topRight, // Messages sent by the current user will always be displayed on the right
+                      alignment: message.senderId ==_email ? Alignment.topRight : Alignment.topLeft,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: HexColor('00B4D8'), // Color for messages sent by the current user
+                          color:  message.senderId ==_email ? HexColor('00B4D8') : Colors.grey.shade400,
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: Padding(
@@ -117,7 +122,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                           child: Text(
                             message.text,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: message.senderId ==_email ? Colors.white : Colors.black,
                               fontSize: 20,
                             ),
                           ),
@@ -128,7 +133,6 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                 );
               },
             ),
-
           ),
           Container(
             padding: EdgeInsets.all(5.0),

@@ -1,86 +1,158 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
+void main() {
+  runApp(ChatApp());
+}
 
-
-class App extends StatelessWidget {
+class ChatApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Video Player with Controls'),
-        ),
-        body: Center(
-          child: VideoPlayerScreen(),
-        ),
+    return MaterialApp(
+      title: 'Chat App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: ChatListScreen(),
     );
   }
 }
 
-class VideoPlayerScreen extends StatefulWidget {
+class ChatListScreen extends StatefulWidget {
   @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  _ChatListScreenState createState() => _ChatListScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  late VideoPlayerController _controller;
-  final String videoUrl =
-      'https://firebasestorage.googleapis.com/v0/b/untitled-fcac1.appspot.com/o/yoga%20fideos%2FFacebook%201542828002837309(720p).mp4?alt=media';
+class _ChatListScreenState extends State<ChatListScreen> {
+  List<Chat> chats = [
+    Chat(name: 'Person 1', messages: ['Hi there!', 'Hello!']),
+    Chat(name: 'Person 2', messages: ['How are you?', 'Fine, thanks!']),
+    // Add more chats here
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Chats'),
+      ),
+      body: ListView.builder(
+        itemCount: chats.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(chats[index].name),
+            subtitle: Text(chats[index].messages.last),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(chat: chats[index]),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ChatScreen extends StatefulWidget {
+  final Chat chat;
+
+  const ChatScreen({Key? key, required this.chat}) : super(key: key);
+
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  TextEditingController _controller = TextEditingController();
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(videoUrl)
-      ..initialize().then((_) {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        // User scrolled to the bottom
         setState(() {});
-      });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return _controller.value.isInitialized
-        ? Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: VideoPlayer(_controller),
-        ),
-        SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.play_arrow),
-              onPressed: () {
-                setState(() {
-                  if (_controller.value.isPlaying) {
-                    _controller.pause();
-                  } else {
-                    _controller.play();
-                  }
-                });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.chat.name),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: widget.chat.messages.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: widget.chat.messages[index].startsWith('Me: ')
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: widget.chat.messages[index].startsWith('Me: ')
+                            ? Colors.blue.withOpacity(0.5)
+                            : Colors.grey.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(widget.chat.messages[index]),
+                    ),
+                  ),
+                );
               },
             ),
-            IconButton(
-              icon: Icon(Icons.stop),
-              onPressed: () {
-                setState(() {
-                  _controller.pause();
-                  _controller.seekTo(Duration.zero);
-                });
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(hintText: 'Enter your message'),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () {
+                    setState(() {
+                      widget.chat.messages.add('Me: ${_controller.text}');
+                      _controller.clear();
+                      // Scroll to bottom after sending a message
+                      _scrollController.animateTo(
+                        _scrollController.position.maxScrollExtent,
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    });
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
-      ],
-    )
-        : CircularProgressIndicator();
+          ),
+        ],
+      ),
+    );
   }
+}
 
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
+class Chat {
+  final String name;
+  List<String> messages;
+
+  Chat({required this.name, this.messages = const []});
 }
