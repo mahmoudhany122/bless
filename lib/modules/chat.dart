@@ -4,8 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chatmodel.dart';
 import '../services/chatservices.dart';
-import 'dart:convert';
-import '../models/chatmodel.dart';
+
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -255,7 +254,6 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
-
 }
 
 
