@@ -25,9 +25,10 @@ class _LoginDocState extends State<LoginDoc> {
   bool isShowed = true;
   IconData suffix = Icons.visibility;
   String _loginMessage = '';
-
+/*
   // SharedPreferences key for storing login state
   final String _loginKey = 'isLoggedIn';
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +53,7 @@ class _LoginDocState extends State<LoginDoc> {
 
     }
   }
-
+*/
 
   // Function to handle login
   void _login() async {
@@ -110,7 +111,7 @@ class _LoginDocState extends State<LoginDoc> {
           // Here, save the first and last names upon successful login
           // prefs.setString('firstName', responseData['firstName']);
           // prefs.setString('lastName', responseData['LastName']);
-           await prefs.setBool(_loginKey, true);
+          // await prefs.setBool(_loginKey, true);
         } else {
           setState(() {
             _loginMessage = 'فشل تسجيل الدخول، البريد الإلكتروني أو كلمة المرور غير صحيحة';

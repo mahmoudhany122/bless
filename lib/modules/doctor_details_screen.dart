@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:blessmate/modules/tap_bar_doctor.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-
-import '../widgets/progress_button.dart';
-import '../widgets/show_bottom_sheet.dart';
-import 'doctime.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
+  final int therapistId;
 
-  const DoctorDetailsScreen({Key? key}) : super(key: key);
+  const DoctorDetailsScreen({Key? key, required this.therapistId}) : super(key: key);
 
   @override
   _DoctorDetailsScreenState createState() => _DoctorDetailsScreenState();
@@ -21,10 +20,14 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   final _imagePicker = ImagePicker();
   var descriptionController = TextEditingController();
   var specialityController = TextEditingController();
+  String? imagePath; // Define imagePath as a class variable
 
   Future<void> pickImageCamera() async {
     final pickedImage = await _imagePicker.pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
+      setState(() {
+        imageSelect = File(pickedImage.path);
+      });
       _showDialog(pickedImage.path);
     }
   }
@@ -32,11 +35,15 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   Future<void> pickImageGallery() async {
     final pickedImage = await _imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
+      setState(() {
+        imageSelect = File(pickedImage.path);
+      });
       _showDialog(pickedImage.path);
     }
   }
 
   Future<void> _showDialog(String imagePath) async {
+    this.imagePath = imagePath;
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -65,7 +72,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
             ),
             TextButton(
               onPressed: () {
-                sendTherapistProfile(imagePath);
+                sendTherapistProfile();
                 Navigator.of(context).pop(); // Close dialog
               },
               child: Text('Send'),
@@ -76,24 +83,35 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     );
   }
 
-  Future<void> sendTherapistProfile(String imagePath) async {
+  Future<void> sendTherapistProfile() async {
     try {
-      final pickedImage = File(imagePath);
-      List<int> imageBytes = await pickedImage.readAsBytes();
-      String base64Image = base64Encode(imageBytes);
+      if (imagePath == null) {
+        print('Please select an image.');
+        return;
+      }
 
-      var response = await http.post(
-        Uri.parse('https://blessmate.onrender.com/Therapist/TherapistProfile?id={TherapistId}'),
-        body: {
-          'decreption': descriptionController.text,
-          'speciality': specialityController.text,
-          'profilePicture': base64Image,
-        },
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('https://blessmate.onrender.com/Therapist/TherapistProfile?id=${widget.therapistId}'),
       );
 
+      // Add description and speciality as text fields
+      request.fields['decreption'] = descriptionController.text;
+      request.fields['speciality'] = specialityController.text;
+
+      // Add the image as a file
+      request.files.add(await http.MultipartFile.fromPath(
+        'profilePicture',
+        imagePath!,
+        contentType: MediaType('image', 'jpeg'), // Change this according to the uploaded image type
+      ));
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
 
       if (response.statusCode == 200) {
         print('Profile updated successfully.');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TabBarScreen()));
       } else {
         print('Error updating profile: ${response.statusCode}');
       }
@@ -207,17 +225,13 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
 
             const SizedBox(height: 15),
             Center(
-              child: AppProgressButton(
-                radius: 8,
-                text: "قم بتحديد مواعيد العمل و الحجز المتاحة",
-                width: MediaQuery.of(context).size.width - 40,
-                onPressed: (anim) {
-                  mainShowDialog(
-                    context: context,
-                    height: MediaQuery.of(context).size.height / 1.5,
-                    page:  Doctime(),
-                  );
-                },
+              child: Container(
+                width: double.infinity,
+                color: Colors.white,
+                child: MaterialButton(
+                  child: Text("قم بتحديد مواعيد العمل و الحجز المتاحة"),
+                  onPressed: sendTherapistProfile, // Call sendTherapistProfile method when the button is pressed
+                ),
               ),
             ),
           ],
@@ -227,43 +241,3 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   }
 }
 
-// const Expanded(
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           "Dr. Herbert Wysocki.",
-//                           style: TextStyle(
-//                             color: Colors.cyan,
-//                             fontWeight: FontWeight.w600,
-//                             fontSize: 18,
-//                           ),
-//                         ),
-//                         Text(
-//                           "psychologist",
-//                           style: TextStyle(
-//                             fontWeight: FontWeight.w500,
-//                             fontSize: 16,
-//                           ),
-//                         ),
-//                         Text(
-//                           "Phd Counselling Psychology",
-//                           style: TextStyle(
-//                             color: Colors.grey,
-//                             fontWeight: FontWeight.w400,
-//                             fontSize: 14,
-//                           ),
-//                         ),
-//                         Text(
-//                           "6+ yrs experience",
-//                           style: TextStyle(
-//                             color: Colors.grey,
-//                             fontWeight: FontWeight.w400,
-//                             fontSize: 14,
-//                           ),
-//                         ),
-//                         StarsBar(stars: 5)
-//                       ],
-//                     ),
-//                   ),

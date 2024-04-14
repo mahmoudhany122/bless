@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/doctor_widget.dart';
 import '../widgets/progress_button.dart';
 import 'appointment_view.dart';
 
@@ -24,8 +22,7 @@ class AppointmentFinalView extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            const DoctorWidget(isSummry: true),
-            const SizedBox(height: 12),
+
             Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(12),

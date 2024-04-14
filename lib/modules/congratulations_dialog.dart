@@ -22,8 +22,9 @@ class CongratulationsDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                "assets/images/summary.png",
-                height: 150,
+                "assets/images/img_38.png",
+                height: 135,
+                width: 150,
               ),
               const Text(
                 "Congratulations!",

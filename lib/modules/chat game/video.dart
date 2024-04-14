@@ -84,7 +84,7 @@ class VideoCallScreen extends StatefulWidget {
             ),
             SafeArea(
               child: Align(
-                alignment: Alignment.bottomLeft,
+                alignment: Alignment.topRight,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(150.0),
                   child: Container(

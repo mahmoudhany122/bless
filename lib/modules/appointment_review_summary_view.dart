@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import '../data/data.dart';
-import '../widgets/doctor_widget.dart';
 import '../widgets/progress_button.dart';
 import 'congratulations_dialog.dart';
 
@@ -35,6 +34,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 20,
+            color: Colors.black,
           ),
         ),
         centerTitle: true,

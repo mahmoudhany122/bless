@@ -40,7 +40,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DoctorDetailsScreen()),
+          MaterialPageRoute(builder: (context) => DoctorDetailsScreen(therapistId: widget.therapistId)),
         );
       } else {
         // فشل رفع الصورة

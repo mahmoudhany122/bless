@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chatmodel.dart';
+import 'chat game/audio.dart';
 import 'chat game/video.dart'; // Import the updated MessageDoc class
 import 'package:http/http.dart' as http;
 
@@ -114,7 +115,10 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
           ),
           IconButton(
             icon: Icon(Icons.call, color: HexColor('00B4D8')),
-            onPressed: () {},
+            onPressed: ()
+            {
+              Navigator.push(context,MaterialPageRoute(builder: (context) => AudioCallScreen(),));
+            },
           ),
         ],
         centerTitle: true,

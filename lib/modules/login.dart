@@ -7,7 +7,8 @@ import '../models/chatmodel.dart';
 import 'bottom_nav.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  final int? patientId; // Define the patientId parameter
+  LoginScreen({Key? key, this.patientId}) : super(key: key);
 
   @override
   State createState() => _LoginScreenState();
@@ -87,19 +88,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
           // Delay the navigation to the desired screen
           await Future.delayed(Duration(seconds: 5));
+          int patientId = responseData['id'];
+
 
           // Navigate to the desired screen
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => BottomNav(),
+              builder: (context) => BottomNav(patientId: patientId),
             ),
           );
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString('firstName', FnameController.text.trim());
           prefs.setString('lastName', SnameController.text.trim());
           prefs.setString('email', responseData['email']); // حفظ البريد الإلكتروني كما هو
-          prefs.setString('id', responseData['id']); //
+          prefs.setString('id', responseData['id']);
 
 
           // Store login state
