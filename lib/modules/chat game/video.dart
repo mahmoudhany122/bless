@@ -123,10 +123,10 @@ class VideoCallScreen extends StatefulWidget {
     }
 
     static String get token {
-      return 'cc9ff8b9d03c49f698f77f67633b007c';
+      return '007eJxTYLB+L9PoMWddaIBqlfuRU+0GG9ouXrnafCI8/W/+JI8AwVQFhkSzNAMzi5TENGNDSxND45TEVCDHODnNJMXC1MQ02ShQUDqtIZCR4Yp0CAMjFIL4LAy5GYaGDAwAUCceWQ==';
     }
 
     static String get channelName {
-      return 'Healthcare / Online Psychological Counseling';
+      return 'mh11';
     }
   }

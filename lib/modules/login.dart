@@ -102,8 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
           prefs.setString('id', responseData['id']); //
 
 
-
-
           // Store login state
 
           //await prefs.setBool(_loginKey, true);

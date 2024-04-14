@@ -102,7 +102,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
                   ],
                 )),
           ],
-        )),
+        ),),
         body: Column(children: [
           TabBar(
             labelColor: HexColor('00B4D8'),

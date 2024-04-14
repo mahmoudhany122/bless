@@ -3,6 +3,7 @@ import 'package:blessmate/modules/docchat.dart';
 import 'package:blessmate/modules/notification.dart';
 import 'package:blessmate/modules/onboardingscreen.dart';
 import 'package:blessmate/modules/profile1.dart';
+import 'package:blessmate/modules/signindoctor.dart';
 import 'package:blessmate/themes/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home:BottomNav(),
+      home:LogoScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

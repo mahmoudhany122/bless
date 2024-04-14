@@ -351,8 +351,12 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
                   // Extracting the email
+
                   String therapistEmail = therapist['email'] ?? '';
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => ChatScreenDoc(userData: {'email': therapistEmail},),));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => ChatScreenDoc(userData: {'email': therapistEmail,},
+                  ),
+                  ),
+                  );
                 },
               ),
             ),

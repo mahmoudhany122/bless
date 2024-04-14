@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                 style: TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.bold)),
 
                                             Text(_email.tr,
-                                                style: TextStyle(fontSize: 16,color: Colors.white)),
+                                                style: TextStyle(fontSize: 13,color: Colors.white)),
                                           ],
                                         ),
                                         Spacer(),
