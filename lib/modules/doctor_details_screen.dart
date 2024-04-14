@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:blessmate/modules/tap_bar_doctor.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -141,36 +142,38 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      imageSelect != null
-                          ? Image.file(
-                        imageSelect!,
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.fill,
-                      )
-                          : Image.asset(
-                        "assets/images/img_12.png",
-                        width: 100,
-                        height: 100,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          pickImageCamera();
-                          pickImageGallery();
-                        },
-                        icon: Icon(
-                          Icons.camera_alt_rounded,
-                          size: 20,
-                          color: Colors.white,
+                  Center(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        imageSelect != null
+                            ? Image.file(
+                          imageSelect!,
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.fill,
+                        )
+                            : Image.asset(
+                          "assets/images/img_12.png",
+                          width: 100,
+                          height: 100,
                         ),
-                      ),
-                    ],
+                        IconButton(
+                          onPressed: () {
+                            pickImageCamera();
+                            pickImageGallery();
+                          },
+                          icon: Icon(
+                            Icons.camera_alt_rounded,
+                            size: 50,
+                            color: Colors.white,
+
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(width: 12),
                 ],
@@ -196,7 +199,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                         maxLines: 3,
                         controller: descriptionController,
                         decoration: InputDecoration(
-                          hintText: 'Enter Description',
+                          hintText: '   Enter Description   ',
                           hintStyle: TextStyle(color: Colors.black),
                         ),
                         style: TextStyle(color: Colors.black),
@@ -212,7 +215,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                       child: TextField(
                         controller: specialityController,
                         decoration: InputDecoration(
-                          hintText: 'Enter Speciality',
+                          hintText: '   Enter Speciality    ',
                           hintStyle: TextStyle(color: Colors.black),
                         ),
                         style: TextStyle(color: Colors.black),
@@ -222,15 +225,21 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                 ),
               ),
             ),
-
-            const SizedBox(height: 15),
-            Center(
-              child: Container(
-                width: double.infinity,
-                color: Colors.white,
-                child: MaterialButton(
-                  child: Text("قم بتحديد مواعيد العمل و الحجز المتاحة"),
-                  onPressed: sendTherapistProfile, // Call sendTherapistProfile method when the button is pressed
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Center(
+                child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadiusDirectional.circular(12),
+                    color: HexColor('00B4D8'),
+                  ),
+                  child: MaterialButton(
+                    child: Text("قم بتحديد مواعيد العمل و الحجز المتاحة",
+                    style: Theme.of(context).textTheme.button),
+                    onPressed: sendTherapistProfile, // Call sendTherapistProfile method when the button is pressed
+                  ),
                 ),
               ),
             ),
