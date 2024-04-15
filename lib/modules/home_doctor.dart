@@ -7,7 +7,9 @@ import 'package:hexcolor/hexcolor.dart';
 import 'docchat.dart';
 
 class HomeDoctorScreen extends StatefulWidget {
-  const HomeDoctorScreen({super.key});
+  final int therapistId;
+
+  const HomeDoctorScreen({super.key, required this.therapistId});
 
   @override
   State<HomeDoctorScreen> createState() => _HomeDoctorScreenState();
@@ -75,7 +77,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomeDoctor2(),
+                          builder: (context) => HomeDoctor2(therapistId: widget.therapistId),
                         ));
                   },
                       child:Container(

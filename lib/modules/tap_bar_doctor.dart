@@ -11,6 +11,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TabBarScreen extends StatefulWidget {
+  final int therapistId;
+  const TabBarScreen({Key? key, required this.therapistId}) : super(key: key);
 
 
 
@@ -132,8 +134,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
           ),
           Expanded(
             child: TabBarView(children: [
-              ProfileDoctorScreen(),
-              HomeDoctorScreen(),
+              ProfileDoctorScreen(therapistId: widget.therapistId),
+              HomeDoctorScreen(therapistId: widget.therapistId),
             ]),
           ),
         ]

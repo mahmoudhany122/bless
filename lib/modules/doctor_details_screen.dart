@@ -112,7 +112,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
 
       if (response.statusCode == 200) {
         print('Profile updated successfully.');
-        Navigator.push(context, MaterialPageRoute(builder: (context) => TabBarScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TabBarScreen(therapistId: widget.therapistId)));
       } else {
         print('Error updating profile: ${response.statusCode}');
       }

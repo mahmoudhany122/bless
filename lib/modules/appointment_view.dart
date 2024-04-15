@@ -18,7 +18,6 @@ import 'dart:convert';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 
 
-
 class AppointmentView extends StatefulWidget {
   final int? patientId;
   const AppointmentView({Key? key, this.patientId, }) : super(key: key);

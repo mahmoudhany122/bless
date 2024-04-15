@@ -13,7 +13,10 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class ProfileDoctorScreen extends StatefulWidget {
-  const ProfileDoctorScreen({super.key});
+
+  final int therapistId;
+
+  const ProfileDoctorScreen({Key? key, required this.therapistId}) : super(key: key);
 
   @override
   State<ProfileDoctorScreen> createState() => _ProfileDoctorScreenState();
@@ -382,7 +385,7 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
                                                                         Navigator.pushAndRemoveUntil(
                                                                             context,
                                                                             MaterialPageRoute(
-                                                                              builder: (context) => TabBarScreen(),
+                                                                              builder: (context) => TabBarScreen(therapistId: widget.therapistId),
                                                                             ),
                                                                             (route) => false);
                                                                       },
