@@ -5,13 +5,14 @@ import 'dart:convert';
 
 class Appointment {
   final int id;
-  final String firstName;
-  final String lastName;
+  final String ?firstName;
+  final String ?lastName;
   final String? phoneNumber; // Make phone number nullable
-  final String email;
+  final String ? email;
   final int age;
   final bool isMale;
   final String? photoUrl; // Make photo URL nullable
+  final String ? inTime;
 
   Appointment({
     required this.id,
@@ -22,6 +23,7 @@ class Appointment {
     required this.age,
     required this.isMale,
     required this.photoUrl,
+    required this.inTime,
   });
 }
 
@@ -64,6 +66,7 @@ class _HomeDoctor2State extends State<HomeDoctor2> {
             age: json['age'] ?? 0,
             isMale: json['isMale'] ?? false,
             photoUrl: json['photoUrl'],
+            inTime: json['inTime'],
           ))
               .toList();
           isLoading = false;
@@ -160,7 +163,7 @@ class AppointmentCard extends StatelessWidget {
                       Icon(Icons.access_time, color: HexColor("00B4D8"), size: 12),
                       SizedBox(width: 2),
                       Text(
-                        "غدا عند 4:00 م",
+                        "${appointment.inTime}",
                         style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                     ],
