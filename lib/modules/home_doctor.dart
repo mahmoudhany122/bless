@@ -4,7 +4,8 @@ import 'package:blessmate/modules/doctor3.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-import 'docchat.dart';
+import 'chatitem.dart';
+import 'doctor_patient_chat.dart';
 
 class HomeDoctorScreen extends StatefulWidget {
   final int therapistId;
@@ -174,7 +175,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                   TextButton(
                       onPressed: (){
 
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => MyTabbedScreen(),));
+                    Navigator.push(context,MaterialPageRoute(builder: (context) =>SCREENMESSENGER(),));
                   },
                       child:Container(
                         padding: EdgeInsets.only(top: 30,bottom: 10,right: 10,left: 10),

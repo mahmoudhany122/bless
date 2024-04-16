@@ -11,7 +11,7 @@ import '../widgets/show_bottom_sheet.dart';
 import '../widgets/stars_bar.dart';
 import 'appointment_review_summary_view.dart';
 import 'chat_doc.dart';
-import 'docchat.dart';
+import 'doctor_patient_chat.dart';
 import 'doctor_details_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
