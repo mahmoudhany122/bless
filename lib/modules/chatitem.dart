@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'chat game/audio.dart';
+import 'chat game/video.dart';
+
 class SCREENMESSENGER extends StatefulWidget {
   @override
   _SCREENMESSENGERState createState() => _SCREENMESSENGERState();
@@ -129,6 +132,22 @@ class _ConversationScreenState extends State<ConversationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Conversation'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.videocam, color: HexColor('00B4D8')),
+            onPressed: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context) => VideoCallScreen(),));
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.call, color: HexColor('00B4D8')),
+            onPressed: ()
+            {
+              Navigator.push(context,MaterialPageRoute(builder: (context) => AudioCallScreen(),));
+            },
+          ),
+        ],
+
       ),
       body: Column(
         children: [
