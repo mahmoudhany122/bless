@@ -52,6 +52,7 @@ List<AppointmentTime> appointmentTimes = [
   AppointmentTime(id: 3, time: "9 PM", isBlocked: false),
 ];
 
+
 List<PaymentMethod> paymentMethod = [
   PaymentMethod(
     id: 0,

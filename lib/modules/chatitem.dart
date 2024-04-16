@@ -29,11 +29,20 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
     });
   }
 
+  String extractUsername(String email) {
+    // Split email based on '@' symbol
+    List<String> parts = email.split('@');
+    // Return the first part (username)
+    return parts[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Messages'),
+        title: Text('Messages',
+        style: Theme.of(context).textTheme.bodyText1),
+        centerTitle: true,
       ),
       body: _isLoading ? Center(child: CircularProgressIndicator()) : StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -49,8 +58,9 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           final List<DocumentSnapshot> messages = snapshot.data!.docs;
-          Set<String> displayedEmails = {}; // تخزين الأيميلات التي تم عرضها بالفعل
-          return ListView.builder(
+          Set<String> displayedEmails = {}; // Store emails that have already been displayed
+          return ListView.separated(
+            separatorBuilder: (context, index) => Divider(),
             itemCount: messages.length,
             itemBuilder: (context, index) {
               final message = messages[index];
@@ -69,17 +79,39 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
                       ),
                     );
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      senderId,
-                      style: TextStyle(fontSize: 16),
-                    ),
+                  child:Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  extractUsername(senderId) ?? 'No username',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundImage: AssetImage('assets/avatar.png'), // Replace with your image
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+
                 );
               } else {
-                return SizedBox.shrink(); // عدم عرض الايميل إذا تم عرضه بالفعل
+                return SizedBox.shrink(); // Do not display the email if it has already been displayed
               }
             },
           );
@@ -88,6 +120,9 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
     );
   }
 }
+
+// ConversationScreen remains the same...
+
 
 class ConversationScreen extends StatefulWidget {
   final String senderId;
@@ -123,8 +158,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 
   void sendMessage(String message) {
-    // هنا يمكنك إرسال الرسالة إلى قاعدة البيانات
-    // يمكنك استخدام FirebaseFirestore.instance.collection('chat').add() لإضافة الرسالة
+    // Here you can send the message to the database
+    // You can use FirebaseFirestore.instance.collection('chat').add() to add the message
   }
 
   @override

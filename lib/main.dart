@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'modules/bottom_nav.dart';
 import 'modules/chat_doc.dart';
+import 'modules/chatitem.dart';
 import 'modules/dark.dart';
 import 'modules/home_doctor.dart';
 import 'modules/initsreen.dart';
