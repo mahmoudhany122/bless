@@ -39,6 +39,15 @@ class _TabBarScreenState extends State<TabBarScreen> {
     });
   }
   String _selectedLanguage = 'ar';
+
+  String extractUsername(String email) {
+    // Split email based on '@' symbol
+    List<String> parts = email.split('@');
+    // Return the first part (username)
+    return parts[0];
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -75,7 +84,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
                 ),
 
                 Text(
-                  _email.tr,
+                  extractUsername(_email),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

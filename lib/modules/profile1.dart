@@ -44,6 +44,13 @@ class _ProfileScreenState extends State<ProfileScreen1> {
       _email = prefs.getString('email') ?? '';
     });
   }
+
+  String extractUsername(String email) {
+    // Split email based on '@' symbol
+    List<String> parts = email.split('@');
+    // Return the first part (username)
+    return parts[0];
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,9 +87,12 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Image(
-                                          image: AssetImage(
-                                            "assets/images/img_12.png",
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          color: Colors.white,
+                                          child: Placeholder(
+
                                           ),
                                         ),
                                         SizedBox(
@@ -92,12 +102,27 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text(_firstName + ' ' + _lastName.tr,
-                                                textAlign: TextAlign.right,
-                                                style: TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.bold)),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                   "اهلا بك  ",
+                                                    textAlign: TextAlign.right,
+                                                    style: TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.bold)),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Image(
+                                                  height: 30,
+                                                  width: 30,
+                                                  image: AssetImage(
+                                                    "assets/images/img_16.png",
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
 
-                                            Text(_email.tr,
-                                                style: TextStyle(fontSize: 13,color: Colors.white)),
+                                            Text( extractUsername(_email),
+                                                style: TextStyle(fontSize: 15,color: Colors.white)),
                                           ],
                                         ),
                                         Spacer(),
