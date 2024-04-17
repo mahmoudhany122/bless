@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import '../data/data.dart';
 import '../widgets/progress_button.dart';
 import 'congratulations_dialog.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+
 
 class AppointmentReviewView extends StatefulWidget {
   const AppointmentReviewView({
@@ -242,13 +246,40 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                 radius: 8,
                 text: "Confirm",
                 width: MediaQuery.of(context).size.width,
-                onPressed: (anim) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => const CongratulationsDialog(),
-                  );
-                },
-              )
+                  // داخل onPressed للزر
+                  onPressed: (anim) async {
+                    // بناء الجسم للطلب
+                    Map<String, dynamic> requestBody = {
+                      "SessionPrice": 50,
+                      "Times": 50
+                    };
+
+                    // إرسال الطلب POST
+                    try {
+                      final response = await http.post(
+                        Uri.parse('https://blessmate.onrender.com/Manage/CheckOut'),
+                        body: jsonEncode(requestBody),
+                        headers: <String, String>{
+                          'Content-Type': 'application/json; charset=UTF-8',
+                        },
+                      );
+
+                      if (response.statusCode == 200) {
+                        // الاستجابة ناجحة
+                        // قم بفتح الرابط في متصفح الويب
+                        await launch(response.body);
+                      } else {
+                        // حدث خطأ
+                        print('Error: ${response.statusCode}');
+                        // يمكنك عرض رسالة خطأ للمستخدم هنا
+                      }
+                    } catch (e) {
+                      // حدث استثناء
+                      print('Exception: $e');
+                      // يمكنك عرض رسالة خطأ للمستخدم هنا
+                    }
+                  },
+              ),
             ],
           ),
         ),
