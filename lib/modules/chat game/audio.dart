@@ -1,9 +1,7 @@
 import "package:agora_rtc_engine/rtc_engine.dart";
-import "package:blessmate/modules/chat%20game/video.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:permission_handler/permission_handler.dart";
-
 
 class AudioCallScreen extends StatefulWidget {
   const AudioCallScreen({Key? key}) : super(key: key);
@@ -33,45 +31,47 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
     return Scaffold(
       body: Stack(
         children: [
-        Container(
-        color: Colors.black87,
-        child: Center(
-          child: _remoteUid == 0
-              ? Text(
-          "calling..",
-          style: TextStyle(color: Colors.white),
-        )
-            : Text(
-        'Calling with $_remoteUid',
+          Container(
+            color: Colors.black87,
+            child: Center(
+              child: _remoteUid == 0
+                  ? Text(
+                "Calling..",
+                style: TextStyle(color: Colors.white),
+              )
+                  : Text(
+                'Calling with $_remoteUid',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 25.0, right: 25),
+              child: Container(
+                height: 50,
+                color: Colors.black12,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        _endCall(); // تم تحسين تصميم الزر
+                      },
+                      icon: Icon(
+                        Icons.call_end,
+                        size: 44,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-    ),
-    ),
-    Align(
-    alignment: Alignment.bottomCenter,
-    child: Padding(
-    padding: const EdgeInsets.only(bottom: 25.0, right: 25),
-    child: Container(
-    height: 50,
-    color: Colors.black12,
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-    IconButton(
-    onPressed: () {
-    Navigator.of(context).pop(true);
-    },
-    icon: Icon(
-    Icons.call_end,
-    size: 44,
-    color: Colors.redAccent,
-    )),
-    ],
-    ),
-    ),
-    ),
-    ),
-    ],
-    ),
     );
   }
 
@@ -99,17 +99,20 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
         AgoraManager.token, AgoraManager.channelName, null, 0);
   }
 
-  Widget _renderRemoteAudio() {
-    if (_remoteUid != 0) {
-      return Text(
-      'Calling with $_remoteUid',
-      style: TextStyle(color: Colors.white),
-    );
-    } else {
-    return Text(
-     'Calling',
-    style: TextStyle(color: Colors.white),
-    );
-    }
+  void _endCall() {
+    Navigator.of(context).pop(true);
+  }
+}
+class AgoraManager {
+  static String get appId {
+    return 'a6f068daf319413dae8da3cf4d8545c2';
+  }
+
+  static String get token {
+    return '007eJxTYDi259YFlphdFtZvL5VdDuk8vUhG736EhuWmhzNsWZfGaq5VYEg0SzMws0hJTDM2tDQxNE5JTAVyjJPTTFIsTE1Mk40OflJKawhkZHCxf8zEyACBID4LQ26GoREDAwCqbiAb';
+  }
+
+  static String get channelName {
+    return 'mh12';
   }
 }
