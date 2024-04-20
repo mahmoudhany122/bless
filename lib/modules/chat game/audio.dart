@@ -40,7 +40,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
                 style: TextStyle(color: Colors.white),
               )
                   : Text(
-                'Calling with $_remoteUid',
+                'مكالمة جارية مع $_remoteUid',
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -57,7 +57,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        _endCall(); // تم تحسين تصميم الزر
+                        _endCall();
                       },
                       icon: Icon(
                         Icons.call_end,
@@ -103,6 +103,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
     Navigator.of(context).pop(true);
   }
 }
+
 class AgoraManager {
   static String get appId {
     return 'a6f068daf319413dae8da3cf4d8545c2';
