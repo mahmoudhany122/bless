@@ -1,5 +1,4 @@
 import 'package:blessmate/language/translate.dart';
-import 'package:blessmate/modules/doctor_patient_chat.dart';
 import 'package:blessmate/modules/notification.dart';
 import 'package:blessmate/modules/onboardingscreen.dart';
 import 'package:blessmate/modules/profile1.dart';

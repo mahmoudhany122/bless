@@ -3,9 +3,7 @@ import 'package:blessmate/modules/doctor2.dart';
 import 'package:blessmate/modules/doctor3.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-
 import 'chatitem.dart';
-import 'doctor_patient_chat.dart';
 
 class HomeDoctorScreen extends StatefulWidget {
   final int therapistId;

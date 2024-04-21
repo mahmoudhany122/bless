@@ -11,7 +11,7 @@ class AudioCallScreen extends StatefulWidget {
 }
 
 class _AudioCallScreenState extends State<AudioCallScreen> {
-  late int _remoteUid = 0;
+  int _remoteUid = 0; // تحديث: تم إزالة late من التعريف
   late RtcEngine _engine;
 
   @override
@@ -86,11 +86,15 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
         },
         userJoined: (int uid, int elapsed) {
           print('remote user $uid joined successfully');
-          setState(() => _remoteUid = uid);
+          setState(() {
+            _remoteUid = uid; // تحديث: تحديث قيمة _remoteUid بشكل صحيح
+          });
         },
         userOffline: (int uid, UserOfflineReason reason) {
           print('remote user $uid left call');
-          setState(() => _remoteUid = 0);
+          setState(() {
+            _remoteUid = 0; // تحديث: إعادة تعيين _remoteUid عند خروج المستخدم
+          });
           Navigator.of(context).pop(true);
         },
       ),
@@ -110,7 +114,7 @@ class AgoraManager {
   }
 
   static String get token {
-    return '007eJxTYDi259YFlphdFtZvL5VdDuk8vUhG736EhuWmhzNsWZfGaq5VYEg0SzMws0hJTDM2tDQxNE5JTAVyjJPTTFIsTE1Mk40OflJKawhkZHCxf8zEyACBID4LQ26GoREDAwCqbiAb';
+    return '007eJxTYNhktM+k+v7Ey+sYEnkkfsbz71+1/fO02RKGidF/PRkrU1IUGBLN0gzMLFIS04wNLU0MjVMSU4Ec4+Q0kxQLUxPTZKOodSppDYGMDCX5zxgZGSAQxGdhyM0wNGJgAAAxFR6h';
   }
 
   static String get channelName {
