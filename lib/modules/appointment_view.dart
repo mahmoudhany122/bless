@@ -14,12 +14,12 @@ import 'chat_doc.dart';
 import 'doctor_details_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
-
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
+as picker;
 
 class AppointmentView extends StatefulWidget {
   final int? patientId;
-  const AppointmentView({Key? key, this.patientId, }) : super(key: key);
+  const AppointmentView({Key? key, this.patientId}) : super(key: key);
 
   @override
   _AppointmentViewState createState() => _AppointmentViewState();
@@ -27,12 +27,12 @@ class AppointmentView extends StatefulWidget {
 
 class _AppointmentViewState extends State<AppointmentView> {
   List<dynamic> therapistsData = [];
-  bool isLoading = true; // Add isLoading variable
-
+  List<dynamic> searchResults = [];
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchData(); // تحميل البيانات عند فتح الصفحة
   }
 
   Future<void> fetchData() async {
@@ -49,6 +49,18 @@ class _AppointmentViewState extends State<AppointmentView> {
     }
   }
 
+  void search(String query) {
+    List<dynamic> searchResults = therapistsData.where((therapist) {
+      String fullName =
+      "${therapist['firstName']} ${therapist['lastName']}".toLowerCase();
+      return fullName.contains(query.toLowerCase());
+    }).toList();
+
+    setState(() {
+      this.searchResults = searchResults;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,118 +75,123 @@ class _AppointmentViewState extends State<AppointmentView> {
         ),
         centerTitle: true,
       ),
-      body:  isLoading
-          ? Center(child: Center(
-            child: CircularProgressIndicator(
-        strokeWidth: 4,
-      ),
-          )) // Show CircularProgressIndicator if isLoading is true
-          : SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: MainTextField(
-                      fillColor: Colors.white,
-                      borderRadius: 21,
-                      hint: "Dr.s",
-                      prefixIcon: Icon(
-                        Iconsax.search_normal,
-                        color: Colors.cyan,
-                      ),
-                      suffixIcon: Icon(
-                        Iconsax.microphone,
-                        color: Colors.cyan,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  AppProgressButton(
-                    height: 38,
-                    width: 75,
-                    fontSize: 13,
-                    text: "Search",
-                    onPressed: (anim) {},
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: isLoading
+          ? Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 4,
+        ),
+      )
+          : Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
               children: [
                 Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.sort,
-                        color: Colors.cyan,
-                      ),
-                      SizedBox(width: 12),
-                      Text(
-                        "Sort",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
+                  child: MainTextField(
+
+                    onChange:(value) {
+                      search(value);
+                    } ,
+                    fillColor: Colors.white,
+                    borderRadius: 21,
+                    hint: "Dr.s",
+                    prefixIcon: Icon(
+                      Iconsax.search_normal,
+                      color: Colors.cyan,
+                    ),
+                    suffixIcon: Icon(
+                      Iconsax.microphone,
+                      color: Colors.cyan,
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                  child: VerticalDivider(),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Iconsax.filter,
-                        color: Colors.cyan,
-                      ),
-                      SizedBox(width: 12),
-                      Text(
-                        "Filter",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
+                const SizedBox(width: 12),
+                AppProgressButton(
+                  height: 38,
+                  width: 75,
+                  fontSize: 13,
+                  text: "Search",
+                  onPressed: (anim) {},
                 ),
               ],
             ),
-            const Divider(),
-            const Padding(
-              padding: EdgeInsets.all(12),
-              child: Text(
-                "All Therapists",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
+          ),
+          const Divider(),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.sort,
+                      color: Colors.cyan,
+                    ),
+                    SizedBox(width: 12),
+                    Text(
+                      "Sort",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              SizedBox(
+                height: 30,
+                child: VerticalDivider(),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Iconsax.filter,
+                      color: Colors.cyan,
+                    ),
+                    SizedBox(width: 12),
+                    Text(
+                      "Filter",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const Divider(),
+          const Padding(
+            padding: EdgeInsets.all(12),
+            child: Text(
+              "All Therapists",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
             ),
-            ListView.separated(
-              itemCount: therapistsData.length,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+          ),
+          Expanded(
+            child: ListView.separated(
+              itemCount: searchResults.isNotEmpty ? searchResults.length : therapistsData.length,
               itemBuilder: (context, index) {
-                final therapist = therapistsData[index];
+                final therapist = searchResults.isNotEmpty ? searchResults[index] : therapistsData[index];
 
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>DetailsDocAppontioment(therapist: therapist,patientId: widget.patientId ?? 0) ,
+                        builder: (context) => DetailsDocAppontioment(
+                          therapist: therapist,
+                          patientId: widget.patientId ?? 0,
+                        ),
                       ),
                     );
                   },
@@ -260,14 +277,16 @@ class _AppointmentViewState extends State<AppointmentView> {
                 );
               },
               separatorBuilder: (context, index) => SizedBox(height: 15),
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
-
 }
+
+// تواصل بقية الكود هنا
+
 class DetailsDocAppontioment extends StatefulWidget {
   final Map<String, dynamic> therapist;
   final int patientId; // إضافة patientId هنا
@@ -637,3 +656,4 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
     );
   }
 }
+
