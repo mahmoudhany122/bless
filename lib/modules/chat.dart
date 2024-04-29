@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,25 +24,26 @@ class _ChatScreenState extends State<ChatScreen> {
     _loadMessages(); // استرجاع الرسائل عند بدء بناء الشاشة
   }
 
-  // تحميل الرسائل المحفوظة في الذاكرة المحلية
+
+
+  Future<void> _saveMessage(Message message) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    messages.add(message); // Add the new message to the list
+    List<String> savedMessages = messages.map((msg) => jsonEncode(msg.toJson())).toList();
+    prefs.setStringList('chat_messages', savedMessages);
+  }
+
   Future<void> _loadMessages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? savedMessages = prefs.getStringList('chat_messages');
 
     if (savedMessages != null) {
       setState(() {
-        messages = savedMessages.map((msg) => Message.fromJson(msg as Map<String, dynamic>)).toList();
+        messages = savedMessages.map((msg) => Message.fromJson(json.decode(msg))).toList();
       });
     }
   }
 
-  // حفظ الرسالة المرسلة في الذاكرة المحلية
-  Future<void> _saveMessage(Message message) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> savedMessages =
-    messages.map((msg) => msg.toJson()).toList().map((e) => e.toString()).toList();
-    prefs.setStringList('chat_messages', savedMessages);
-  }
 
   Future<void> sendMessage(String message) async {
     setState(() {
@@ -49,15 +51,10 @@ class _ChatScreenState extends State<ChatScreen> {
     });
 
     final userMessage = Message(text: message, isUserMessage: true);
-    final sendingMessage = Message(text: '.....', isUserMessage: false);
 
     setState(() {
       messages.add(userMessage);
-      messages.add(sendingMessage);
     });
-
-    // Delay the response by 2 seconds
-    await Future.delayed(Duration(seconds: 3));
 
     try {
       final botResponse = await chatService.getBotResponse(message);
@@ -67,28 +64,27 @@ class _ChatScreenState extends State<ChatScreen> {
         Message(text: botResponse, isUserMessage: false);
 
         setState(() {
-          messages.remove(sendingMessage);
+          messages.remove(userMessage); // Remove user message
           messages.add(updatedSendingMessage);
           isLoading = false;
         });
       } else {
         setState(() {
-          messages.remove(sendingMessage);
+          isLoading = false;
           messages.add(Message(
               text: 'لا يوجد اجابه حاول مره اخرى'.tr, isUserMessage: false));
-          isLoading = false;
         });
       }
     } catch (e) {
       setState(() {
         isLoading = false;
-        messages.remove(sendingMessage);
         messages.add(Message(text: 'خطا فى صيغه السؤال'.tr, isUserMessage: false));
       });
     }
 
-    _saveMessage(userMessage); // حفظ الرسالة المرسلة
+    _saveMessage(userMessage); // Save the sent message
   }
+
 
   String _selectedLanguage = 'ar';
 
@@ -122,7 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: ListView.builder(
               controller: _controller,
-              reverse: false,
+              reverse: true,
               itemCount: messages.length,
               itemBuilder: (BuildContext context, int index) {
                 final message = messages[index];

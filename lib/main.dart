@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'modules/bottom_nav.dart';
+import 'modules/chat.dart';
 import 'modules/chat_doc.dart';
 import 'modules/chatitem.dart';
 import 'modules/dark.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home:LogoScreen(),
+      home:ChatScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),
