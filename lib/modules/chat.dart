@@ -213,55 +213,66 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
+            child:ListView.builder(
               controller: _controller,
               reverse: false,
               itemCount: messages.length,
               itemBuilder: (BuildContext context, int index) {
                 final message = messages[index];
-                return Container(
-                  padding: const EdgeInsets.all(8.0),
-                  alignment: message.isUserMessage
-                      ? Alignment.topRight
-                      : Alignment.topLeft,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: message.isUserMessage
-                          ? HexColor('00B4D8')
-                          : Colors.grey.shade400,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        message.text,
-                        style: TextStyle(
-                          color: message.isUserMessage
-                              ? Colors.white
-                              : Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+
+                // Check if the message is a text message
+                if (message.text != null && message.text.isNotEmpty) {
+                  return Container(
+                    padding: const EdgeInsets.all(8.0),
+                    alignment: message.isUserMessage
+                        ? Alignment.topRight
+                        : Alignment.topLeft,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: message.isUserMessage
+                            ? HexColor('00B4D8')
+                            : Colors.grey.shade400,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          message.text,
+                          style: TextStyle(
+                            color: message.isUserMessage
+                                ? Colors.white
+                                : Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                }
+                // Check if the message is an audio message
+                else if (message.audio != null && message.audio.isNotEmpty) {
+                  // Replace 'BubbleNormalAudio' with your own widget for displaying audio messages
+                  return BubbleNormalAudio(
+                    onSeekChanged: (e){},
+                    color: message.isUserMessage ? HexColor('00B4D8') : Colors.grey.shade400,
+                    isLoading: false, // Set to true if audio is still loading
+                    isPlaying: _isPlayer, // Set to true if this audio is currently being played
+                    onPlayPauseButtonClick: () {
+                      if (!_isPlayer) {
+                        play(message.audio); // Play the audio when clicked
+                      } else {
+                        stop(); // Stop the audio when clicked again
+                      }
+                    },
+                  );
+                }
 
+                return SizedBox(); // Return an empty SizedBox for other types of messages
               },
-
             ),
 
-          ),
-          BubbleNormalAudio(
-              color: HexColor('00B4D8'),
-              onSeekChanged: (e){},
-              isLoading: false,
-              isPlaying: _isPlayer,
-              onPlayPauseButtonClick: () {
-                if (!_isPlayer) {
-                  play(url);
-                } else {stop();}
-              }
+
           ),
           Container(
             padding: EdgeInsets.all(5.0),
