@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class HomeDoctor1 extends StatefulWidget {
@@ -13,7 +14,7 @@ class _HomeDoctor1State extends State<HomeDoctor1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title: Text("تاريخ الاستشارات",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text("تاريخ الاستشارات".tr,style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black),),
           centerTitle: true, ),
       body: ListView(
         children: [
@@ -22,7 +23,7 @@ class _HomeDoctor1State extends State<HomeDoctor1> {
             children: [
               Container(
                 margin: EdgeInsets.only(left: 15,right: 15),
-                child:  Text("اليوم-20 مايو 2024",style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,)),
+                child:  Text("اليوم-20 مايو 2024".tr,style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,)),
               ),
                   TextButton(onPressed: (){},
                    child:
@@ -66,16 +67,16 @@ class _HomeDoctor1State extends State<HomeDoctor1> {
                             SizedBox(height: 15,),
                             Row(
                               children: [
-                                Text("رسالة. ",style: TextStyle(fontSize: 12,color: Colors.black),),
-                                Text("مكتمل",style: TextStyle(fontSize: 12,color: HexColor("3FD198"),fontWeight: FontWeight.bold),)
+                                Text("رسالة. ".tr,style: TextStyle(fontSize: 12,color: Colors.black),),
+                                Text("مكتمل".tr,style: TextStyle(fontSize: 12,color: HexColor("3FD198"),fontWeight: FontWeight.bold),)
                               ],
                             ),
-                            Text("ماريا كرم",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                            Text("ماريا كرم".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
                             Row(
                               children: [
                                 Icon(Icons.access_time,color: HexColor("00B4D8",),size: 12,),
                                 SizedBox(width: 2,),
-                                Text("تم الرد في الساعة 4:00 مساء",style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
+                                Text("تم الرد في الساعة 4:00 مساء".tr,style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
                               ],
                             )
                           ],
@@ -125,16 +126,16 @@ class _HomeDoctor1State extends State<HomeDoctor1> {
                             SizedBox(height: 15,),
                             Row(
                               children: [
-                                Text("ميعاد. ",style: TextStyle(fontSize: 12,color: Colors.black),),
-                                Text("مكتمل",style: TextStyle(fontSize: 12,color: HexColor("3FD198"),fontWeight: FontWeight.bold),)
+                                Text("ميعاد. ".tr,style: TextStyle(fontSize: 12,color: Colors.black),),
+                                Text("مكتمل".tr,style: TextStyle(fontSize: 12,color: HexColor("3FD198"),fontWeight: FontWeight.bold),)
                               ],
                             ),
-                            Text("زياد الشرقاوي",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                            Text("زياد الشرقاوي".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
                             Row(
                               children: [
                                 Icon(Icons.access_time,color: HexColor("00B4D8",),size: 12,),
                                 SizedBox(width: 2,),
-                                Text("4:00 مساء - 5:00 مساء",style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
+                                Text("4:00 مساء - 5:00 مساء".tr,style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
                               ],
                             )
                           ],
@@ -185,16 +186,16 @@ class _HomeDoctor1State extends State<HomeDoctor1> {
                             SizedBox(height: 15,),
                             Row(
                               children: [
-                                Text("ميعاد. ",style: TextStyle(fontSize: 12,color: Colors.black),),
-                                Text("تم الإلغاء بواسطة المريض",style: TextStyle(fontSize: 12,color: HexColor("FF5785"),fontWeight: FontWeight.bold),)
+                                Text("ميعاد. ".tr,style: TextStyle(fontSize: 12,color: Colors.black),),
+                                Text("تم الإلغاء بواسطة المريض".tr,style: TextStyle(fontSize: 12,color: HexColor("FF5785"),fontWeight: FontWeight.bold),)
                               ],
                             ),
-                            Text("بسنت احمد",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                            Text("بسنت احمد".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
                             Row(
                               children: [
                                 Icon(Icons.access_time,color: HexColor("00B4D8",),size: 12,),
                                 SizedBox(width: 2,),
-                                Text("7:00 مساء - 8:00 مساء",style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
+                                Text("7:00 مساء - 8:00 مساء".tr,style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
                               ],
                             )
                           ],
@@ -206,7 +207,7 @@ class _HomeDoctor1State extends State<HomeDoctor1> {
               SizedBox(height: 15,),
               Container(
                 margin: EdgeInsets.only(left: 15,right: 15),
-                child:  Text("19 أبريل 2024",style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,)),
+                child:  Text("19 أبريل 2024".tr,style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,)),
               ),
               TextButton(onPressed: (){},
                   child:
@@ -250,16 +251,16 @@ class _HomeDoctor1State extends State<HomeDoctor1> {
                             SizedBox(height: 15,),
                             Row(
                               children: [
-                                Text("رسالة. ",style: TextStyle(fontSize: 12,color: Colors.black),),
-                                Text("مكتمل",style: TextStyle(fontSize: 12,color: HexColor("3FD198"),fontWeight: FontWeight.bold),)
+                                Text("رسالة. ".tr,style: TextStyle(fontSize: 12,color: Colors.black),),
+                                Text("مكتمل".tr,style: TextStyle(fontSize: 12,color: HexColor("3FD198"),fontWeight: FontWeight.bold),)
                               ],
                             ),
-                            Text("لارا علاء",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                            Text("لارا علاء".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
                             Row(
                               children: [
                                 Icon(Icons.access_time,color: HexColor("00B4D8",),size: 12,),
                                 SizedBox(width: 2,),
-                                Text("3:00 مساء - 4:00 مساء",style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
+                                Text("3:00 مساء - 4:00 مساء".tr,style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
                               ],
                             )
                           ],
@@ -309,16 +310,16 @@ class _HomeDoctor1State extends State<HomeDoctor1> {
                             SizedBox(height: 15,),
                             Row(
                               children: [
-                                Text("ميعاد. ",style: TextStyle(fontSize: 12,color: Colors.black),),
-                                Text("مكتمل",style: TextStyle(fontSize: 12,color: HexColor("3FD198"),fontWeight: FontWeight.bold),)
+                                Text("ميعاد. ".tr,style: TextStyle(fontSize: 12,color: Colors.black),),
+                                Text("مكتمل".tr,style: TextStyle(fontSize: 12,color: HexColor("3FD198"),fontWeight: FontWeight.bold),)
                               ],
                             ),
-                            Text("نور بسام",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                            Text("نور بسام".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
                             Row(
                               children: [
                                 Icon(Icons.access_time,color: HexColor("00B4D8",),size: 12,),
                                 SizedBox(width: 2,),
-                                Text("4:00 مساء - 5:00 مساء",style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
+                                Text("4:00 مساء - 5:00 مساء".tr,style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold),),
                               ],
                             )
                           ],

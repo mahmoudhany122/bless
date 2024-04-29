@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chatmodel.dart';
@@ -65,7 +66,7 @@ class _DoctorChat extends State<DoctorChat> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "معالج بليس ميت",
+          "معالج بليس ميت".tr,
           style: Theme.of(context).textTheme.bodyText1,
         ),
         actions: [
@@ -149,7 +150,7 @@ class _DoctorChat extends State<DoctorChat> {
                       controller: _textEditingController,
                       onChanged: updateCurrentMessage, // استدعاء الدالة عندما يتم تغيير النص
                       decoration: InputDecoration(
-                        hintText: 'أكتب رسالتك هنا...',
+                        hintText: 'أكتب رسالتك هنا...'.tr,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

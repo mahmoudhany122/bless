@@ -1,12 +1,11 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chatmodel.dart';
-import 'chat game/audio.dart';
 import 'chat game/video.dart'; // Import the updated MessageDoc class
-import 'package:http/http.dart' as http;
+
 
 class ChatScreenDoc extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -22,7 +21,6 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
   TextEditingController _textEditingController = TextEditingController();
   String _currentMessage = ''; // تخزين النص المكتوب حالياً
   String _email = '';
-  String id = '';
 
 
 
@@ -38,7 +36,6 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _email = prefs.getString('email') ?? '';
-      id = prefs.getString('id') ?? '';
     });
   }
   // دالة تحديث واجهة المستخدم لعرض النص الذي تم كتابته بشكل مستمر
@@ -63,47 +60,12 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
     }
   }
 
-  // Function to send the message to the API
-  Future<void> sendMessageToAPI(String message) async {
-    final url = 'YOUR_API_URL'; // Replace it with your API endpoint
-    final headers = <String, String>{
-      'Content-Type': 'application/json', // You can change the content type as per your requirement
-    };
-    final body = jsonEncode({
-      'message': message,
-      "senderId":_email,
-      "timestamp":DateTime.now(),
-      "receiverId":widget.userData["email"],
-      // You can add more data to the request body as per API requirements
-    });
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: headers,
-        body: body,
-      );
-
-      if (response.statusCode == 200) {
-        print('Message sent to API successfully');
-        // You can insert any code to handle the response here, like updating the UI or showing a success message
-      }
-      else {
-        print('Failed to send message to API: ${response.statusCode}');
-        // You can handle error cases here, like showing an error message to the user
-      }
-    } catch (e) {
-      print('Error sending message to API: $e');
-      // You can handle errors here, like showing an error message to the user
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "معالج بليس ميت",
+          "معالج بليس ميت".tr,
           style: Theme.of(context).textTheme.bodyText1,
         ),
         actions: [
@@ -115,10 +77,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
           ),
           IconButton(
             icon: Icon(Icons.call, color: HexColor('00B4D8')),
-            onPressed: ()
-            {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => AudioCallScreen(),));
-            },
+            onPressed: () {},
           ),
         ],
         centerTitle: true,
@@ -187,7 +146,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                       controller: _textEditingController,
                       onChanged: updateCurrentMessage, // استدعاء الدالة عندما يتم تغيير النص
                       decoration: InputDecoration(
-                        hintText: 'أكتب رسالتك هنا...',
+                        hintText: 'أكتب رسالتك هنا...'.tr,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

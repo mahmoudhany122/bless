@@ -90,10 +90,11 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                         Container(
                                           width: 70,
                                           height: 70,
-                                          color: Colors.white,
-                                          child: Placeholder(
 
-                                          ),
+                                          child: Image(
+                                            image: AssetImage("assets/images/img_12.png",),
+                                            width: 70,height: 70,
+                                          )
                                         ),
                                         SizedBox(
                                           width: 10,
@@ -102,24 +103,14 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Row(
-                                              children: [
+
                                                 Text(
-                                                   "اهلا بك  ",
+                                                   "ليلي".tr,
                                                     textAlign: TextAlign.right,
                                                     style: TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.bold)),
                                                 SizedBox(
                                                   width: 5,
                                                 ),
-                                                Image(
-                                                  height: 30,
-                                                  width: 30,
-                                                  image: AssetImage(
-                                                    "assets/images/img_16.png",
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
 
                                             Text( extractUsername(_email),
                                                 style: TextStyle(fontSize: 15,color: Colors.white)),
@@ -399,7 +390,86 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                       Padding(
                                         padding: const EdgeInsets.all(0),
                                         child: TextButton(
-                                          onPressed: () {},
+
+                                          onPressed: () {   showDialog(
+                                              context: context,
+                                              builder: (context)=>AlertDialog(
+                                                  actions: [
+
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          children: [
+                                                            Text( "مشاركة عبر".tr,  style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                                                            SizedBox(width: 5,),
+                                                            Image( width: 20,
+                                                                height: 20,
+                                                                image: AssetImage("assets/images/img_39.png"))
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          children: [
+                                                            Column(
+                                                              children: [
+                                                                TextButton (
+                                                                    onPressed: (){},
+                                                                    child:Image( width: 42,
+                                                                        height: 42,
+                                                                        image: AssetImage("assets/images/img_43.png"))
+                                                                ),
+                                                                Text("نسخ الرابط".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                              ],
+                                                            ), Column(
+                                                              children: [
+                                                                TextButton (
+                                                                    onPressed: (){},
+                                                                    child:Image( width: 42,
+                                                                        height: 42,
+                                                                        image: AssetImage("assets/images/img_42.png"))
+                                                                ),
+                                                                Text("انستجرام".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                              ],
+                                                            ), Column(
+                                                              children: [
+                                                                TextButton (
+                                                                    onPressed: (){},
+                                                                    child:Image( width: 42,
+                                                                        height: 42,
+                                                                        image: AssetImage("assets/images/img_41.png"))
+                                                                ),
+                                                                Text("فيسبوك".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                              ],
+                                                            ), Column(
+                                                              children: [
+                                                                TextButton (
+                                                                    onPressed: (){},
+                                                                    child:Image( width: 42,
+                                                                        height: 42,
+                                                                        image: AssetImage("assets/images/img_40.png"))
+                                                                ),
+                                                                Text("واتساب".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                              ],
+                                                            ),
+                                                         
+                                                        ],)
+                                                       
+
+                                                     ]
+                                                  , title:Column(
+                                                children: [
+                                                  Center(
+                                                    child: Text ("ادعو أصدقاء".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 28),
+
+                                                    ),
+
+                                                  ),
+                                                  SizedBox(height: 5,),
+                                                  Divider(height: 1,)
+                                                ],
+                                              )
+
+
+                                              )  );},
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [  Icon(

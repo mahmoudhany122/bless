@@ -183,7 +183,7 @@ class ExerciseDetailsScreen extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'ملخص:',
+              'ملخص:'.tr,
               style: Theme.of(context).textTheme.headline2,
             ),
             SizedBox(height: 10),

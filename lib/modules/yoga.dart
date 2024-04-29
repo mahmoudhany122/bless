@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class Yoga extends StatefulWidget {
@@ -67,7 +68,7 @@ class _YogaState extends State<Yoga> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'تمارين',
+                'تمارين'.tr,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(height: 10),
@@ -86,7 +87,7 @@ class _YogaState extends State<Yoga> {
               ),
               SizedBox(height: 20),
               Text(
-                'التمارين المتاحة',
+                'التمارين المتاحة'.tr,
                 style: Theme.of(context).textTheme.headline6,
               ),
               SizedBox(height: 10),
@@ -186,7 +187,7 @@ class ExerciseDetailsScreen extends StatelessWidget {
             VideoPlayerScreen(videoUrl: videoUrl),
             SizedBox(height: 20),
             Text(
-              'ملخص:',
+              'ملخص:'.tr,
               style: Theme.of(context).textTheme.headline2,
             ),
             SizedBox(height: 10),

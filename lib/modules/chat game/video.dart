@@ -123,10 +123,10 @@ class VideoCallScreen extends StatefulWidget {
     }
 
     static String get token {
-      return '007eJxTYDi259YFlphdFtZvL5VdDuk8vUhG736EhuWmhzNsWZfGaq5VYEg0SzMws0hJTDM2tDQxNE5JTAVyjJPTTFIsTE1Mk40OflJKawhkZHCxf8zEyACBID4LQ26GoREDAwCqbiAb';
+      return '007eJxTYLB+L9PoMWddaIBqlfuRU+0GG9ouXrnafCI8/W/+JI8AwVQFhkSzNAMzi5TENGNDSxND45TEVCDHODnNJMXC1MQ02ShQUDqtIZCR4Yp0CAMjFIL4LAy5GYaGDAwAUCceWQ==';
     }
 
     static String get channelName {
-      return 'mh12';
+      return 'mh11';
     }
   }

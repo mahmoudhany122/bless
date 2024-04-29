@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -90,7 +91,7 @@ class _HomeDoctor2State extends State<HomeDoctor2> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "جدول المواعيد",
+          "جدول المواعيد".tr,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         centerTitle: true,

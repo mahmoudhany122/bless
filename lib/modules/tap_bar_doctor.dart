@@ -67,7 +67,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "مرحبآ دكتور",
+                      "مرحبآ".tr,
                       style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
                     SizedBox(
@@ -132,7 +132,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
               ),
               Tab(
                 child: Text(
-                  "الصفحة الرئيسية",
+                  "الصفحة الرئيسية".tr,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

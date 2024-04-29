@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -239,7 +240,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       controller: _textEditingController,
                       onChanged: updateCurrentMessage,
                       decoration: InputDecoration(
-                        hintText: 'أكتب رسالتك هنا...',
+                        hintText: 'أكتب رسالتك هنا...'.tr,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

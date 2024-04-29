@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class NotificationDoctorScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("الإشعارات",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text("الإشعارات".tr,style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black),),
         centerTitle: true,
       ),
       body: ListView(
@@ -23,7 +24,7 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
             children: [
               Container(
                 margin: EdgeInsets.all(10),
-                child:  Text("اليوم-20مايو2024",style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,),),
+                child:  Text("اليوم-20مايو2024".tr,style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,),),
               ),
               Container(
                 height: 101,
@@ -61,9 +62,9 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
                                TextButton(
                                    onPressed: (){},
                                    child:Text(
-                                 "لديك موعد مع سارة ابراهيم الساعه 08:00 مساء اليوم.",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                                 "لديك موعد مع سارة ابراهيم الساعه 08:00 مساء اليوم.".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
                                ),
-                               Text("الآن",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,)
+                               Text("الآن".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,)
                                ,
                              ],
                            ) ,
@@ -107,8 +108,8 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
                            child: Column(
                              crossAxisAlignment: CrossAxisAlignment.start,
                              children: [
-                               TextButton(onPressed: (){}, child: Text("أكمل ملفك الشخصي لتكون مستشارآ صحيآ أفضل. ملف كامل",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
-                               Text("منذ 25 دقيقة",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
+                               TextButton(onPressed: (){}, child: Text("أكمل ملفك الشخصي لتكون مستشارآ صحيآ أفضل. ملف كامل".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
+                               Text("منذ 25 دقيقة".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
                              ],
                            ) ,
                          ),
@@ -154,13 +155,13 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
                                TextButton(onPressed: (){}, child: Column(
                                  crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("أضف حسابآ مصرفيآ لسحب دخلك.",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
-                                  Text("أضف الآن >",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16,fontWeight: FontWeight.bold) ) ,
+                                  Text("أضف حسابآ مصرفيآ لسحب دخلك.".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                                  Text("أضف الآن >".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16,fontWeight: FontWeight.bold) ) ,
 
     ],
                                 ),
                                  ),
-                               Text("منذ 2 ساعات",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ,fontWeight: FontWeight.bold)) ,
+                               Text("منذ 2 ساعات".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ,fontWeight: FontWeight.bold)) ,
                              ],
                            ) ,
                          ),
@@ -173,7 +174,7 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
               ),
               Container(
                 margin: EdgeInsets.all(10),
-                child:  Text("19أبريل2024",style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,),),
+                child:  Text("19أبريل2024".tr,style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,),),
               ),
               Container(
                 height: 101,
@@ -207,8 +208,8 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
                            child: Column(
                              crossAxisAlignment: CrossAxisAlignment.start,
                              children: [
-                               TextButton(onPressed: (){}, child:Text("لديك موعد مع ليلى باسم الساعة05:00 مساء اليوم.",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
-                               Text("أمس.10:58 صباحآ",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
+                               TextButton(onPressed: (){}, child:Text("لديك موعد مع ليلى باسم الساعة05:00 مساء اليوم.".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
+                               Text("أمس.10:58 صباحآ".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
                              ],
                            ) ,
                          ),
@@ -250,8 +251,8 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
                            child: Column(
                              crossAxisAlignment: CrossAxisAlignment.start,
                              children: [
-                               TextButton(onPressed: (){}, child: Text("لديك طلب مكالمة صوتية من علي فى الساعة08:20 صباحآ اليوم.",style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
-                               Text("أمس.7:58 صباحآ",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
+                               TextButton(onPressed: (){}, child: Text("لديك طلب مكالمة صوتية من علي فى الساعة08:20 صباحآ اليوم.".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
+                               Text("أمس.7:58 صباحآ".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
                              ],
                            ) ,
                          ),
@@ -293,8 +294,8 @@ class _NotificationDoctorScreenState extends State<NotificationDoctorScreen> {
                            child: Column(
                              crossAxisAlignment: CrossAxisAlignment.start,
                              children: [
-                               TextButton(onPressed: (){}, child: Text("لديك موعد مع كريم عزت الساعة05:00 مساء اليوم.",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.black),), ),
-                               Text("أمس.الساعة2:00 صباحآ",style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
+                               TextButton(onPressed: (){}, child: Text("لديك موعد مع كريم عزت الساعة05:00 مساء اليوم.".tr,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.black),), ),
+                               Text("أمس.الساعة2:00 صباحآ".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
 
                              ],
                            ) ,

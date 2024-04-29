@@ -3,14 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Message {
   final String text;
   final bool isUserMessage;
-
-  Message({required this.text, required this.isUserMessage});
+  String audio;
+  Message({required this.text, required this.isUserMessage,required this.audio});
 
   // Convert the Message object to a JSON-compatible Map
   Map<String, dynamic> toJson() {
     return {
       'text': text,
       'isUserMessage': isUserMessage,
+      "audio": audio,
     };
   }
 
@@ -19,6 +20,7 @@ class Message {
     return Message(
       text: json['text'] as String,
       isUserMessage: json['isUserMessage'] as bool,
+      audio: json['audio'] as String,
     );
   }
 }

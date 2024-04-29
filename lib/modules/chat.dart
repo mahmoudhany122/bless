@@ -1,9 +1,17 @@
+import 'package:audioplayers/audioplayers.dart';
+import 'package:chat_bubbles/bubbles/bubble_normal_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chatmodel.dart';
 import '../services/chatservices.dart';
+import 'package:http/http.dart'as http;
+import 'dart:io';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -16,11 +24,18 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isLoading = false;
   final ChatService chatService = ChatService();
   TextEditingController _textEditingController = TextEditingController();
-
+  late String _filePath;
+  AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isRecording = false;
+  bool _isPlayer =false;
   @override
   void initState() {
     super.initState();
     _loadMessages(); // استرجاع الرسائل عند بدء بناء الشاشة
+  }
+  void dispose(){
+    super.dispose();
+    _audioPlayer.dispose();
   }
 
   // تحميل الرسائل المحفوظة في الذاكرة المحلية
@@ -30,7 +45,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
     if (savedMessages != null) {
       setState(() {
-        messages = savedMessages.map((msg) => Message.fromJson(msg as Map<String, dynamic>)).toList();
+        messages = savedMessages.map((msg) =>
+            Message.fromJson(msg as Map<String, dynamic>)).toList();
       });
     }
   }
@@ -39,7 +55,9 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _saveMessage(Message message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> savedMessages =
-    messages.map((msg) => msg.toJson()).toList().map((e) => e.toString()).toList();
+    messages.map((msg) => msg.toJson()).toList()
+        .map((e) => e.toString())
+        .toList();
     prefs.setStringList('chat_messages', savedMessages);
   }
 
@@ -48,8 +66,10 @@ class _ChatScreenState extends State<ChatScreen> {
       isLoading = true;
     });
 
-    final userMessage = Message(text: message, isUserMessage: true);
-    final sendingMessage = Message(text: '.....', isUserMessage: false);
+    final userMessage = Message(
+        text: message, isUserMessage: true, audio: _filePath);
+    final sendingMessage = Message(
+        text: '.....', isUserMessage: false, audio: _filePath);
 
     setState(() {
       messages.add(userMessage);
@@ -64,7 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       if (message != null && message != botResponse) {
         final updatedSendingMessage =
-        Message(text: botResponse, isUserMessage: false);
+        Message(text: botResponse, isUserMessage: false, audio: _filePath);
 
         setState(() {
           messages.remove(sendingMessage);
@@ -75,7 +95,9 @@ class _ChatScreenState extends State<ChatScreen> {
         setState(() {
           messages.remove(sendingMessage);
           messages.add(Message(
-              text: 'لا يوجد اجابه حاول مره اخرى'.tr, isUserMessage: false));
+              text: 'لا يوجد اجابه حاول مره اخرى'.tr,
+              isUserMessage: false,
+              audio: _filePath));
           isLoading = false;
         });
       }
@@ -83,12 +105,83 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         isLoading = false;
         messages.remove(sendingMessage);
-        messages.add(Message(text: 'خطا فى صيغه السؤال'.tr, isUserMessage: false));
+        messages.add(Message(text: 'خطا فى صيغه السؤال'.tr,
+            isUserMessage: false,
+            audio: _filePath));
       });
     }
 
     _saveMessage(userMessage); // حفظ الرسالة المرسلة
   }
+
+  Future<void> _startRecording() async {
+    try {
+      setState(() {
+        _isRecording = true;
+      });
+      Directory appDir = await getApplicationDocumentsDirectory();
+      String filePath = '${appDir.path}/audio.wav';
+      _filePath = filePath;
+      print('Start recorder');
+    } catch (e) {
+      print("Error starting recording: $e");
+    }
+  }
+
+  Future<void> _stopRecording() async {
+    setState(() {
+      _isRecording = false;
+    });
+    print('Stop recrder');
+    _uploadFile();
+  }
+
+  Future<void> _uploadFile() async {
+    if (_filePath != null) {
+      File audioFile = File(_filePath);
+      String apiUrl = 'https://blissmate-chatbot.onrender.com/ChatBot/Record';
+
+      try {
+        var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
+        request.files.add(http.MultipartFile(
+          'audio',
+          audioFile.readAsBytes().asStream(),
+          audioFile.lengthSync(),
+          filename: basename(audioFile.path),
+        ));
+        var response = await request.send();
+
+        // Check the response status
+        if (response.statusCode == 200) {
+          // File uploaded successfully
+          print('File uploaded successfully!');
+        } else {
+          // Handle error
+          print('Failed to upload file. Status code: ${response.statusCode}');
+        }
+      } catch (error) {
+        // Handle network errors
+        print('Error: $error');
+      }
+    }
+    sendMessage("audio");
+  }
+
+  play(url)async{
+    await _audioPlayer.play(UrlSource(url));
+    setState(() {
+      _isPlayer=true;
+    });
+    print('audio player');
+  }
+  stop()async{
+    await _audioPlayer.stop();
+    setState(() {
+      _isPlayer=false;
+    });
+    print('stop audio');
+  }
+
 
   String _selectedLanguage = 'ar';
 
@@ -153,8 +246,22 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 );
+
               },
+
             ),
+
+          ),
+          BubbleNormalAudio(
+              color: HexColor('00B4D8'),
+              onSeekChanged: (e){},
+              isLoading: false,
+              isPlaying: _isPlayer,
+              onPlayPauseButtonClick: () {
+                if (!_isPlayer) {
+                  play(url);
+                } else {stop();}
+              }
           ),
           Container(
             padding: EdgeInsets.all(5.0),
@@ -163,9 +270,25 @@ class _ChatScreenState extends State<ChatScreen> {
               _selectedLanguage == 'ar' ? TextDirection.rtl : TextDirection.ltr,
               child: Row(
                 children: [
+                  CircleAvatar(
+                    radius: 22,
+                    backgroundColor: HexColor('00B4D8'),
+                    child: IconButton(
+                      icon:_isRecording?
+                      Icon(Icons.stop,color: Colors.white,): Icon(Icons.mic,color: Colors.white,),
+                      onPressed: () {
+                       if(!_isRecording){
+                         _startRecording();
+                       }else{
+                         _stopRecording();
+                       }
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 5,),
                   Container(
                     height: 60,
-                    width: 280,
+                    width: 250,
                     child: Center(
                       child: TextField(
                         controller: _textEditingController,

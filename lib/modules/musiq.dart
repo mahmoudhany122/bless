@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:video_player/video_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -59,7 +60,7 @@ class _MusiqState extends State<Musiq> {
 
   void addPlaylist(String playlistName) {
     // Your existing addPlaylist logic
-    print('تمت إضافة قائمة جديدة: $playlistName');
+    print('تمت إضافة قائمة جديدة: $playlistName'.tr);
   }
   Future<void> pickAudioFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -68,10 +69,10 @@ class _MusiqState extends State<Musiq> {
 
     if (result != null) {
       // يمكنك هنا تنفيذ الإجراءات الخاصة بالملف الصوتي المختار
-      print('تم اختيار ملف صوتي: ${result.files.first.name}');
+      print('تم اختيار ملف صوتي: ${result.files.first.name}'.tr);
     } else {
       // المستخدم لم يقم بتحديد ملف صوتي
-      print('لم يتم اختيار أي ملف صوتي.');
+      print('لم يتم اختيار أي ملف صوتي.'.tr);
     }
   }
 
@@ -91,7 +92,7 @@ class _MusiqState extends State<Musiq> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      "اضافة قائمة تشغيل جديدة",
+                      "اضافة قائمة تشغيل جديدة".tr,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     SizedBox(
@@ -106,13 +107,13 @@ class _MusiqState extends State<Musiq> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('إضافة قائمة جديدة'),
+                                title: Text('إضافة قائمة جديدة'.tr),
                                 content: TextField(
                                   onChanged: (value) {
                                     // يمكنك استخدام القيمة المدخلة هنا
                                   },
                                   decoration: InputDecoration(
-                                    hintText: 'اسم القائمة',
+                                    hintText: 'اسم القائمة'.tr,
                                   ),
                                 ),
                                 actions: [
@@ -120,15 +121,15 @@ class _MusiqState extends State<Musiq> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Text('إلغاء'),
+                                    child: Text('إلغاء'.tr),
                                   ),
                                   TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                       // استخدم القيمة المدخلة لإضافة القائمة
-                                      addPlaylist('اسم القائمة');
+                                      addPlaylist('اسم القائمة'.tr);
                                     },
-                                    child: Text('إضافة'),
+                                    child: Text('إضافة'.tr),
                                   ),
                                 ],
                               );
@@ -161,7 +162,7 @@ class _MusiqState extends State<Musiq> {
                         );
                       },
                       child: Text(
-                        "الموسيقى المفضلة لديك",
+                        "الموسيقى المفضلة لديك".tr,
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
@@ -195,7 +196,7 @@ class _MusiqState extends State<Musiq> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    "استكشف",
+                    "استكشف".tr,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -301,7 +302,7 @@ class VideoDetailPage extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'ملخص:',
+              'ملخص:'.tr,
               style: Theme.of(context).textTheme.headline2,
             ),
             SizedBox(height: 10),
@@ -436,7 +437,7 @@ class FavoriteItemsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('الموسيقى المفضلة لديك'),
+        title: Text('الموسيقى المفضلة لديك'.tr),
       ),
       body: ListView.builder(
         itemCount: favoriteItemsDetails.length,

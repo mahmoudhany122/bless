@@ -124,6 +124,157 @@ const Map<String,String> en ={
   "نغمة الاشعارات" : "Notification sound",
   "اهتزاز" : "Vibration",
   "التلقائي" : "Automatic",
+  "محادثة" : "Chat",
+  "تأكيد مسح المحادثة" : "Confirm deletion of the chat",
+  "هل تريد بالفعل مسح محتويات الشات؟": "Do you want to delete the chat",
+  "نعم":"yes",
+  "لا": "No",
+  'أكتب رسالتك هنا...': "Write Your message here",
+  "تاريخ الاستشارات":"Consult History",
+  "اليوم-20 مايو 2024":"Today-20 May,2024",
+  "رسالة. ":"Message",
+  "مكتمل":"Completed",
+  "ماريا كرم":"Mari Robbert",
+  "تم الرد في الساعة 4:00 مساء":"Answered at 4:00 PM",
+  "ميعاد. ": "Appointment",
+  "زياد الشرقاوي": "Hanry Watterson",
+  "4:00 مساء - 5:00 مساء":"4:00 PM - 5:00 PM",
+  "تم الإلغاء بواسطة المريض":"Patient Canceled",
+  "بسنت احمد":"Anne Smith",
+  "7:00 مساء - 8:00 مساء":"7:00 PM : 8:00 PM",
+  "19 أبريل 2024":"19 April,2024",
+  "لارا علاء":"Ellen Abbott",
+  "3:00 مساء - 4:00 مساء":"4:00 PM - 3:00 PM",
+  "نور بسام": "Willie Erickson",
+  "جدول المواعيد":"Schedule",
+  "إدارة المرضى":"Patient Management",
+  "جينا احمد":"Jenna Schoen",
+  "أنثى   .24 سنة ": "Female  . 24Years Old",
+  "بسام نور" : "Willie Erickson",
+  " ذكر   .28 سنة":"Male  . 28 years Old",
+  "أنثى   .21 سنة ":"Female  . 21 Years Old",
+  "سيليا سمير":"Donnie Brekke",
+  "أنثى   .30 سنة ": "Fmale  . 30 Years Old",
+  "عمر عادل":"Brad Walter",
+  "ذكر   .24 سنة ": "Male  .24 Years Old",
+  "جورج بيتر": "George Boyer",
+  "ذكر   .26 سنة ": "Male  26 . Years Old",
+  '  اكتب نبذة مختصرة عنك  ':"Write a brief about you",
+  '   ادخل التعليم و التخصص    ':"Enter education and specialization",
+  "قم بتحديد مواعيد العمل و الحجز المتاحة": " Select available opening and booking times",
+  'ملخص:': " Summary:",
+  "استشارات اليوم":"Consults for today",
+  "تم الإنتهاء من 5 من 10": "5 of 10 completed",
+  "إدارة المرضي":"Patient Management",
+  "استشارات مجانية": "Free Consults",
+  'لم يتم اختيار أي ملف صوتي.':"No music",
+  "اليوم-20مايو2024": "Today - 20 May,2024",
+  "لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م":"You Have Appointment With Dr.Herbert Wysocki Today At 7:00 PM",
+  "الآن": "Now",
+  "منذ 25 دقيقة":"25 Minutes Ago",
+  "منذ 2 ساعات":"2 Hours Ago",
+  "19أبريل2024":"19April,2024",
+  "أمس.7:58 صباحآ": "Yesterday,10:58 AM",
+  "لديك موعد مع د.احمد اسماعيل اليوم في الساعة5:00 م":"Ypu Have Appointment With Dr.Herbert wyscki Today At 5:00 PM",
+  "أمس.9:58 صباحآ":"Yesterday,10:58 PM",
+  "لديك موعد مع سارة ابراهيم الساعه 08:00 مساء اليوم." : "Ypu Have Appointment With Sarah Connor At 08:00 PM Today",
+  "أكمل ملفك الشخصي لتكون مستشارآ صحيآ أفضل. ملف كامل":"Complete Your Profile To Be Better Health Consults.Complete Profile",
+  "أضف حسابآ مصرفيآ لسحب دخلك.":"Add Bank Account To Withdraw You Income.",
+  "أضف الآن >":"Add Now >",
+  "لديك موعد مع ليلى باسم الساعة05:00 مساء اليوم.": " You Have Appointment With Laila Connor At 05:00 PM Today",
+  "أمس.10:58 صباحآ":"Yesterday,10:58 AM",
+  "لديك طلب مكالمة صوتية من علي فى الساعة08:20 صباحآ اليوم.": " You Have Voice Call Request From Marry Jan Ot 08:20 AM Today.",
+  "لديك موعد مع كريم عزت الساعة05:00 مساء اليوم.":"You Have Appiontment With Laila Connor At 05:00 PM Today",
+  "أمس.الساعة2:00 صباحآ":"Yesterday,2:00 AM",
+  "اهلا بك  ": "Hello",
+  "اختر فئتك":"Choose your Category",
+  "معالج نفسي":"Therapist",
+  "مريض":"Patient",
+  "الصفحة الرئيسية":"Home",
+  "مرحبآ":"Hello",
+  "ليلي":"Laila",
+  "مشاركة عبر":"Share to",
+  "نسخ الرابط":"Copy Link",
+  "انستجرام":"Instagram",
+  "فيسبوك":"Facebook",
+  "واتساب":"Whatsapp",
+  "ادعو أصدقاء":"Invent Friends"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

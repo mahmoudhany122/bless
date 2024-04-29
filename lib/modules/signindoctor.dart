@@ -1,6 +1,7 @@
 import 'package:blessmate/modules/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'id.dart';
 import 'logres.dart';
@@ -28,7 +29,7 @@ class SignInDoc extends StatelessWidget {
             height: 30,
           ),
           Text(
-            "اختر فئتك",
+            "اختر فئتك".tr,
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.end,
           ),
@@ -45,7 +46,7 @@ class SignInDoc extends StatelessWidget {
             ),
             child: TextButton(
               child: Text(
-                "معالج نفسي",
+                "معالج نفسي".tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -77,7 +78,7 @@ class SignInDoc extends StatelessWidget {
             ),
             child: TextButton(
               child: Text(
-                "مريض",
+                "مريض".tr,
                 style: TextStyle(
                   color: HexColor('00B4D8'),
                   fontWeight: FontWeight.bold,

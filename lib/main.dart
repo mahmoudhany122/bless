@@ -1,4 +1,5 @@
 import 'package:blessmate/language/translate.dart';
+import 'package:blessmate/modules/chat.dart';
 import 'package:blessmate/modules/notification.dart';
 import 'package:blessmate/modules/onboardingscreen.dart';
 import 'package:blessmate/modules/profile1.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home:LogoScreen(),
+      home:ChatScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

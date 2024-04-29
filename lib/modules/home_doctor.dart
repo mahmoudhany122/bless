@@ -2,6 +2,7 @@ import 'package:blessmate/modules/doctor1.dart';
 import 'package:blessmate/modules/doctor2.dart';
 import 'package:blessmate/modules/doctor3.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'chatitem.dart';
 
@@ -55,8 +56,8 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                             Padding(padding: EdgeInsets.only(left: 10,right: 20,top: 10,bottom: 10),
 
                             ),
-                            Text("استشارات اليوم",style: TextStyle(fontSize: 24,color: Colors.black,fontWeight: FontWeight.bold),),
-                            Text("تم الإنتهاء من 5 من 10",style: TextStyle(color: Colors.grey,fontSize: 14),)
+                            Text("استشارات اليوم".tr,style: TextStyle(fontSize: 24,color: Colors.black,fontWeight: FontWeight.bold),),
+                            Text("تم الإنتهاء من 5 من 10".tr,style: TextStyle(color: Colors.grey,fontSize: 14),)
                           ],
                         ),
                         Spacer(),
@@ -97,7 +98,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                               image: AssetImage("assets/images/img_27.png"),
                             ),
                             SizedBox(height: 10,),
-                            Text("جدول المواعيد",style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),)
+                            Text("جدول المواعيد".tr,style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),)
                           ],
                         ),
                       )),
@@ -129,7 +130,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                               image: AssetImage("assets/images/img_26.png"),
                             ),
                             SizedBox(height: 10,),
-                            Text("تاريخ الاستشارات",style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),)
+                            Text("تاريخ الاستشارات".tr,style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),)
                           ],
                         ),
                       )),
@@ -164,7 +165,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                               image: AssetImage("assets/images/img_25.png"),
                             ),
                             SizedBox(height: 10,),
-                            Text("إدارة المرضي",style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),)
+                            Text("إدارة المرضي".tr,style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),)
                           ],
                         ),
                       )),
@@ -193,7 +194,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                            image: AssetImage("assets/images/img_24.png"),
                          ),
                          SizedBox(height: 10,),
-                         Text("استشارات مجانية",style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),)
+                         Text("استشارات مجانية".tr,style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),)
                           ],
                         ),
                       )

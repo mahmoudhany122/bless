@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:blessmate/modules/tap_bar_doctor.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -126,7 +127,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Therapist Details",
+          "تفاصيل المعالج",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.black,
@@ -199,7 +200,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                         maxLines: 3,
                         controller: descriptionController,
                         decoration: InputDecoration(
-                          hintText: '   Enter Description   ',
+                          hintText: '  اكتب نبذة مختصرة عنك  '.tr,
                           hintStyle: TextStyle(color: Colors.black),
                         ),
                         style: TextStyle(color: Colors.black),
@@ -215,7 +216,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                       child: TextField(
                         controller: specialityController,
                         decoration: InputDecoration(
-                          hintText: '   Enter Speciality    ',
+                          hintText: '   ادخل التعليم و التخصص    '.tr,
                           hintStyle: TextStyle(color: Colors.black),
                         ),
                         style: TextStyle(color: Colors.black),
@@ -236,7 +237,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                     color: HexColor('00B4D8'),
                   ),
                   child: MaterialButton(
-                    child: Text("قم بتحديد مواعيد العمل و الحجز المتاحة",
+                    child: Text("قم بتحديد مواعيد العمل و الحجز المتاحة".tr,
                     style: Theme.of(context).textTheme.button),
                     onPressed: sendTherapistProfile, // Call sendTherapistProfile method when the button is pressed
                   ),

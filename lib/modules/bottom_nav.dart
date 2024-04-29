@@ -2,6 +2,7 @@ import 'package:blessmate/modules/productscreen.dart';
 import 'package:blessmate/modules/profile1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'appointment_view.dart';
 import 'chat.dart';
@@ -49,23 +50,23 @@ class _BottomNavState extends State<BottomNav> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            label: "الرئيسية",
+            label: "الرئيسية".tr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
-            label: "محادثة",
+            label: "محادثة".tr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.explore_outlined),
-            label: "يستكشف",
+            label: "يستكشف".tr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.date_range_sharp),
-            label: "تعيينات",
+            label: "تعيينات".tr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
-            label: "الملف الشخصي",
+            label: "الملف الشخصي".tr,
           ),
         ],
       ),
