@@ -14,6 +14,7 @@ import 'modules/chat.dart';
 import 'modules/chat_doc.dart';
 import 'modules/chatitem.dart';
 import 'modules/dark.dart';
+import 'modules/explore.dart';
 import 'modules/home_doctor.dart';
 import 'modules/initsreen.dart';
 import 'modules/logindoc.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home:ChatScreen(),
+      home:Explore(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),
