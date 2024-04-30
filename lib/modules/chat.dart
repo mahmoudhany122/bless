@@ -163,12 +163,12 @@ class _ChatScreenState extends State<ChatScreen> {
         // Handle network errors
         print('Error: $error');
       }
+
     }
-    sendMessage("audio");
   }
 
-  play(url)async{
-    await _audioPlayer.play(UrlSource(url));
+  play(_filePath)async{
+    await _audioPlayer.play(UrlSource(_filePath));
     setState(() {
       _isPlayer=true;
     });

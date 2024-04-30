@@ -198,9 +198,10 @@ const Map<String,String> en ={
   "انستجرام":"Instagram",
   "فيسبوك":"Facebook",
   "واتساب":"Whatsapp",
-  "ادعو أصدقاء":"Invent Friends"
-
-
+  "ادعو أصدقاء":"Invent Friends",
+  "الوضع":"Mode",
+  'فاتح':"Light",
+  'غامق':"Dark",
 
 
 

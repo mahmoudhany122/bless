@@ -17,7 +17,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     bool _value = false;
     return Scaffold(
       appBar: AppBar(
-        title: Text("الإشعارات".tr,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 24),),
+        title: Text("الإشعارات".tr,style:  Theme.of(context).textTheme.bodyText2,),
         centerTitle: true,
       ),
       body:  ListView(
@@ -27,7 +27,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             children: [
               Container(
                 margin: EdgeInsets.all(10),
-                child:  Text("اليوم-20مايو2024".tr,style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,),),
+                child:  Text("اليوم-20مايو2024".tr,style: Theme.of(context).textTheme.bodyText1,),
               ),
               Container(
                   height: 101,
@@ -157,12 +157,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 TextButton(onPressed: (){}, child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),),
+                                    Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م".tr,style:Theme.of(context).textTheme.headline5 ,),
 
                                   ],
                                 ),
                                 ),
-                                Text("منذ 2 ساعات".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ,fontWeight: FontWeight.bold)) ,
+                                Text("منذ 2 ساعات".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 )) ,
                               ],
                             ) ,
                           ),
@@ -175,7 +175,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
               Container(
                 margin: EdgeInsets.all(10),
-                child:  Text("19أبريل2024".tr,style: TextStyle(fontSize: 20,color: Colors.grey.shade600,fontWeight: FontWeight.w500,),),
+                child:  Text("19أبريل2024".tr,style: Theme.of(context).textTheme.bodyText1,),
               ),
               Container(
                   height: 101,
@@ -209,8 +209,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextButton(onPressed: (){}, child:Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
-                                Text("أمس.7:58 صباحآ".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
+                                TextButton(onPressed: (){}, child:Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م".tr,style: Theme.of(context).textTheme.headline5,), ),
+                                Text("أمس.7:58 صباحآ".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 )),
                               ],
                             ) ,
                           ),
@@ -252,7 +252,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextButton(onPressed: (){}, child: Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة5:00 م".tr,style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),), ),
+                                TextButton(onPressed: (){}, child: Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة5:00 م".tr,style: Theme.of(context).textTheme.headline5,), ),
                                 Text("أمس.9:58 صباحآ".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
                               ],
                             ) ,

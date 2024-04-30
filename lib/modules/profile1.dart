@@ -8,9 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart'
 as hex; // aliasing the external HexColor class
+import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'add_after_signu.dart';
-
+enum MyThemeMode {
+  light,
+  dark,
+  third,
+}
 var myColor = hex.HexColor('00B4D8');
 
 class ProfileScreen1 extends StatefulWidget {
@@ -53,6 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
   }
   @override
   Widget build(BuildContext context) {
+    final themeMode = Provider.of<ValueNotifier<MyThemeMode>>(context);
     return Scaffold(
         appBar: AppBar(
           title: Center(
@@ -283,12 +290,50 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                     padding: const EdgeInsets.all(0),
                                                     child: TextButton(
                                                       onPressed: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  BrightnessSelectionScreen(),
-                                                            ));
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context)=>AlertDialog(
+                                                              actions: [
+                                                                Column(
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    SizedBox(height: 10,),
+                                                                    Center(
+                                                                      child: Text("الوضع".tr,style: TextStyle(color: HexColor('00B4D8')),),),
+                                                                    SizedBox(height: 5,),
+                                                                    Divider(height: 1,),
+                                                                    SizedBox(
+                                                                      height: 5,
+                                                                    ),
+                                                                    RadioListTile<MyThemeMode>(
+                                                                      title:  Text('فاتح'.tr,
+                                                                        style: TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      activeColor: HexColor('00B4D8'),
+                                                                      value:MyThemeMode .light,
+                                                                      groupValue: themeMode.value,
+                                                                      onChanged: (value) {
+                                                                        themeMode.value = value!;
+
+                                                                      },
+                                                                    ),
+                                                                    RadioListTile<MyThemeMode>(
+                                                                      title:  Text('غامق'.tr,
+                                                                        style: TextStyle(color:Colors.black),
+                                                                      ),
+                                                                      activeColor: HexColor('00B4D8'),
+                                                                      value: MyThemeMode .dark,
+                                                                      groupValue: themeMode.value,
+                                                                      onChanged: (value) {
+                                                                        themeMode.value = value!;
+                                                                      },
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+
+                                                            )
+                                                        );
                                                       },
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.start,
@@ -391,7 +436,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                         padding: const EdgeInsets.all(0),
                                         child: TextButton(
 
-                                          onPressed: () {   showDialog(
+                                          onPressed: () {
+                                            showDialog(
                                               context: context,
                                               builder: (context)=>AlertDialog(
                                                   actions: [
@@ -399,7 +445,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.start,
                                                           children: [
-                                                            Text( "مشاركة عبر".tr,  style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                                                            Text( "مشاركة عبر".tr, style: Theme.of(context).textTheme.headline6,),
                                                             SizedBox(width: 5,),
                                                             Image( width: 20,
                                                                 height: 20,
@@ -585,8 +631,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                               actions: [
 
 
-                                                ElevatedButton(onPressed: (){ Navigator.push(
-                                                    context,MaterialPageRoute(builder: (context) => LogRes(),));},
+                                                ElevatedButton(onPressed: (){ Navigator.pushAndRemoveUntil(
+                                                    context,MaterialPageRoute(builder: (context) => LogRes(),),((route) => false));},
                                                   child: Text ("نعم. قم بتسجيل الخروج".tr,style: TextStyle(color:Colors.white,fontSize: 14),),
                                                   style: ElevatedButton.styleFrom(
                                                       backgroundColor: myColor
@@ -604,8 +650,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
 
                                                   child:
                                                     TextButton (
-                                                     onPressed: (){  Navigator.push(
-                                                                                     context,MaterialPageRoute(builder: (context) => ProfileScreen1(),));},
+                                                     onPressed: (){  Navigator.pushAndRemoveUntil(
+                                                                                     context,MaterialPageRoute(builder: (context) => ProfileScreen1(),),((route) => false));},
                                                          child: Text(
                                                         "الغاء".tr,style: TextStyle(fontSize:16,color: Colors.black),
 
@@ -620,7 +666,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                             ),
 
                                           ),
-                                              content: Text( "هل أنت متأكد أنك تريد تسجيل الخروج ".tr,  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+                                              content: Text( "هل أنت متأكد أنك تريد تسجيل الخروج ".tr, style: Theme.of(context).textTheme.headline6,)
                                           )  );
                                     },
                                   ),

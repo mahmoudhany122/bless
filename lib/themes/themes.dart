@@ -29,7 +29,11 @@ ThemeData darkTheme =ThemeData(
       fontWeight: FontWeight.w600,
       fontSize: 20.0,
       color: Colors.white,
-
+    ),
+    headlineLarge: TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 30.0,
+      color: Colors.black,
     ),
     bodyText2: TextStyle(
       color: Colors.white,
@@ -37,8 +41,14 @@ ThemeData darkTheme =ThemeData(
       fontWeight: FontWeight.bold,
     ),
     headline6: TextStyle(
-      color: Colors.white,
+      color: Colors.black,
       fontSize: 17,
+
+    ),
+      headline5  : TextStyle(
+      color: Colors.white,
+      fontSize: 16,
+
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -155,6 +165,17 @@ ThemeData lightTheme = ThemeData(
       color: Colors.black,
       fontWeight: FontWeight.w400,
       fontSize: 17,
+    ),
+    headline5  : TextStyle(
+      color: Colors.black,
+      fontSize: 16,
+      fontWeight: FontWeight.bold
+
+    ),
+    headlineLarge: TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 30.0,
+      color: Colors.black,
     ),
     button:  TextStyle(
       color: Colors.white,

@@ -9,7 +9,7 @@ class Explore extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Explore'),
+        title: Text('Explore',style: Theme.of(context).textTheme.bodyText2,),
       ),
       body: Padding(
         padding: EdgeInsets.all(10),
