@@ -254,17 +254,15 @@ class _ChatScreenState extends State<ChatScreen> {
                 else if (message.audio != null && message.audio.isNotEmpty) {
                   // Replace 'BubbleNormalAudio' with your own widget for displaying audio messages
                   return BubbleNormalAudio(
-                    onSeekChanged: (e){},
-                    color: message.isUserMessage ? HexColor('00B4D8') : Colors.grey.shade400,
-                    isLoading: false, // Set to true if audio is still loading
-                    isPlaying: _isPlayer, // Set to true if this audio is currently being played
-                    onPlayPauseButtonClick: () {
-                      if (!_isPlayer) {
-                        play(message.audio); // Play the audio when clicked
-                      } else {
-                        stop(); // Stop the audio when clicked again
+                      color: HexColor('00B4D8'),
+                      onSeekChanged: (e){},
+                      isLoading: false,
+                      isPlaying: _isPlayer,
+                      onPlayPauseButtonClick: () {
+                        if (!_isPlayer) {
+                          play(url);
+                        } else {stop();}
                       }
-                    },
                   );
                 }
 
@@ -273,6 +271,17 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
 
+          ),
+          BubbleNormalAudio(
+              color: HexColor('00B4D8'),
+              onSeekChanged: (e){},
+              isLoading: false,
+              isPlaying: _isPlayer,
+              onPlayPauseButtonClick: () {
+                if (!_isPlayer) {
+                  play(url);
+                } else {stop();}
+              }
           ),
           Container(
             padding: EdgeInsets.all(5.0),

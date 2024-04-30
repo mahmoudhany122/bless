@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home:BottomNav(),
+      home:ChatScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

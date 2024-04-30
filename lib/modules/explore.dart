@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -71,48 +73,74 @@ class GridItem extends StatelessWidget {
   }
 }
 
-class DetailPage extends StatelessWidget {
+
+
+class DetailPage extends StatefulWidget {
   final Map<String, dynamic> item;
 
   const DetailPage({Key? key, required this.item}) : super(key: key);
+
+  @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Image.asset(
-              'assets/${item['imageFileName']}',
-              height: 110,
-              width: 110,
-            ),
-            SizedBox(height: 16),
-            Text(
-              ' ${item['name']}',
-              style: Theme.of(context).textTheme.bodyText1,
-              textDirection: TextDirection.rtl,
-            ),
-            SizedBox(height: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Image.asset(
+                  'assets/${widget.item['imageFileName']}',
+                  height: 110,
+                  width: 110,
+                ),
+                SizedBox(height: 16),
                 Text(
-                  "لمحه عامه".tr,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headline1,
+                  ' ${widget.item['name']}',
+                  style: Theme.of(context).textTheme.bodyText1,
                   textDirection: TextDirection.rtl,
                 ),
-                Text(
-                  ' ${item['description']}',
-                  textDirection: TextDirection.rtl,
-                  style: Theme.of(context).textTheme.headline6,
+                SizedBox(height: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "لمحه عامه".tr,
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.headline1,
+                      textDirection: TextDirection.rtl,
+                    ),
+                    Text(
+                      _isExpanded
+                          ? ' ${widget.item['description']}'
+                          : '${widget.item['description'].substring(0, min<int>(50, widget.item['description'].length))}...',
+                      textDirection: TextDirection.rtl,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    if (!_isExpanded)
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _isExpanded = true;
+                          });
+                        },
+                        child: Text("قراءة المزيد"),
+                      ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -123,32 +151,32 @@ List<Map<String, dynamic>> items = [
   {
     'name': 'الاكتئاب'.tr,
     'imageFileName': 'explore/img.png',
-    'description': 'لاضطراب الاكتئابي (المعروف أيضاً باسم الاكتئاب) هو اضطراب'.tr,
+    'description': 'لاضطراب الاكتئابي (المعروف أيضاً باسم الاكتئاب) هو اضطراب نفسي شائع يسبب شعوراً بالحزن وفقدان الاهتمام بالأشياء التي كانت ممتعة مرة واحدة، وقد يؤدي إلى مجموعة من المشاكل النفسية والفسيولوجية. قد يؤثر الاكتئاب بشكل كبير على الأداء اليومي والعلاقات الشخصية. من المهم البحث عن العلاج المناسب للتعامل مع الاكتئاب وتحسين الجودة العامة للحياة. لاضطراب الاكتئابي (المعروف أيضاً باسم الاكتئاب) هو اضطراب نفسي شائع يسبب شعوراً بالحزن وفقدان الاهتمام بالأشياء التي كانت ممتعة مرة واحدة، وقد يؤدي إلى مجموعة من المشاكل النفسية والفسيولوجية. قد يؤثر الاكتئاب بشكل كبير على الأداء اليومي والعلاقات الشخصية. من المهم البحث عن العلاج المناسب للتعامل مع الاكتئاب وتحسين الجودة العامة للحياة. لاضطراب الاكتئابي (المعروف أيضاً باسم الاكتئاب) هو اضطراب نفسي شائع يسبب شعوراً بالحزن وفقدان الاهتمام بالأشياء التي كانت ممتعة مرة واحدة، وقد يؤدي إلى مجموعة من المشاكل النفسية والفسيولوجية. قد يؤثر الاكتئاب بشكل كبير على الأداء اليومي والعلاقات الشخصية. من المهم البحث عن العلاج المناسب للتعامل مع الاكتئاب وتحسين الجودة العامة للحياة.',
   },
   {
     'name': 'قلق'.tr,
     'imageFileName': 'explore/img_5.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
+    'description': 'عندما يصبح القلق مفرطاً أو غير مسيطر عليه، يمكن أن يؤثر على الحياة اليومية بشكل كبير. يمكن أن يتسبب القلق المستمر في مشاكل في العمل، والعلاقات الشخصية، والصحة العامة. يجب أن يتم التعامل مع القلق المفرط بجدية، وقد يتطلب الأمر العلاج الاحترافي للتغلب عليه. عندما يصبح القلق مفرطاً أو غير مسيطر عليه، يمكن أن يؤثر على الحياة اليومية بشكل كبير. يمكن أن يتسبب القلق المستمر في مشاكل في العمل، والعلاقات الشخصية، والصحة العامة. يجب أن يتم التعامل مع القلق المفرط بجدية، وقد يتطلب الأمر العلاج الاحترافي للتغلب عليه. عندما يصبح القلق مفرطاً أو غير مسيطر عليه، يمكن أن يؤثر على الحياة اليومية بشكل كبير. يمكن أن يتسبب القلق المستمر في مشاكل في العمل، والعلاقات الشخصية، والصحة العامة. يجب أن يتم التعامل مع القلق المفرط بجدية، وقد يتطلب الأمر العلاج الاحترافي للتغلب عليه.',
   },
   {
     'name': "إختلال النوم".tr,
     'imageFileName': 'explore/img_13.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
+    'description': 'يعتبر اضطراب النوم من الأمراض الشائعة التي يعاني منها الكثير من الأشخاص. قد يتسبب اضطراب النوم في مشاكل في الأداء اليومي، والتعب الشديد، وعدم القدرة على التركيز. يجب البحث عن الأسباب المحتملة لاضطراب النوم واتخاذ الإجراءات اللازمة للتعامل معه بفعالية. يعتبر اضطراب النوم من الأمراض الشائعة التي يعاني منها الكثير من الأشخاص. قد يتسبب اضطراب النوم في مشاكل في الأداء اليومي، والتعب الشديد، وعدم القدرة على التركيز. يجب البحث عن الأسباب المحتملة لاضطراب النوم واتخاذ الإجراءات اللازمة للتعامل معه بفعالية. يعتبر اضطراب النوم من الأمراض الشائعة التي يعاني منها الكثير من الأشخاص. قد يتسبب اضطراب النوم في مشاكل في الأداء اليومي، والتعب الشديد، وعدم القدرة على التركيز. يجب البحث عن الأسباب المحتملة لاضطراب النوم واتخاذ الإجراءات اللازمة للتعامل معه بفعالية.',
   },
   {
     'name': 'ضغط'.tr,
     'imageFileName': 'explore/img_7.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
+    'description': 'الضغط هو حالة يمكن أن تحدث عندما يكون هناك تفاعل سلبي بين الفرد والبيئة المحيطة به. يمكن أن يسبب الضغط تأثيرات سلبية على الصحة العامة، بما في ذلك زيادة مستويات الإجهاد والقلق وحتى المشاكل الصحية الجسدية مثل الصداع والامتناع عن الأكل. للتعامل مع الضغط بشكل فعال، يجب تحديد مصادر الضغط وتطبيق استراتيجيات لإدارته بشكل صحيح.',
   },
   {
     'name': 'رهاب'.tr,
     'imageFileName': 'explore/img_4.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
+    'description': 'يُعرف رهاب بأنه خوف شديد من شيء معين أو موقف معين يمكن أن يكون غير منطقي. قد يؤثر الرهاب على الحياة اليومية للشخص وقد يؤدي إلى تجنب الأماكن أو الأشياء التي تسبب الخوف، مما يؤثر على الحياة الاجتماعية والمهنية. يجب البحث عن العلاج المناسب للتعامل مع الرهاب وتحسين الجودة العامة للحياة.',
   },
   {
     'name': 'اضطراب في الشخصية'.tr,
     'imageFileName': 'explore/img_9.png',
-    'description': 'عانوا من سوء المعاملة أو الخسائر الفا'.tr,
+    'description': 'يتسم اضطراب الشخصية بتشوه في النظرة الذاتية وطريقة تفكير الشخص وتصرفاته. يمكن أن يؤدي اضطراب الشخصية إلى مشاكل في العلاقات الشخصية والعمل والتعليم. يمكن أن يكون العلاج النفسي مفيدًا للأشخاص الذين يعانون من اضطراب الشخصية لتحسين جودة حياتهم وعلاقاتهم.',
   },
   // Add more items with different data
 ];
