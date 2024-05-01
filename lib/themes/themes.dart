@@ -32,12 +32,12 @@ ThemeData darkTheme =ThemeData(
     ),
     headlineLarge: TextStyle(
       fontWeight: FontWeight.w600,
-      fontSize: 30.0,
+      fontSize: 23.0,
       color: Colors.black,
     ),
     bodyText2: TextStyle(
       color: Colors.white,
-      fontSize: 30,
+      fontSize: 23,
       fontWeight: FontWeight.bold,
     ),
     headline6: TextStyle(
@@ -148,7 +148,7 @@ ThemeData lightTheme = ThemeData(
     ),
     bodyText2: TextStyle(
       color: Colors.black,
-      fontSize: 30,
+      fontSize: 23,
       fontWeight: FontWeight.bold,
     ),
     headline1:TextStyle(
@@ -174,7 +174,7 @@ ThemeData lightTheme = ThemeData(
     ),
     headlineLarge: TextStyle(
       fontWeight: FontWeight.w600,
-      fontSize: 30.0,
+      fontSize: 23.0,
       color: Colors.black,
     ),
     button:  TextStyle(

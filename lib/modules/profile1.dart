@@ -1,3 +1,4 @@
+import 'package:blessmate/modules/Notification_mute.dart';
 import 'package:blessmate/modules/dark.dart';
 import 'package:blessmate/modules/logres.dart';
 import 'package:blessmate/modules/notification.dart';
@@ -112,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           children: [
 
                                                 Text(
-                                                   "ليلي".tr,
+                                                   _firstName,
                                                     textAlign: TextAlign.right,
                                                     style: TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.bold)),
                                                 SizedBox(
@@ -192,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
-                                                              builder: (context) => NotificationScreen(),
+                                                              builder: (context) => NotificationMute(),
                                                             ));
                                                       },
                                                       child: Row(
@@ -290,6 +291,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                     padding: const EdgeInsets.all(0),
                                                     child: TextButton(
                                                       onPressed: () {
+
                                                         showDialog(
                                                             context: context,
                                                             builder: (context)=>AlertDialog(
@@ -459,8 +461,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                               children: [
                                                                 TextButton (
                                                                     onPressed: (){},
-                                                                    child:Image( width: 42,
-                                                                        height: 42,
+                                                                    child:Image( width: 45,
+                                                                        height: 45,
                                                                         image: AssetImage("assets/images/img_43.png"))
                                                                 ),
                                                                 Text("نسخ الرابط".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
@@ -469,8 +471,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                               children: [
                                                                 TextButton (
                                                                     onPressed: (){},
-                                                                    child:Image( width: 42,
-                                                                        height: 42,
+                                                                    child:Image( width: 45,
+                                                                        height: 45,
                                                                         image: AssetImage("assets/images/img_42.png"))
                                                                 ),
                                                                 Text("انستجرام".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
@@ -479,8 +481,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                               children: [
                                                                 TextButton (
                                                                     onPressed: (){},
-                                                                    child:Image( width: 42,
-                                                                        height: 42,
+                                                                    child:Image( width: 45,
+                                                                        height: 45,
                                                                         image: AssetImage("assets/images/img_41.png"))
                                                                 ),
                                                                 Text("فيسبوك".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
@@ -489,8 +491,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                               children: [
                                                                 TextButton (
                                                                     onPressed: (){},
-                                                                    child:Image( width: 42,
-                                                                        height: 42,
+                                                                    child:Image( width: 45,
+                                                                        height: 45,
                                                                         image: AssetImage("assets/images/img_40.png"))
                                                                 ),
                                                                 Text("واتساب".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))

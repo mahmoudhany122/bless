@@ -11,7 +11,12 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:hexcolor/hexcolor.dart';
-
+import 'package:provider/provider.dart';
+enum MyThemeMode {
+  light,
+  dark,
+  third,
+}
 class ProfileDoctorScreen extends StatefulWidget {
 
   final int therapistId;
@@ -26,6 +31,7 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
   String _selectedLanguage = 'ar';
   @override
   Widget build(BuildContext context) {
+    final themeMode = Provider.of<ValueNotifier<MyThemeMode>>(context);
     return Scaffold(
         body: SingleChildScrollView(
             child: Padding(
@@ -193,12 +199,50 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
                                     padding: const EdgeInsets.all(0),
                                     child: TextButton(
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  BrightnessSelectionScreen(),
-                                            ));
+                                        showDialog(
+                                            context: context,
+                                            builder: (context)=>AlertDialog(
+                                              actions: [
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 10,),
+                                                    Center(
+                                                      child: Text("الوضع".tr,style: TextStyle(color: HexColor('00B4D8')),),),
+                                                    SizedBox(height: 5,),
+                                                    Divider(height: 1,),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    RadioListTile<MyThemeMode>(
+                                                      title:  Text('فاتح'.tr,
+                                                        style: TextStyle(color: Colors.black),
+                                                      ),
+                                                      activeColor: HexColor('00B4D8'),
+                                                      value:MyThemeMode .light,
+                                                      groupValue: themeMode.value,
+                                                      onChanged: (value) {
+                                                        themeMode.value = value!;
+
+                                                      },
+                                                    ),
+                                                    RadioListTile<MyThemeMode>(
+                                                      title:  Text('غامق'.tr,
+                                                        style: TextStyle(color:Colors.black),
+                                                      ),
+                                                      activeColor: HexColor('00B4D8'),
+                                                      value: MyThemeMode .dark,
+                                                      groupValue: themeMode.value,
+                                                      onChanged: (value) {
+                                                        themeMode.value = value!;
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+
+                                            )
+                                        );
                                       },
                                       child: Row(
                                         mainAxisAlignment:

@@ -113,6 +113,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
             style: Theme.of(context).textTheme.headlineLarge,
           ),
         ),
+        centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 2,
       ),

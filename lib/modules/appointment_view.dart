@@ -65,13 +65,9 @@ class _AppointmentViewState extends State<AppointmentView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title:  Text(
           "Choose Your Therapist",
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 23,
-            color: Colors.black,
-          ),
+          style:Theme.of(context).textTheme.bodyText2
         ),
         centerTitle: true,
       ),

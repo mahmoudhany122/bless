@@ -31,7 +31,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _loadMessages(); // استرجاع الرسائل عند بدء بناء الشاشة
+    _loadMessages();// استرجاع الرسائل عند بدء بناء الشاشة
+  _audioPlayer = AudioPlayer();
   }
   void dispose(){
     super.dispose();
@@ -260,7 +261,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       isPlaying: _isPlayer,
                       onPlayPauseButtonClick: () {
                         if (!_isPlayer) {
-                          play(url);
+                          play(message.audio);
                         } else {stop();}
                       }
                   );
@@ -271,17 +272,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
 
-          ),
-          BubbleNormalAudio(
-              color: HexColor('00B4D8'),
-              onSeekChanged: (e){},
-              isLoading: false,
-              isPlaying: _isPlayer,
-              onPlayPauseButtonClick: () {
-                if (!_isPlayer) {
-                  play(url);
-                } else {stop();}
-              }
           ),
           Container(
             padding: EdgeInsets.all(5.0),
