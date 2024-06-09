@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 var myColor = HexColor('00B4D8');
 
 class NotificationScreen extends StatefulWidget {
@@ -12,6 +14,42 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
+  Future<void> initNotification()async{
+    AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('assets/images/img_1.png');
+    var initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,);
+      await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse)async{}
+    );
+  }
+  notificationDetails(){
+    return NotificationDetails(
+      android: AndroidNotificationDetails("channelId",'channelName',
+      importance: Importance.max)
+    );
+  }
+
+  Future showNotification(
+  {int id =0, String? title, String?body, String? payLoad})async{
+    return flutterLocalNotificationsPlugin.show(id, title, body,await notificationDetails());
+  }
+
+  Future<DateTime> fetchAppointmentDate() async {
+    final response =
+    await http.get(Uri.https('blessmate.onrender.com', '/Patient/GetTherapistes'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      final String appointmentDateString = data['appointment_date'];
+      final DateTime appointmentDate = DateTime.parse(appointmentDateString);
+      return appointmentDate;
+    } else {
+      throw Exception('Failed to load appointment date');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     bool _value = false;
