@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:blessmate/modules/Notification_mute.dart';
 import 'package:blessmate/modules/dark.dart';
 import 'package:blessmate/modules/logres.dart';
@@ -13,6 +15,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'add_after_signu.dart';
+import 'package:share_plus/share_plus.dart';
 enum MyThemeMode {
   light,
   dark,
@@ -28,6 +31,7 @@ class ProfileScreen1 extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen1> {
+  TextEditingController textdata = TextEditingController();
 
   bool _switch = false;
 
@@ -193,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
-                                                              builder: (context) => NotificationMute(),
+                                                              builder: (context) => NotificationScreen(),
                                                             ));
                                                       },
                                                       child: Row(
@@ -454,52 +458,63 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                                 image: AssetImage("assets/images/img_39.png"))
                                                           ],
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Column(
-                                                              children: [
-                                                                TextButton (
-                                                                    onPressed: (){},
-                                                                    child:Image( width: 45,
-                                                                        height: 45,
-                                                                        image: AssetImage("assets/images/img_43.png"))
-                                                                ),
-                                                                Text("نسخ الرابط".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
-                                                              ],
-                                                            ), Column(
-                                                              children: [
-                                                                TextButton (
-                                                                    onPressed: (){},
-                                                                    child:Image( width: 45,
-                                                                        height: 45,
-                                                                        image: AssetImage("assets/images/img_42.png"))
-                                                                ),
-                                                                Text("انستجرام".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
-                                                              ],
-                                                            ), Column(
-                                                              children: [
-                                                                TextButton (
-                                                                    onPressed: (){},
-                                                                    child:Image( width: 45,
-                                                                        height: 45,
-                                                                        image: AssetImage("assets/images/img_41.png"))
-                                                                ),
-                                                                Text("فيسبوك".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
-                                                              ],
-                                                            ), Column(
-                                                              children: [
-                                                                TextButton (
-                                                                    onPressed: (){},
-                                                                    child:Image( width: 45,
-                                                                        height: 45,
-                                                                        image: AssetImage("assets/images/img_40.png"))
-                                                                ),
-                                                                Text("واتساب".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
-                                                              ],
-                                                            ),
-                                                         
-                                                        ],)
+                                                       Row(
+                                                         mainAxisAlignment: MainAxisAlignment.start,
+                                                         children: [
+
+                                                           Column(
+                                                             children: [
+
+                                                               TextButton (
+                                                                   onPressed: ()async{
+                                                                     Share.share('https://www.figma.com/file/jwAGA7AI0TtOyIxBzPKVYW/graduation-project?type=design&node-id=0%3A1&mode=design&t=QfxZJLW4DnWY69MC-1');
+                                                                   },
+                                                                   child:Image( width: 43,
+                                                                       height: 43,
+                                                                       image: AssetImage("assets/images/img_43.png"))
+                                                               ),
+                                                               Text("نسخ الرابط".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                             ],
+                                                           ), Column(
+                                                             children: [
+                                                               TextButton (
+                                                                   onPressed: ()async{
+                                                                     Share.share('https://www.figma.com/file/jwAGA7AI0TtOyIxBzPKVYW/graduation-project?type=design&node-id=0%3A1&mode=design&t=QfxZJLW4DnWY69MC-1');
+                                                                   },
+                                                                   child:Image( width: 43,
+                                                                       height: 43,
+                                                                       image: AssetImage("assets/images/img_42.png"))
+                                                               ),
+                                                               Text("انستجرام".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                             ],
+                                                           ), Column(
+                                                             children: [
+                                                               TextButton (
+                                                                   onPressed: ()async{
+                                                                     Share.share('https://www.figma.com/file/jwAGA7AI0TtOyIxBzPKVYW/graduation-project?type=design&node-id=0%3A1&mode=design&t=QfxZJLW4DnWY69MC-1');
+                                                                   },
+                                                                   child:Image( width: 43,
+                                                                       height: 43,
+                                                                       image: AssetImage("assets/images/img_41.png"))
+                                                               ),
+                                                               Text("فيسبوك".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                             ],
+                                                           ), Column(
+                                                             children: [
+                                                               TextButton (
+                                                                   onPressed: ()async{
+                                                                     Share.share('https://www.figma.com/file/jwAGA7AI0TtOyIxBzPKVYW/graduation-project?type=design&node-id=0%3A1&mode=design&t=QfxZJLW4DnWY69MC-1');
+                                                                   },
+                                                                   child:Image( width: 43,
+                                                                       height: 43,
+                                                                       image: AssetImage("assets/images/img_40.png"))
+                                                               ),
+                                                               Text("واتساب".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                             ],
+                                                           ),
+
+                                                         ],),
+
                                                        
 
                                                      ]

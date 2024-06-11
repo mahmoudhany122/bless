@@ -68,14 +68,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child:  Text("اليوم-20مايو2024".tr,style: Theme.of(context).textTheme.bodyText1,),
               ),
               Container(
-                  height: 101,
-                  width: double.infinity,
+                  height: 105,
+                  width:MediaQuery.of(context).size.width,
                   color:HexColor('D1F1F8'),
                   child:Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          
                           Container(
                             margin: EdgeInsets.only(right: 10,bottom: 30),
                             height: 40,
@@ -94,8 +95,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 8) ,
-                            width: 340,
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            width: 300,
                             height: 100,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,6 +113,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                         ],
                       ),
+
                       Divider(color: Colors.grey,height: 1,),
                     ],
                   )
@@ -143,8 +145,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 8) ,
-                            width: 340,
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            width: 300,
                             height: 100,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,7 +189,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
-                            width: 340,
+                            width: 300,
                             height: 100,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,8 +243,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 8) ,
-                            width: 340,
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            width: 300,
                             height: 100,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,8 +286,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 8) ,
-                            width: 340,
+                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            width: 300,
                             height: 100,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
