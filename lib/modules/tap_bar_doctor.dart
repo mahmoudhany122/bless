@@ -122,12 +122,11 @@ class _TabBarScreenState extends State<TabBarScreen> {
             tabs: [
               Tab(
                 child:Text(
-                  _firstName  ,
+                  "الملف الشخصى",
                   style: TextStyle(
                       fontSize: 200,
                       fontWeight: FontWeight.bold,
-
-                      color: Colors.green),
+                     ),
                 ),
               ),
               Tab(
