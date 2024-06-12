@@ -1,5 +1,6 @@
 import 'package:blessmate/language/translate.dart';
 import 'package:blessmate/modules/chat.dart';
+import 'package:blessmate/modules/login.dart';
 import 'package:blessmate/modules/notification.dart';
 import 'package:blessmate/modules/onboardingscreen.dart';
 import 'package:blessmate/modules/profile1.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'modules/all.dart';
 import 'modules/bottom_nav.dart';
 import 'modules/chat.dart';
 import 'modules/chat_doc.dart';
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home:ChatScreen(),
+      home:LoginScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),
