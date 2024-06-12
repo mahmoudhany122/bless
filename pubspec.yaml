@@ -69,7 +69,8 @@ dependencies:
   chat_bubbles: ^1.4.1
   raised_buttons: ^0.0.2
   path: ^1.8.2
-
+  flutter_local_notifications: ^17.1.2
+  share_plus:
 dev_dependencies:
   flutter_test:
     sdk: flutter

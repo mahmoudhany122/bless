@@ -88,7 +88,7 @@ class _GymState extends State<Gym> {
               SizedBox(height: 20),
               Text(
                 'التمارين المتاحة'.tr,
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.headline5,
               ),
               SizedBox(height: 10),
               GridView.builder(

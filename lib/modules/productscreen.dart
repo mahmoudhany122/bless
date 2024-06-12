@@ -1,4 +1,5 @@
 import 'package:blessmate/modules/musiq.dart';
+import 'package:blessmate/modules/notification.dart';
 import 'package:blessmate/modules/yoga.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> screensName = ['الكل'.tr, 'موسيقى'.tr, 'التامل'.tr, 'اليوجا'.tr, 'تمارين'];
+  List<String> screensName = ['الكل'.tr, 'موسيقى'.tr, 'التامل'.tr, 'اليوجا'.tr, 'تمارين'.tr];
   int _selectedIndex = 0;
 
   @override
@@ -25,7 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.notifications_none, color: HexColor('00B4D8')),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationScreen(),
+                ));
+          },
         ),
         title: Text(
           screensName[_selectedIndex], // Update the title based on selected tab

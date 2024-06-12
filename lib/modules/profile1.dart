@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:blessmate/modules/Notification_mute.dart';
 import 'package:blessmate/modules/dark.dart';
 import 'package:blessmate/modules/logres.dart';
 import 'package:blessmate/modules/notification.dart';
@@ -8,9 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart'
 as hex; // aliasing the external HexColor class
+import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'add_after_signu.dart';
-
+import 'package:share_plus/share_plus.dart';
+enum MyThemeMode {
+  light,
+  dark,
+  third,
+}
 var myColor = hex.HexColor('00B4D8');
 
 class ProfileScreen1 extends StatefulWidget {
@@ -21,6 +31,7 @@ class ProfileScreen1 extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen1> {
+  TextEditingController textdata = TextEditingController();
 
   bool _switch = false;
 
@@ -53,6 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
   }
   @override
   Widget build(BuildContext context) {
+    final themeMode = Provider.of<ValueNotifier<MyThemeMode>>(context);
     return Scaffold(
         appBar: AppBar(
           title: Center(
@@ -105,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                           children: [
 
                                                 Text(
-                                                   "ليلي".tr,
+                                                   _firstName,
                                                     textAlign: TextAlign.right,
                                                     style: TextStyle(fontSize: 24,color: Colors.white,fontWeight: FontWeight.bold)),
                                                 SizedBox(
@@ -283,12 +295,51 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                     padding: const EdgeInsets.all(0),
                                                     child: TextButton(
                                                       onPressed: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  BrightnessSelectionScreen(),
-                                                            ));
+
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context)=>AlertDialog(
+                                                              actions: [
+                                                                Column(
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    SizedBox(height: 10,),
+                                                                    Center(
+                                                                      child: Text("الوضع".tr,style: TextStyle(color: HexColor('00B4D8')),),),
+                                                                    SizedBox(height: 5,),
+                                                                    Divider(height: 1,),
+                                                                    SizedBox(
+                                                                      height: 5,
+                                                                    ),
+                                                                    RadioListTile<MyThemeMode>(
+                                                                      title:  Text('فاتح'.tr,
+                                                                        style: TextStyle(color: Colors.black),
+                                                                      ),
+                                                                      activeColor: HexColor('00B4D8'),
+                                                                      value:MyThemeMode .light,
+                                                                      groupValue: themeMode.value,
+                                                                      onChanged: (value) {
+                                                                        themeMode.value = value!;
+
+                                                                      },
+                                                                    ),
+                                                                    RadioListTile<MyThemeMode>(
+                                                                      title:  Text('غامق'.tr,
+                                                                        style: TextStyle(color:Colors.black),
+                                                                      ),
+                                                                      activeColor: HexColor('00B4D8'),
+                                                                      value: MyThemeMode .dark,
+                                                                      groupValue: themeMode.value,
+                                                                      onChanged: (value) {
+                                                                        themeMode.value = value!;
+                                                                      },
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+
+                                                            )
+                                                        );
                                                       },
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.start,
@@ -391,7 +442,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                         padding: const EdgeInsets.all(0),
                                         child: TextButton(
 
-                                          onPressed: () {   showDialog(
+                                          onPressed: () {
+                                            showDialog(
                                               context: context,
                                               builder: (context)=>AlertDialog(
                                                   actions: [
@@ -399,59 +451,70 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.start,
                                                           children: [
-                                                            Text( "مشاركة عبر".tr,  style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                                                            Text( "مشاركة عبر".tr, style: Theme.of(context).textTheme.headline6,),
                                                             SizedBox(width: 5,),
                                                             Image( width: 20,
                                                                 height: 20,
                                                                 image: AssetImage("assets/images/img_39.png"))
                                                           ],
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: [
-                                                            Column(
-                                                              children: [
-                                                                TextButton (
-                                                                    onPressed: (){},
-                                                                    child:Image( width: 42,
-                                                                        height: 42,
-                                                                        image: AssetImage("assets/images/img_43.png"))
-                                                                ),
-                                                                Text("نسخ الرابط".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
-                                                              ],
-                                                            ), Column(
-                                                              children: [
-                                                                TextButton (
-                                                                    onPressed: (){},
-                                                                    child:Image( width: 42,
-                                                                        height: 42,
-                                                                        image: AssetImage("assets/images/img_42.png"))
-                                                                ),
-                                                                Text("انستجرام".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
-                                                              ],
-                                                            ), Column(
-                                                              children: [
-                                                                TextButton (
-                                                                    onPressed: (){},
-                                                                    child:Image( width: 42,
-                                                                        height: 42,
-                                                                        image: AssetImage("assets/images/img_41.png"))
-                                                                ),
-                                                                Text("فيسبوك".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
-                                                              ],
-                                                            ), Column(
-                                                              children: [
-                                                                TextButton (
-                                                                    onPressed: (){},
-                                                                    child:Image( width: 42,
-                                                                        height: 42,
-                                                                        image: AssetImage("assets/images/img_40.png"))
-                                                                ),
-                                                                Text("واتساب".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
-                                                              ],
-                                                            ),
-                                                         
-                                                        ],)
+                                                       Row(
+                                                         mainAxisAlignment: MainAxisAlignment.start,
+                                                         children: [
+
+                                                           Column(
+                                                             children: [
+
+                                                               TextButton (
+                                                                   onPressed: ()async{
+                                                                     Share.share('https://www.figma.com/file/jwAGA7AI0TtOyIxBzPKVYW/graduation-project?type=design&node-id=0%3A1&mode=design&t=QfxZJLW4DnWY69MC-1');
+                                                                   },
+                                                                   child:Image( width: 43,
+                                                                       height: 43,
+                                                                       image: AssetImage("assets/images/img_43.png"))
+                                                               ),
+                                                               Text("نسخ الرابط".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                             ],
+                                                           ), Column(
+                                                             children: [
+                                                               TextButton (
+                                                                   onPressed: ()async{
+                                                                     Share.share('https://www.figma.com/file/jwAGA7AI0TtOyIxBzPKVYW/graduation-project?type=design&node-id=0%3A1&mode=design&t=QfxZJLW4DnWY69MC-1');
+                                                                   },
+                                                                   child:Image( width: 43,
+                                                                       height: 43,
+                                                                       image: AssetImage("assets/images/img_42.png"))
+                                                               ),
+                                                               Text("انستجرام".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                             ],
+                                                           ), Column(
+                                                             children: [
+                                                               TextButton (
+                                                                   onPressed: ()async{
+                                                                     Share.share('https://www.figma.com/file/jwAGA7AI0TtOyIxBzPKVYW/graduation-project?type=design&node-id=0%3A1&mode=design&t=QfxZJLW4DnWY69MC-1');
+                                                                   },
+                                                                   child:Image( width: 43,
+                                                                       height: 43,
+                                                                       image: AssetImage("assets/images/img_41.png"))
+                                                               ),
+                                                               Text("فيسبوك".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                             ],
+                                                           ), Column(
+                                                             children: [
+                                                               TextButton (
+                                                                   onPressed: ()async{
+                                                                     Share.share('https://www.figma.com/file/jwAGA7AI0TtOyIxBzPKVYW/graduation-project?type=design&node-id=0%3A1&mode=design&t=QfxZJLW4DnWY69MC-1');
+                                                                   },
+                                                                   child:Image( width: 43,
+                                                                       height: 43,
+                                                                       image: AssetImage("assets/images/img_40.png"))
+                                                               ),
+                                                               Text("واتساب".tr,style: TextStyle(color: myColor,fontWeight: FontWeight.bold ,fontSize: 10,))
+                                                             ],
+                                                           ),
+
+                                                         ],),
+
                                                        
 
                                                      ]
@@ -585,8 +648,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                               actions: [
 
 
-                                                ElevatedButton(onPressed: (){ Navigator.push(
-                                                    context,MaterialPageRoute(builder: (context) => LogRes(),));},
+                                                ElevatedButton(onPressed: (){ Navigator.pushAndRemoveUntil(
+                                                    context,MaterialPageRoute(builder: (context) => LogRes(),),((route) => false));},
                                                   child: Text ("نعم. قم بتسجيل الخروج".tr,style: TextStyle(color:Colors.white,fontSize: 14),),
                                                   style: ElevatedButton.styleFrom(
                                                       backgroundColor: myColor
@@ -604,8 +667,8 @@ class _ProfileScreenState extends State<ProfileScreen1> {
 
                                                   child:
                                                     TextButton (
-                                                     onPressed: (){  Navigator.push(
-                                                                                     context,MaterialPageRoute(builder: (context) => ProfileScreen1(),));},
+                                                     onPressed: (){  Navigator.pushAndRemoveUntil(
+                                                                                     context,MaterialPageRoute(builder: (context) => ProfileScreen1(),),((route) => false));},
                                                          child: Text(
                                                         "الغاء".tr,style: TextStyle(fontSize:16,color: Colors.black),
 
@@ -620,7 +683,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                             ),
 
                                           ),
-                                              content: Text( "هل أنت متأكد أنك تريد تسجيل الخروج ".tr,  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+                                              content: Text( "هل أنت متأكد أنك تريد تسجيل الخروج ".tr, style: Theme.of(context).textTheme.headline6,)
                                           )  );
                                     },
                                   ),

@@ -110,9 +110,10 @@ class _AddInSignUpState extends State<AddInSignUp> {
         title: Center(
           child: Text(
             "تعديل الملف الشخصي".tr,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
         ),
+        centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 2,
       ),
