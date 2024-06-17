@@ -1,15 +1,17 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_bubbles/bubbles/bubble_normal_audio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:path/path.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chatmodel.dart';
 import '../services/chatservices.dart';
 import 'package:http/http.dart'as http;
 import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 
 
@@ -28,17 +30,18 @@ class _ChatScreenState extends State<ChatScreen> {
   AudioPlayer _audioPlayer = AudioPlayer();
   bool _isRecording = false;
   bool _isPlayer =false;
+  FlutterSoundRecorder _audioRecorder = FlutterSoundRecorder();
   @override
   void initState() {
     super.initState();
     _loadMessages();// استرجاع الرسائل عند بدء بناء الشاشة
-  _audioPlayer = AudioPlayer();
+    _requestPermission();
+    openTheRecorder();
   }
   void dispose(){
-    super.dispose();
-    _audioPlayer.dispose();
+   super.dispose();
+   _audioRecorder.closeRecorder();
   }
-
   // تحميل الرسائل المحفوظة في الذاكرة المحلية
   Future<void> _loadMessages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -115,27 +118,59 @@ class _ChatScreenState extends State<ChatScreen> {
     _saveMessage(userMessage); // حفظ الرسالة المرسلة
   }
 
-  Future<void> _startRecording() async {
+  void _requestPermission() async{
+    var status = await Permission.microphone.request();
+    if(!status.isGranted){
+      throw Exception("Microphone Permission not granted");
+    }
+    if(await Permission.storage.isDenied){
+      await Permission.storage.request();
+    }
+  }
+  Future<void> openTheRecorder() async{
+    await _audioRecorder.openRecorder();
+  }
+
+  Future<String?> _startRecording() async {
+    String path = await _getFilePath();
+    await _audioRecorder.openRecorder();
+    await _audioRecorder.startRecorder(toFile: path,codec: Codec.aacMP4);
     try {
+
       setState(() {
         _isRecording = true;
+        _filePath = path;
       });
-      Directory appDir = await getApplicationDocumentsDirectory();
-      String filePath = '${appDir.path}/audio.wav';
-      _filePath = filePath;
-      print('Start recorder');
+      return path;
+
     } catch (e) {
       print("Error starting recording: $e");
+      return null;
     }
   }
 
   Future<void> _stopRecording() async {
-    setState(() {
-      _isRecording = false;
-    });
-    print('Stop recrder');
+    try{
+      await _audioRecorder.stopRecorder();
+      await _audioRecorder.closeRecorder();
+      setState(() {
+        _isRecording = false;
+      });
+      print('Stop recrder. File saved at : $_filePath');
+    }
+    catch(e){
+      print("error stopping recording : $e");
+    }
+
     _uploadFile();
+
   }
+ Future<String> _getFilePath()async{
+    Directory appDir = await getApplicationDocumentsDirectory();
+    String appDirPath = appDir.path;
+    String _filePath= "$appDirPath/recrding_${DateTime.now().microsecondsSinceEpoch}.aac";
+    return _filePath;
+ }
 
   Future<void> _uploadFile() async {
     if (_filePath != null) {
@@ -169,14 +204,14 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   play(_filePath)async{
-    await _audioPlayer.play(UrlSource(_filePath));
+    await _audioRecorder.openRecorder();
     setState(() {
       _isPlayer=true;
     });
     print('audio player');
   }
   stop()async{
-    await _audioPlayer.stop();
+    await _audioRecorder.stopRecorder();
     setState(() {
       _isPlayer=false;
     });
