@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Message {
   final String text;
   final bool isUserMessage;
-  String audio;
+  final String audio;
   Message({required this.text, required this.isUserMessage,required this.audio});
 
   // Convert the Message object to a JSON-compatible Map
@@ -11,7 +11,8 @@ class Message {
     return {
       'text': text,
       'isUserMessage': isUserMessage,
-      "audio": audio,
+      "audio" : audio
+
     };
   }
 
@@ -30,6 +31,7 @@ class MessageDoc {
   late String senderId; // معرف المرسل
   late DateTime timestamp; // الوقت الذي تم فيه إرسال الرسالة
   late String receiverId; // معرف المستقبل
+
 
   MessageDoc({
     required this.text,

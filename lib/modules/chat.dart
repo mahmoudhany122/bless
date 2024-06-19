@@ -39,8 +39,8 @@ class _ChatScreenState extends State<ChatScreen> {
     openTheRecorder();
   }
   void dispose(){
-   super.dispose();
-   _audioRecorder.closeRecorder();
+    super.dispose();
+    _audioRecorder.closeRecorder();
   }
   // تحميل الرسائل المحفوظة في الذاكرة المحلية
   Future<void> _loadMessages() async {
@@ -134,7 +134,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<String?> _startRecording() async {
     String path = await _getFilePath();
     await _audioRecorder.openRecorder();
-    await _audioRecorder.startRecorder(toFile: path,codec: Codec.aacMP4);
+    await _audioRecorder.startRecorder(toFile: path,codec: Codec.pcm16WAV);
     try {
 
       setState(() {
@@ -165,12 +165,12 @@ class _ChatScreenState extends State<ChatScreen> {
     _uploadFile();
 
   }
- Future<String> _getFilePath()async{
+  Future<String> _getFilePath()async{
     Directory appDir = await getApplicationDocumentsDirectory();
     String appDirPath = appDir.path;
-    String _filePath= "$appDirPath/recrding_${DateTime.now().microsecondsSinceEpoch}.aac";
+    String _filePath= "$appDirPath/recrding_${DateTime.now().microsecondsSinceEpoch}.wav";
     return _filePath;
- }
+  }
 
   Future<void> _uploadFile() async {
     if (_filePath != null) {
@@ -322,11 +322,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       icon:_isRecording?
                       Icon(Icons.stop,color: Colors.white,): Icon(Icons.mic,color: Colors.white,),
                       onPressed: () {
-                       if(!_isRecording){
-                         _startRecording();
-                       }else{
-                         _stopRecording();
-                       }
+                        if(!_isRecording){
+                          _startRecording();
+                        }else{
+                          _stopRecording();
+                        }
                       },
                     ),
                   ),
@@ -423,5 +423,3 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
-
-

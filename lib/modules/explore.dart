@@ -11,7 +11,7 @@ class Explore extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Explore',style: Theme.of(context).textTheme.bodyText2,),
+        title: Text('Explore'),
       ),
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -91,55 +91,53 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Image.asset(
-                  'assets/${widget.item['imageFileName']}',
-                  height: 110,
-                  width: 110,
-                ),
-                SizedBox(height: 16),
-                Text(
-                  ' ${widget.item['name']}',
-                  style: Theme.of(context).textTheme.bodyText1,
-                  textDirection: TextDirection.rtl,
-                ),
-                SizedBox(height: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      "لمحه عامه".tr,
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline1,
-                      textDirection: TextDirection.rtl,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/${widget.item['imageFileName']}',
+                height: 110,
+                width: 110,
+              ),
+              SizedBox(height: 16),
+              Text(
+                ' ${widget.item['name']}',
+                style: Theme.of(context).textTheme.bodyText1,
+                textDirection: TextDirection.rtl,
+              ),
+              SizedBox(height: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "لمحه عامه".tr,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headline1,
+                    textDirection: TextDirection.rtl,
+                  ),
+                  Text(
+                    _isExpanded
+                        ? ' ${widget.item['description']}'
+                        : '${widget.item['description'].substring(0, min<int>(200, widget.item['description'].length))}...',
+                    textDirection: TextDirection.rtl,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  if (!_isExpanded)
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _isExpanded = true;
+                        });
+                      },
+                      child: Text("قراءة المزيد".tr),
                     ),
-                    Text(
-                      _isExpanded
-                          ? ' ${widget.item['description']}'
-                          : '${widget.item['description'].substring(0, min<int>(50, widget.item['description'].length))}...',
-                      textDirection: TextDirection.rtl,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    if (!_isExpanded)
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _isExpanded = true;
-                          });
-                        },
-                        child: Text("قراءة المزيد".tr),
-                      ),
-                  ],
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
