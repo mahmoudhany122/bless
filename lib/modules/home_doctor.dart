@@ -57,7 +57,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
 
                             ),
                             Text("استشارات اليوم".tr,style: TextStyle(fontSize: 24,color: Colors.black,fontWeight: FontWeight.bold),),
-                            Text("تم الإنتهاء من 5 من 10".tr,style: TextStyle(color: Colors.grey,fontSize: 14),)
+                            Text("تم الإنتهاء من 0 من 0".tr,style: TextStyle(color: Colors.grey,fontSize: 14),)
                           ],
                         ),
                         Spacer(),

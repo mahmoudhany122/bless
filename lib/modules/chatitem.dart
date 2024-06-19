@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rxdart/rxdart.dart';
 import 'chat game/audio.dart';
 import 'chat game/video.dart';
 
@@ -30,21 +31,22 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
   }
 
   String extractUsername(String email) {
-    // Split email based on '@' symbol
-    List<String> parts = email.split('@');
-    // Return the first part (username)
-    return parts[0];
+    List<String> parts = email.split("@");
+    String username = parts[0];
+    username = username.replaceAll("\\d", "");
+    return username;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Messages',
-        style: Theme.of(context).textTheme.bodyText1),
+        title: Text('Messages', style: Theme.of(context).textTheme.bodyText1),
         centerTitle: true,
       ),
-      body: _isLoading ? Center(child: CircularProgressIndicator()) : StreamBuilder<QuerySnapshot>(
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('chat')
             .where('receiverId', isEqualTo: _email)
@@ -58,7 +60,7 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           final List<DocumentSnapshot> messages = snapshot.data!.docs;
-          Set<String> displayedEmails = {}; // Store emails that have already been displayed
+          Set<String> displayedEmails = {};
           return ListView.separated(
             separatorBuilder: (context, index) => Divider(),
             itemCount: messages.length,
@@ -79,16 +81,15 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
                       ),
                     );
                   },
-                  child:Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -101,17 +102,16 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
                             SizedBox(width: 10),
                             CircleAvatar(
                               radius: 30,
-                              backgroundImage: AssetImage('assets/avatar.png'), // Replace with your image
+                              backgroundImage: AssetImage('assets/avatar.png'),
                             ),
                           ],
                         ),
                       ),
                     ],
                   ),
-
                 );
               } else {
-                return SizedBox.shrink(); // Do not display the email if it has already been displayed
+                return SizedBox.shrink();
               }
             },
           );
@@ -121,14 +121,11 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
   }
 }
 
-// ConversationScreen remains the same...
-
-
 class ConversationScreen extends StatefulWidget {
-  final String senderId;
   final String email;
+  final String senderId;
 
-  ConversationScreen({required this.senderId, required this.email});
+  ConversationScreen({required this.email, required this.senderId});
 
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
@@ -158,8 +155,41 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 
   void sendMessage(String message) {
-    // Here you can send the message to the database
-    // You can use FirebaseFirestore.instance.collection('chat').add() to add the message
+    FirebaseFirestore.instance.collection('chat').add({
+      'text': message,
+      'senderId': widget.email,
+      'receiverId': widget.senderId,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+    _textEditingController.clear();
+    setState(() {
+      _currentMessage = '';
+    });
+  }
+
+  Stream<List<DocumentSnapshot>> combineStreams() {
+    var stream1 = FirebaseFirestore.instance
+        .collection('chat')
+        .where('senderId', isEqualTo: widget.email)
+        .where('receiverId', isEqualTo: widget.senderId)
+        .orderBy('timestamp')
+        .snapshots();
+
+    var stream2 = FirebaseFirestore.instance
+        .collection('chat')
+        .where('senderId', isEqualTo: widget.senderId)
+        .where('receiverId', isEqualTo: widget.email)
+        .orderBy('timestamp')
+        .snapshots();
+
+    return CombineLatestStream.list([stream1, stream2]).map((snapshots) {
+      var allDocs = <DocumentSnapshot>[];
+      snapshots.forEach((snapshot) {
+        allDocs.addAll((snapshot as QuerySnapshot).docs);
+      });
+      allDocs.sort((a, b) => (a['timestamp'] as Timestamp).compareTo(b['timestamp'] as Timestamp));
+      return allDocs;
+    });
   }
 
   @override
@@ -171,29 +201,32 @@ class _ConversationScreenState extends State<ConversationScreen> {
           IconButton(
             icon: Icon(Icons.videocam, color: HexColor('00B4D8')),
             onPressed: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => VideoCallScreen(),));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VideoCallScreen(),
+                ),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.call, color: HexColor('00B4D8')),
-            onPressed: ()
-            {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => AudioCallScreen(),));
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AudioCallScreen(),
+                ),
+              );
             },
           ),
         ],
-
       ),
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('chat')
-                  .where('senderId', isEqualTo: widget.senderId)
-                  .where('receiverId', isEqualTo: widget.email)
-                  .orderBy('timestamp')
-                  .snapshots(),
+            child: StreamBuilder<List<DocumentSnapshot>>(
+              stream: combineStreams(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -201,7 +234,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
-                final List<DocumentSnapshot> messages = snapshot.data!.docs;
+                final List<DocumentSnapshot> messages = snapshot.data ?? [];
 
                 return ListView.builder(
                   itemCount: messages.length,
@@ -209,7 +242,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     final message = messages[index];
                     final isMe = message['senderId'] == widget.email;
                     return Align(
-                      alignment: isMe ?  Alignment.topRight : Alignment.topLeft,
+                      alignment: isMe ? Alignment.topRight : Alignment.topLeft,
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         padding: EdgeInsets.all(10),
@@ -219,7 +252,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         ),
                         child: Text(
                           message['text'] ?? 'No message',
-                          style: TextStyle(color: isMe ?  Colors.white : Colors.black,),
+                          style: TextStyle(
+                            color: isMe ? Colors.white : Colors.black,
+                          ),
                         ),
                       ),
                     );
@@ -239,7 +274,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       controller: _textEditingController,
                       onChanged: updateCurrentMessage,
                       decoration: InputDecoration(
-                        hintText: 'أكتب رسالتك هنا...'.tr,
+                        hintText: 'أكتب رسالتك هنا...',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

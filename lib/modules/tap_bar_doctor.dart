@@ -60,15 +60,12 @@ class _TabBarScreenState extends State<TabBarScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 8,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       "مرحبآ".tr,
-                      style: TextStyle(fontSize: 18, color: Colors.black),
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     SizedBox(
                       width: 5,
@@ -86,7 +83,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
                 Text(
                   extractUsername(_email),
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
@@ -124,7 +121,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
                 child:Text(
                   "الملف الشخصى",
                   style: TextStyle(
-                      fontSize: 200,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                      ),
                 ),
