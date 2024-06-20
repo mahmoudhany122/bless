@@ -72,6 +72,7 @@ dependencies:
   path: ^1.8.2
   flutter_local_notifications: ^17.1.2
   share_plus:
+flutter_sound: ^9.1.8
 dev_dependencies:
   flutter_test:
     sdk: flutter

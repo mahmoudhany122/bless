@@ -97,7 +97,7 @@ class _AllState extends State<All> {
                     controller: searchController, // استخدام حقل التحكم لحقل البحث
                     fillColor: Colors.white,
                     borderRadius: 21,
-                    hint: "بحث",
+                    hint: "بحث".tr,
                     prefixIcon: Icon(
                       Iconsax.search_normal,
                       color: Colors.cyan,
