@@ -285,9 +285,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 SizedBox(width: 5),
                 CircleAvatar(
                   radius: 22,
-                  backgroundColor: Colors.blue,
+                  backgroundColor: HexColor('00B4D8'),
                   child: IconButton(
-                    icon: Icon(Icons.send),
+                    icon: Icon(Icons.send_outlined, color: Colors.white),
                     onPressed: () {
                       final message = _currentMessage.trim();
                       if (message.isNotEmpty) {

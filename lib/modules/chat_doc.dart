@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/chatmodel.dart';
-import 'chat game/video.dart'; // Import the updated MessageDoc class
-
+import 'package:rxdart/rxdart.dart' as rx; // تحديد prefix لمكتبة rxdart
+import '../models/chatmodel.dart'; // استيراد نموذج MessageDoc المحدث
+import 'chat game/video.dart'; // استيراد VideoCallScreen المحدثة
 
 class ChatScreenDoc extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -19,12 +19,8 @@ class ChatScreenDoc extends StatefulWidget {
 class _ChatScreenDocState extends State<ChatScreenDoc> {
   late FirebaseFirestore _firestore;
   TextEditingController _textEditingController = TextEditingController();
-  String _currentMessage = ''; // تخزين النص المكتوب حالياً
+  String _currentMessage = '';
   String _email = '';
-
-
-
-
 
   @override
   void initState() {
@@ -32,13 +28,14 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
     _loadUserData();
     _firestore = FirebaseFirestore.instance;
   }
+
   void _loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _email = prefs.getString('email') ?? '';
     });
   }
-  // دالة تحديث واجهة المستخدم لعرض النص الذي تم كتابته بشكل مستمر
+
   void updateCurrentMessage(String value) {
     setState(() {
       _currentMessage = value;
@@ -48,8 +45,8 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
   Future<void> sendMessage(String message) async {
     final userMessage = MessageDoc(
       text: message,
-      senderId: _email,  // Replace 'currentUserId' with the actual sender's ID
-      timestamp: DateTime.now(), // Set the timestamp here
+      senderId: _email,
+      timestamp: DateTime.now(),
       receiverId: widget.userData["email"],
     );
     try {
@@ -58,6 +55,30 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
     } catch (e) {
       print('Failed to send message: $e');
     }
+  }
+
+  Stream<List<MessageDoc>> getMessages() {
+    Stream<QuerySnapshot> sentMessagesStream = _firestore
+        .collection('chat')
+        .where('senderId', isEqualTo: _email)
+        .where('receiverId', isEqualTo: widget.userData["email"])
+        .orderBy('timestamp')
+        .snapshots();
+
+    Stream<QuerySnapshot> receivedMessagesStream = _firestore
+        .collection('chat')
+        .where('senderId', isEqualTo: widget.userData["email"])
+        .where('receiverId', isEqualTo: _email)
+        .orderBy('timestamp')
+        .snapshots();
+
+    return rx.Rx.combineLatest2(sentMessagesStream, receivedMessagesStream, (QuerySnapshot sent, QuerySnapshot received) {
+      List<MessageDoc> messages = [];
+      messages.addAll(sent.docs.map((doc) => MessageDoc.fromJson(doc.data() as Map<String, dynamic>)).toList());
+      messages.addAll(received.docs.map((doc) => MessageDoc.fromJson(doc.data() as Map<String, dynamic>)).toList());
+      messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+      return messages;
+    });
   }
 
   @override
@@ -72,7 +93,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
           IconButton(
             icon: Icon(Icons.videocam, color: HexColor('00B4D8')),
             onPressed: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => VideoCallScreen(),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => VideoCallScreen(),));
             },
           ),
           IconButton(
@@ -85,13 +106,8 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('chat')
-                  .where('senderId', isEqualTo: _email)
-                  .where('receiverId', isEqualTo: widget.userData["email"])
-                  .orderBy('timestamp')
-                  .snapshots(),
-
+            child: StreamBuilder<List<MessageDoc>>(
+              stream: getMessages(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -99,12 +115,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
-                final List<MessageDoc> messages = snapshot.data!.docs
-                    .map((doc) => MessageDoc.fromJson(doc.data() as Map<String, dynamic>))
-                    .toList();
-
-                // ترتيب الرسائل حسب الوقت الذي تم إرسال الرسالة فيه
-                messages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+                final List<MessageDoc> messages = snapshot.data ?? [];
 
                 return ListView.builder(
                   itemCount: messages.length,
@@ -112,10 +123,10 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                     final message = messages[index];
                     return Container(
                       padding: const EdgeInsets.all(8.0),
-                      alignment: message.senderId ==_email ? Alignment.topRight : Alignment.topLeft,
+                      alignment: message.senderId == _email ? Alignment.topRight : Alignment.topLeft,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color:  message.senderId ==_email ? HexColor('00B4D8') : Colors.grey.shade400,
+                          color: message.senderId == _email ? HexColor('00B4D8') : Colors.grey.shade400,
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: Padding(
@@ -123,7 +134,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                           child: Text(
                             message.text,
                             style: TextStyle(
-                              color: message.senderId ==_email ? Colors.white : Colors.black,
+                              color: message.senderId == _email ? Colors.white : Colors.black,
                               fontSize: 20,
                             ),
                           ),
@@ -144,7 +155,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                     height: 60,
                     child: TextField(
                       controller: _textEditingController,
-                      onChanged: updateCurrentMessage, // استدعاء الدالة عندما يتم تغيير النص
+                      onChanged: updateCurrentMessage,
                       decoration: InputDecoration(
                         hintText: 'أكتب رسالتك هنا...'.tr,
                         border: OutlineInputBorder(
@@ -161,7 +172,7 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
                   child: IconButton(
                     icon: Icon(Icons.send_outlined, color: Colors.white),
                     onPressed: () {
-                      final message = _currentMessage.trim(); // استخدام النص المحفوظ
+                      final message = _currentMessage.trim();
                       if (message.isNotEmpty) {
                         sendMessage(message);
                       }
