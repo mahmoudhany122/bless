@@ -396,7 +396,6 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
 
-
                                               Icon(
                                                 Icons.payment_outlined,
                                                 color: myColor,

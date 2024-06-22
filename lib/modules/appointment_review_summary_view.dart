@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-
 class AppointmentReviewView extends StatefulWidget {
   const AppointmentReviewView({
     Key? key,
