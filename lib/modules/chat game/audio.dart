@@ -114,10 +114,10 @@ class AgoraManager {
   }
 
   static String get token {
-    return '007eJxTYNhktM+k+v7Ey+sYEnkkfsbz71+1/fO02RKGidF/PRkrU1IUGBLN0gzMLFIS04wNLU0MjVMSU4Ec4+Q0kxQLUxPTZKOodSppDYGMDCX5zxgZGSAQxGdhyM0wNGJgAAAxFR6h';
+    return '007eJxTYLiz8bAyW8mC2rtJGyWSX/IkrF3Ie/lR7omPmyYyHAm+zd6kwJBolmZgZpGSmGZsaGliaJySmArkGCenmaRYmJqYJhtdDSlLawhkZBDhmM/ACIUgPgtDboahIQMDAKyEH8M=';
   }
 
   static String get channelName {
-    return 'mh12';
+    return 'mh11';
   }
 }
