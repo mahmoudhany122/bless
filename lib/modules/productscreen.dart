@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:blessmate/modules/imagine.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'all.dart';
 import 'gem.dart';
 import 'package:get/get.dart';
+
+import 'notification_doctor.dart';
 
 
 
@@ -19,11 +22,39 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<String> screensName = ['الكل'.tr, 'موسيقى'.tr, 'التامل'.tr, 'اليوجا'.tr ];
   int _selectedIndex = 0;
+  String _firstName = '';
+  String _lastName = '';
+  String _email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _firstName = prefs.getString('firstName') ?? '';
+      _lastName = prefs.getString('lastName') ?? '';
+      _email = prefs.getString('email') ?? '';
+    });
+  }
+
+  String extractUsername(String email) {
+    List<String> parts = email.split("@");
+    String username = parts[0];
+    username = username.replaceAll("\\d", "");
+    return username;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+
+        ],
         leading: IconButton(
           icon: Icon(Icons.notifications_none, color: HexColor('00B4D8')),
           onPressed: () {
@@ -34,10 +65,45 @@ class _HomeScreenState extends State<HomeScreen> {
                 ));
           },
         ),
-        title: Text(
-          screensName[_selectedIndex], // Update the title based on selected tab
-          style: Theme.of(context).textTheme.bodyText1,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "مرحبآ".tr,
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Image(
+                      height: 20,
+                      width: 20,
+                      image: AssetImage(
+                        "assets/images/img_16.png",
+                      ),
+                    ),
+                  ],
+                ),
+
+                Text(
+                  extractUsername(_email),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+
+              ],
+            ),
+          ],
         ),
+
         centerTitle: true,
       ),
       body: DefaultTabController(

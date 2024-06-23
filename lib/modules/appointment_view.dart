@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data/data.dart';
 import '../widgets/appointment_date_widget.dart';
 import '../widgets/appointment_time_widget.dart';
@@ -14,8 +15,7 @@ import 'chat_doc.dart';
 import 'doctor_details_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
-as picker;
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 
 class AppointmentView extends StatefulWidget {
   final int? patientId;
@@ -29,6 +29,9 @@ class _AppointmentViewState extends State<AppointmentView> {
   List<dynamic> therapistsData = [];
   List<dynamic> searchResults = [];
   bool isLoading = true;
+
+  Set<int> favoriteTherapistIds = {};
+
   @override
   void initState() {
     super.initState();
@@ -36,8 +39,7 @@ class _AppointmentViewState extends State<AppointmentView> {
   }
 
   Future<void> fetchData() async {
-    final response =
-    await http.get(Uri.https('blessmate.onrender.com', '/Patient/GetTherapistes'));
+    final response = await http.get(Uri.https('blessmate.onrender.com', '/Patient/GetTherapistes'));
 
     if (response.statusCode == 200) {
       setState(() {
@@ -51,8 +53,7 @@ class _AppointmentViewState extends State<AppointmentView> {
 
   void search(String query) {
     List<dynamic> searchResults = therapistsData.where((therapist) {
-      String fullName =
-      "${therapist['firstName']} ${therapist['lastName']}".toLowerCase();
+      String fullName = "${therapist['firstName']} ${therapist['lastName']}".toLowerCase();
       return fullName.contains(query.toLowerCase());
     }).toList();
 
@@ -61,13 +62,36 @@ class _AppointmentViewState extends State<AppointmentView> {
     });
   }
 
+  void toggleFavorite(int therapistId, Map<String, dynamic> therapist) {
+    setState(() {
+      if (favoriteTherapistIds.contains(therapistId)) {
+        favoriteTherapistIds.remove(therapistId);
+      } else {
+        favoriteTherapistIds.add(therapistId);
+        savePatientData(therapist);
+      }
+    });
+  }
+
+  void savePatientData(Map<String, dynamic> therapist) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // حفظ بيانات المعالج باستخدام SharedPreferences
+    await prefs.setString('therapistFirstName', therapist['firstName']);
+    await prefs.setString('therapistLastName', therapist['lastName']);
+    await prefs.setString('therapistPhotoUrl', therapist['photoUrl']);
+
+    print('Saved therapist data: ${therapist['firstName']} ${therapist['lastName']}');
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
+        title: Text(
           "اختر المعالج الخاص بك",
-          style:Theme.of(context).textTheme.bodyText2
+          style: Theme.of(context).textTheme.bodyText2,
         ),
         centerTitle: true,
       ),
@@ -86,10 +110,9 @@ class _AppointmentViewState extends State<AppointmentView> {
               children: [
                 Expanded(
                   child: MainTextField(
-
-                    onChange:(value) {
+                    onChange: (value) {
                       search(value);
-                    } ,
+                    },
                     fillColor: Colors.white,
                     borderRadius: 21,
                     hint: "دكتور",
@@ -116,6 +139,7 @@ class _AppointmentViewState extends State<AppointmentView> {
               itemCount: searchResults.isNotEmpty ? searchResults.length : therapistsData.length,
               itemBuilder: (context, index) {
                 final therapist = searchResults.isNotEmpty ? searchResults[index] : therapistsData[index];
+                final therapistId = therapist['id'];
 
                 return GestureDetector(
                   onTap: () {
@@ -150,7 +174,8 @@ class _AppointmentViewState extends State<AppointmentView> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.network(
-                            therapist['photoUrl'] ?? 'https://th.bing.com/th/id/R.215c1ff399e961851cc11a7810886a0e?rik=oZfxvnavGwz6cA&riu=http%3a%2f%2fwww.writergirl.com%2fwp-content%2fuploads%2f2014%2f11%2fDoctor-790X1024.jpg&ehk=CmnYm47Si7SLogCKQcVQ9Onueou53ycpcjvFFc3Ej00%3d&risl=&pid=ImgRaw&r=0',
+                            therapist['photoUrl'] ??
+                                'https://th.bing.com/th/id/R.215c1ff399e961851cc11a7810886a0e?rik=oZfxvnavGwz6cA&riu=http%3a%2f%2fwww.writergirl.com%2fwp-content%2fuploads%2f2014%2f11%2fDoctor-790X1024.jpg&ehk=CmnYm47Si7SLogCKQcVQ9Onueou53ycpcjvFFc3Ej00%3d&risl=&pid=ImgRaw&r=0',
                             height: 95,
                             fit: BoxFit.fill,
                             width: 95,
@@ -198,12 +223,27 @@ class _AppointmentViewState extends State<AppointmentView> {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        AppProgressButton(
-                          height: 38,
-                          width: 75,
-                          fontSize: 13,
-                          text: "احجز الان",
-                          onPressed: (anim) {},
+                        Column(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                favoriteTherapistIds.contains(therapistId)
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: favoriteTherapistIds.contains(therapistId) ? Colors.cyan : Colors.cyan,
+                              ),
+                              onPressed: () {
+                                toggleFavorite(therapistId, therapist);
+                              },
+                            ),
+                            AppProgressButton(
+                              height: 38,
+                              width: 75,
+                              fontSize: 13,
+                              text: "احجز الان",
+                              onPressed: (anim) {},
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -218,8 +258,6 @@ class _AppointmentViewState extends State<AppointmentView> {
     );
   }
 }
-
-// تواصل بقية الكود هنا
 
 class DetailsDocAppontioment extends StatefulWidget {
   final Map<String, dynamic> therapist;

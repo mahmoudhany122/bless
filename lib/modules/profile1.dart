@@ -57,10 +57,10 @@ class _ProfileScreenState extends State<ProfileScreen1> {
   }
 
   String extractUsername(String email) {
-    // Split email based on '@' symbol
-    List<String> parts = email.split('@');
-    // Return the first part (username)
-    return parts[0];
+    List<String> parts = email.split("@");
+    String username = parts[0];
+    username = username.replaceAll("\\d", "");
+    return username;
   }
   @override
   Widget build(BuildContext context) {

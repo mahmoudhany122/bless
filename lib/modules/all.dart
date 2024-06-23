@@ -1,22 +1,22 @@
-import 'package:blessmate/modules/yoga.dart';
+import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/main_text_form.dart';
 import '../widgets/progress_button.dart';
 import 'appointment_view.dart';
 import 'gem.dart';
 import 'imagine.dart';
 import 'musiq.dart';
+import 'yoga.dart';
 
 class All extends StatefulWidget {
   const All({Key? key}) : super(key: key);
 
   @override
-  State<All> createState() => _AllState();
+  _AllState createState() => _AllState();
 }
 
 class _AllState extends State<All> {
@@ -32,12 +32,31 @@ class _AllState extends State<All> {
   List<String> displayNames = [];
   List<String> displayImages = [];
 
+
   @override
   void initState() {
     super.initState();
     _firestore = FirebaseFirestore.instance;
     _itemsCollection = _firestore.collection('items');
     _loadItemsData();
+    getSavedTherapistData();
+  }
+// تعريف المتغيرات لحفظ بيانات المعالج
+  String therapistFirstName = 'Unknown';
+  String therapistLastName = 'Therapist';
+  String therapistPhotoUrl = '';
+
+
+
+  void getSavedTherapistData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // استرجاع البيانات من SharedPreferences
+    setState(() {
+      therapistFirstName = prefs.getString('therapistFirstName') ?? 'Unknown';
+      therapistLastName = prefs.getString('therapistLastName') ?? 'Therapist';
+      therapistPhotoUrl = prefs.getString('therapistPhotoUrl') ?? '';
+    });
   }
 
   Future<void> _loadItemsData() async {
@@ -83,6 +102,7 @@ class _AllState extends State<All> {
       displayImages = searchResultsImages;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -179,54 +199,54 @@ class _AllState extends State<All> {
                 "افضل اطباء النفس",
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: displayNames.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Get.to(() => pages[index % pages.length]);
-                      },
+// إضافة حقل لعرض بيانات المعالج
+              Container(
+                width:220 ,
+                height:100 ,
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey[300]!,
+                      blurRadius: 10,
+                      offset: const Offset(0, 1),
+                    )
+                  ],
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // عرض صورة المعالج إذا كانت متاحة
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
                       child: Container(
-                        margin: EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                        ),
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(4),
-                              child: Image.network(
-                                displayImages[index],
-                                height: 220,
-                                width: 200,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Container(
-                              width: 200,
-                              color: Colors.black54,
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text(
-                                displayNames[index],
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
+                        width: 80,
+                        height: 90,
+                        color: Colors.grey[300], // لون الخلفية للصورة إذا لم تكن متاحة
+                        child: therapistPhotoUrl != null
+                            ? Image.network(
+                          therapistPhotoUrl,
+                          fit: BoxFit.cover,
+                        )
+                            : Icon(Icons.person, size: 30, color: Colors.grey),
                       ),
-                    );
-                  },
+                    ),
+                    SizedBox(width: 10),
+                    // عرض اسم المعالج
+                    Text(
+                      '$therapistFirstName $therapistLastName',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
+
               SizedBox(height: 15),
               Text(
                 "المساعدات النفسية",
