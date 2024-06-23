@@ -18,7 +18,7 @@ class Explore extends StatelessWidget {
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
+            crossAxisSpacing: 9.0,
             mainAxisSpacing: 8.0,
             childAspectRatio: 1.0,
           ),
@@ -61,7 +61,7 @@ class GridItem extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          Image.asset(imageUrl, height: 140, width: 140),
+          Image.asset(imageUrl, height: 115, width: 140),
           SizedBox(height: 8),
           Text(
             itemName,
@@ -100,7 +100,7 @@ class _DetailPageState extends State<DetailPage> {
             children: [
               Image.asset(
                 'assets/${widget.item['imageFileName']}',
-                height: 110,
+                height: 124,
                 width: 110,
               ),
               SizedBox(height: 16),

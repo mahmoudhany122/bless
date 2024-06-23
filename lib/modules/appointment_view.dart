@@ -66,7 +66,7 @@ class _AppointmentViewState extends State<AppointmentView> {
     return Scaffold(
       appBar: AppBar(
         title:  Text(
-          "Choose Your Therapist",
+          "اختر المعالج الخاص بك",
           style:Theme.of(context).textTheme.bodyText2
         ),
         centerTitle: true,
@@ -92,13 +92,9 @@ class _AppointmentViewState extends State<AppointmentView> {
                     } ,
                     fillColor: Colors.white,
                     borderRadius: 21,
-                    hint: "Dr.s",
+                    hint: "دكتور",
                     prefixIcon: Icon(
                       Iconsax.search_normal,
-                      color: Colors.cyan,
-                    ),
-                    suffixIcon: Icon(
-                      Iconsax.microphone,
                       color: Colors.cyan,
                     ),
                   ),
@@ -108,71 +104,13 @@ class _AppointmentViewState extends State<AppointmentView> {
                   height: 38,
                   width: 75,
                   fontSize: 13,
-                  text: "Search",
+                  text: "بحث",
                   onPressed: (anim) {},
                 ),
               ],
             ),
           ),
           const Divider(),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.sort,
-                      color: Colors.cyan,
-                    ),
-                    SizedBox(width: 12),
-                    Text(
-                      "Sort",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 30,
-                child: VerticalDivider(),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Iconsax.filter,
-                      color: Colors.cyan,
-                    ),
-                    SizedBox(width: 12),
-                    Text(
-                      "Filter",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const Divider(),
-          const Padding(
-            padding: EdgeInsets.all(12),
-            child: Text(
-              "All Therapists",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-            ),
-          ),
           Expanded(
             child: ListView.separated(
               itemCount: searchResults.isNotEmpty ? searchResults.length : therapistsData.length,
@@ -264,7 +202,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                           height: 38,
                           width: 75,
                           fontSize: 13,
-                          text: "Book now",
+                          text: "احجز الان",
                           onPressed: (anim) {},
                         ),
                       ],
@@ -334,7 +272,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          " Dr. ${therapist['firstName'] ?? 'Unknown'} ${therapist['lastName'] ?? 'Therapist'}",
+                          " دكتور : ${therapist['firstName'] ?? 'Unknown'} ${therapist['lastName'] ?? 'Therapist'}",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: Colors.cyan,
@@ -342,7 +280,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                           ),
                         ),
                         Text(
-                          therapist['speciality'] ?? 'Specialty not specified',
+                          therapist['speciality'] ?? 'التخصص غير معروف',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 17,
@@ -350,7 +288,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                           ),
                         ),
                         Text(
-                          "Years of Experience: ${therapist['yearsExperience'] ?? 'Unknown'}",
+                          "Years of Experience: ${therapist['yearsExperience'] ?? 'غير معروف'}",
                           style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
@@ -368,12 +306,12 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
             Center(
               child: AppProgressButton(
                 radius: 8,
-                text: " Have free chat with me ",
+                text: " عمل محادثه مجانيه معى",
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
                   // Extracting the email
 
-                  String therapistEmail = therapist['email'] ?? '';
+                  String therapistEmail = therapist['email'] ?? 'البريد الالكترونى غير معروف';
                   Navigator.push(context,MaterialPageRoute(builder: (context) => ChatScreenDoc(userData: {'email': therapistEmail,},
                   ),
                   ),
@@ -385,7 +323,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
             Center(
               child: AppProgressButton(
                 radius: 8,
-                text: "Check available appointment",
+                text: "التحقق من الموعد المتاح",
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
                   mainShowDialog(
@@ -402,7 +340,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "About",
+                    "عن الطبيب",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -410,7 +348,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                     ),
                   ),
                   Text(
-                    "${therapist['description'] ?? 'description is not specified'} ",
+                    "${therapist['description'] ?? 'الوصف غير معرف'} ",
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
@@ -419,7 +357,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "Specialization",
+                    "التخصص",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -427,7 +365,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                     ),
                   ),
                   Text(
-                    "${therapist['speciality'] ?? '"speciality" is not spectified'} ",
+                    "${therapist['speciality'] ?? '" التخصص غير معروف'} ",
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
@@ -436,7 +374,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "clinicAddress",
+                    "عنوان العياده",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -444,7 +382,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                     ),
                   ),
                   Text(
-                    "${therapist['clinicAddress'] ?? '"clinicAddress" is not spectified'} ",
+                    "${therapist['clinicAddress'] ?? '"عنوان العياده غير معروف'} ",
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
@@ -453,7 +391,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "clinicNumber",
+                    "رقم العياده",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -461,7 +399,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                     ),
                   ),
                   Text(
-                    "${therapist['clinicNumber'] ?? '"clinicAddress" is not spectified'} ",
+                    "${therapist['clinicNumber'] ?? '"رقم العياده غير معرف'} ",
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
@@ -470,7 +408,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "Contact Details",
+                    "بيانات التواصل",
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -478,7 +416,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                     ),
                   ),
                   Text(
-                    "${therapist["email"] ?? '"email" is not spectified'} ",
+                    "${therapist["email"] ?? '"البريد الكترونى غير معروف'} ",
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
@@ -602,7 +540,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
           },
           child: const HeaderWidget(
             icon: Icons.calendar_month,
-            title: "Select Date",
+            title: "اختر التاريخ",
           ),
         ),
 
@@ -613,7 +551,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
         Text("Therapist ID: ${widget.therapistId}"),
         // عرض قيمة patientId
         Text("Patient ID: ${widget.patientId}"),
-        Text('TIME:$date $time'),
+        Text(' الوقت: $date $time'),
         SizedBox(height: 12),
         // رسالة التنبيه
 
@@ -627,7 +565,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
             SizedBox(width: 8),
             Expanded(
               child: Text(
-                "This session can be rescheduled or canceled later than 24 hours before the session",
+                "يمكن إعادة جدولة هذه الجلسة أو إلغاؤها بعد 24 ساعة قبل الجلسة",
                 maxLines: 3,
                 style: TextStyle(
                   color: Colors.grey,
@@ -640,7 +578,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
         ),
         const SizedBox(height: 20),
         AppProgressButton(
-          text: "Select $date $time",
+          text: " لقد اخترت    $date $time",
           width: MediaQuery.of(context).size.width,
           onPressed: (anim) {
             {

@@ -33,7 +33,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Review Summary",
+          "ملخص المراجعة",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 20,
@@ -61,7 +61,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                       children: [
                         const Expanded(
                           child: Text(
-                            "Date & Hour",
+                            "التاريخ والساعة",
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
@@ -85,7 +85,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                       children: [
                         Expanded(
                           child: Text(
-                            "Duration",
+                            "المدة",
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
@@ -94,7 +94,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                         ),
                         Expanded(
                           child: Text(
-                            "30 minutes",
+                          "30 دقيقه",
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -121,7 +121,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                       children: [
                         Expanded(
                           child: Text(
-                            "amount",
+                            "المبلغ",
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
@@ -130,7 +130,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                         ),
                         Expanded(
                           child: Text(
-                            "350 LE",
+                            "350 جنيها ",
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -145,7 +145,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                       children: [
                         Expanded(
                           child: Text(
-                            "Duration(30mins)",
+                            "المده(30دقيقه)",
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
@@ -154,7 +154,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                         ),
                         Expanded(
                           child: Text(
-                            "1x350 LE",
+                            "1x350 جنيها",
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -169,7 +169,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                       children: [
                         Expanded(
                           child: Text(
-                            "Total",
+                            "المجموع",
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
@@ -178,7 +178,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                         ),
                         Expanded(
                           child: Text(
-                            "350 LE",
+                            "350 جنيها",
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -193,7 +193,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
               ),
               const SizedBox(height: 12),
               const Text(
-                "The chosen payment method",
+                "الطريقة المختارة للدفع",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -243,7 +243,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
               const SizedBox(height: 20),
               AppProgressButton(
                 radius: 8,
-                text: "Confirm",
+                text: "تأكيد",
                 width: MediaQuery.of(context).size.width,
                   // داخل onPressed للزر
                   onPressed: (anim) async {

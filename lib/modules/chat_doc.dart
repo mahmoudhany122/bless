@@ -85,10 +85,6 @@ class _ChatScreenDocState extends State<ChatScreenDoc> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "معالج بليس ميت".tr,
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
         actions: [
           IconButton(
             icon: Icon(Icons.videocam, color: HexColor('00B4D8')),

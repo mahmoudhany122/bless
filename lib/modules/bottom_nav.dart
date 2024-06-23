@@ -27,8 +27,8 @@ class _BottomNavState extends State<BottomNav> {
     super.initState();
     screens = [
       HomeScreen(),
-      ChatScreen(),
       Explore(),
+      ChatScreen(),
       AppointmentView(patientId: widget.patientId), // تمرير patientId هنا
       ProfileScreen1(),
     ];
@@ -53,16 +53,16 @@ class _BottomNavState extends State<BottomNav> {
             label: "الرئيسية".tr,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble_outline),
-            label: "محادثة".tr,
+            icon: Icon(Icons.explore_outlined),
+            label: "استكشف".tr,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore_outlined),
-            label: "يستكشف".tr,
+            icon: Icon(Icons.mark_unread_chat_alt_outlined),
+            label: "المحادثه".tr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.date_range_sharp),
-            label: "تعيينات".tr,
+            label: "الحجوزات".tr,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),

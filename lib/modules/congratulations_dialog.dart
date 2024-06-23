@@ -27,7 +27,7 @@ class CongratulationsDialog extends StatelessWidget {
                 width: 150,
               ),
               const Text(
-                "Congratulations!",
+                "تهانينا!",
                 style: TextStyle(
                   color: Colors.cyan,
                   fontWeight: FontWeight.w600,
@@ -36,7 +36,7 @@ class CongratulationsDialog extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               const Text(
-                "Appointment Successfully Booked. You Will Receive A Notification And The Doctor You Selected Will Contact you",
+                "تم حجز الموعد بنجاح. ستتلقى إشعارا وسيتصل بك الطبيب الذي اخترته",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -46,7 +46,7 @@ class CongratulationsDialog extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               AppProgressButton(
-                text: "View Appointment",
+                text: "عرض الموعد",
                 height: 55,
                 width: MediaQuery.of(context).size.width,
                 onPressed: (onPressed) {
@@ -60,7 +60,7 @@ class CongratulationsDialog extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               AppProgressButton(
-                text: "Cancle",
+                text: "الغاء الامر",
                 height: 55,
                 backgroundColor: Colors.white,
                 isBordered: true,

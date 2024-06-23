@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> screensName = ['الكل'.tr, 'موسيقى'.tr, 'التامل'.tr, 'اليوجا'.tr, 'تمارين'.tr];
+  List<String> screensName = ['الكل'.tr, 'موسيقى'.tr, 'التامل'.tr, 'اليوجا'.tr ];
   int _selectedIndex = 0;
 
   @override
@@ -87,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   Musiq(),
                   Yoga(),
                   ExerciseScreen(),
-                  Gym(),
                 ],
               ),
             ),

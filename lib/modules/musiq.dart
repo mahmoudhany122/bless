@@ -91,65 +91,6 @@ class _MusiqState extends State<Musiq> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      "اضافة قائمة تشغيل جديدة".tr,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    CircleAvatar(
-                      backgroundColor: HexColor('06B4D8'),
-                      child: TextButton(
-                        onPressed: () {
-                          // عند الضغط على زرار الإضافة قائمة جديدة
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('إضافة قائمة جديدة'.tr),
-                                content: TextField(
-                                  onChanged: (value) {
-                                    // يمكنك استخدام القيمة المدخلة هنا
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: 'اسم القائمة'.tr,
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('إلغاء'.tr),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      // استخدم القيمة المدخلة لإضافة القائمة
-                                      addPlaylist('اسم القائمة'.tr);
-                                    },
-                                    child: Text('إضافة'.tr),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
