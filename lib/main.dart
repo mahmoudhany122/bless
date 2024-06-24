@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeMode = Provider.of<ValueNotifier<MyThemeMode>>(context).value;
-    const Color mainColor = Color(0xFF00B4D8);
+
     ThemeData selectedTheme;
     switch (themeMode) {
       case MyThemeMode.light:
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
-      home:BottomNav(),
+      home:LogoScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

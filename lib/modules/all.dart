@@ -53,8 +53,8 @@ class _AllState extends State<All> {
 
     // استرجاع البيانات من SharedPreferences
     setState(() {
-      therapistFirstName = prefs.getString('therapistFirstName') ?? 'Unknown';
-      therapistLastName = prefs.getString('therapistLastName') ?? 'Therapist';
+      therapistFirstName = prefs.getString('therapistFirstName') ?? '';
+      therapistLastName = prefs.getString('therapistLastName') ?? '';
       therapistPhotoUrl = prefs.getString('therapistPhotoUrl') ?? '';
     });
   }
@@ -223,7 +223,7 @@ class _AllState extends State<All> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
-                        width: 80,
+                        width: 50,
                         height: 90,
                         color: Colors.grey[300], // لون الخلفية للصورة إذا لم تكن متاحة
                         child: therapistPhotoUrl != null

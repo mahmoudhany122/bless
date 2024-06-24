@@ -94,9 +94,9 @@ class _YogaState extends State<Yoga> {
               GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  crossAxisSpacing: 9.0,
+                  crossAxisSpacing: 4.0,
                   mainAxisSpacing: 8.0,
-                  childAspectRatio: 0.95,
+                  childAspectRatio: 0.80,
                 ),
                 itemCount: itemNames.length,
                 shrinkWrap: true,
@@ -137,7 +137,7 @@ class _YogaState extends State<Yoga> {
           children: [
             Image.network(
               imageUrl,
-              width: 125,
+              width: 120,
               height: 80,
               fit: BoxFit.cover,
             ),

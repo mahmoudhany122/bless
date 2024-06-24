@@ -4,6 +4,7 @@ class Message {
   final String text;
   final bool isUserMessage;
   final String audio;
+
   Message({required this.text, required this.isUserMessage,required this.audio});
 
   // Convert the Message object to a JSON-compatible Map
@@ -12,7 +13,6 @@ class Message {
       'text': text,
       'isUserMessage': isUserMessage,
       "audio" : audio
-
     };
   }
 
@@ -87,5 +87,3 @@ class UserData {
 
   UserData({required this.firstName, required this.lastName, required this.email});
 }
-
-

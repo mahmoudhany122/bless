@@ -21,19 +21,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
     AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('assets/images/img_1.png');
     var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,);
-      await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse)async{}
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: (NotificationResponse notificationResponse)async{}
     );
   }
   notificationDetails(){
     return NotificationDetails(
-      android: AndroidNotificationDetails("channelId",'channelName',
-      importance: Importance.max)
+        android: AndroidNotificationDetails("channelId",'channelName',
+            importance: Importance.max)
     );
   }
 
   Future showNotification(
-  {int id =0, String? title, String?body, String? payLoad})async{
+      {int id =0, String? title, String?body, String? payLoad})async{
     return flutterLocalNotificationsPlugin.show(id, title, body,await notificationDetails());
   }
 
@@ -55,7 +55,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     bool _value = false;
     return Scaffold(
       appBar: AppBar(
-        title: Text("الإشعارات".tr,style:  Theme.of(context).textTheme.bodyText2,),
+        title: Text("الإشعارات".tr,style:  Theme.of(context).textTheme.bodyMedium,),
         centerTitle: true,
       ),
       body:  ListView(
@@ -65,10 +65,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
             children: [
               Container(
                 margin: EdgeInsets.all(10),
-                child:  Text("اليوم-20مايو2024".tr,style: Theme.of(context).textTheme.bodyText1,),
+                child:  Text("اليوم-20مايو2024".tr,style: Theme.of(context).textTheme.bodyLarge,),
               ),
               Container(
-                  height: 105,
+                  height: 130,
                   width:MediaQuery.of(context).size.width,
                   color:HexColor('D1F1F8'),
                   child:Column(
@@ -76,16 +76,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          
+
                           Container(
-                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            margin: EdgeInsets.only(right: 10,bottom: 35,left: 10),
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(color:HexColor("D9D9D9"),
+                                  BoxShadow(color:Theme.of(context).colorScheme.background,
                                       blurRadius: 4,
                                       offset: Offset(1, 1)
                                   ),
@@ -95,9 +95,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            padding: EdgeInsets.only(top:10,) ,
                             width: 300,
-                            height: 100,
+                            height: 125,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -119,7 +119,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   )
 
               ), Container(
-                  height: 101,
+                  height: 130,
                   width: double.infinity,
                   color:HexColor('D1F1F8'),
                   child:Column(
@@ -128,14 +128,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            margin: EdgeInsets.only(right: 10,bottom: 35,left: 10),
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(color:HexColor("D9D9D9"),
+                                  BoxShadow(color:Theme.of(context).colorScheme.background,
                                       blurRadius: 4,
                                       offset: Offset(1, 1)
                                   ),
@@ -145,9 +145,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            padding: EdgeInsets.only(top: 10) ,
                             width: 300,
-                            height: 100,
+                            height: 125,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -163,7 +163,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   )
 
               ), Container(
-                  height: 101,
+                  height: 130,
                   width: double.infinity,
                   child:Column(
                     children: [
@@ -171,14 +171,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            margin: EdgeInsets.only(right: 10,bottom: 35,left: 10),
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(color:HexColor("D9D9D9"),
+                                  BoxShadow(color:Theme.of(context).colorScheme.background,
                                       blurRadius: 4,
                                       offset: Offset(1, 1)
                                   ),
@@ -188,16 +188,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            padding: EdgeInsets.only(top: 10) ,
                             width: 300,
-                            height: 100,
+                            height: 125,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextButton(onPressed: (){}, child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م".tr,style:Theme.of(context).textTheme.headline5 ,),
+                                    Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م".tr,style:Theme.of(context).textTheme.headlineSmall ,),
 
                                   ],
                                 ),
@@ -215,10 +215,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
               Container(
                 margin: EdgeInsets.all(10),
-                child:  Text("19أبريل2024".tr,style: Theme.of(context).textTheme.bodyText1,),
+                child:  Text("19أبريل2024".tr,style: Theme.of(context).textTheme.bodyLarge,),
               ),
               Container(
-                  height: 101,
+                  height: 130,
                   width: double.infinity,
                   child:Column(
                     children: [
@@ -226,14 +226,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            margin: EdgeInsets.only(right: 10,bottom: 35,left: 10),
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(color:HexColor("D9D9D9"),
+                                  BoxShadow(color:Theme.of(context).colorScheme.background,
                                       blurRadius: 4,
                                       offset: Offset(1, 1)
                                   ),
@@ -243,13 +243,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            padding: EdgeInsets.only(top: 10) ,
                             width: 300,
-                            height: 100,
+                            height: 125,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextButton(onPressed: (){}, child:Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م".tr,style: Theme.of(context).textTheme.headline5,), ),
+                                TextButton(onPressed: (){}, child:Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة7:00 م".tr,style: Theme.of(context).textTheme.headlineSmall,), ),
                                 Text("أمس.7:58 صباحآ".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 )),
                               ],
                             ) ,
@@ -261,7 +261,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   )
 
               ), Container(
-                  height: 101,
+                  height: 130,
                   width: double.infinity,
                   child:Column(
                     children: [
@@ -269,14 +269,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 10,bottom: 30),
+                            margin: EdgeInsets.only(right: 10,bottom: 35,left: 10),
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(color:HexColor("D9D9D9"),
+                                  BoxShadow(color:Theme.of(context).colorScheme.background,
                                       blurRadius: 4,
                                       offset: Offset(1, 1)
                                   ),
@@ -286,13 +286,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Icon(Icons.calendar_month_outlined,color: HexColor('00B4D8'), size: 35),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 10,right: 10,top: 2) ,
+                            padding: EdgeInsets.only(top: 10) ,
                             width: 300,
-                            height: 100,
+                            height: 125,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextButton(onPressed: (){}, child: Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة5:00 م".tr,style: Theme.of(context).textTheme.headline5,), ),
+                                TextButton(onPressed: (){}, child: Text("لديك موعد مع د.احمد اسماعيل اليوم في الساعة5:00 م".tr,style: Theme.of(context).textTheme.headlineSmall,), ),
                                 Text("أمس.9:58 صباحآ".tr,style:TextStyle(color: HexColor('00B4D8'),fontSize: 16 ) ,),
                               ],
                             ) ,

@@ -50,18 +50,18 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter Description and Speciality'),
+          title: Text('قم بادخال نبذه مختصره عنك والتخصص'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: descriptionController,
-                decoration: InputDecoration(hintText: 'Enter Description'),
+                decoration: InputDecoration(hintText: 'اكتب نبذة مختصرة عنك'),
               ),
               SizedBox(height: 8),
               TextField(
                 controller: specialityController,
-                decoration: InputDecoration(hintText: 'Enter Speciality'),
+                decoration: InputDecoration(hintText: 'ادخل التعليم و التخصص'),
               ),
             ],
           ),
@@ -70,14 +70,14 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close dialog without sending
               },
-              child: Text('Cancel'),
+              child: Text('الغاء'),
             ),
             TextButton(
               onPressed: () {
                 sendTherapistProfile();
                 Navigator.of(context).pop(); // Close dialog
               },
-              child: Text('Send'),
+              child: Text('ارسال'),
             ),
           ],
         );

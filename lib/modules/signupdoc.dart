@@ -404,10 +404,10 @@ class _SignUpDocState extends State<SignUpDoc> {
                       keyboardType: TextInputType.number,
                       controller: clinicNumberController,
                       validator: (value) {
-                        return value!.isEmpty ? "ادخل رقم العياده" .tr: null;
+                        return value!.isEmpty ? "   ادخل مبلغ الكشف بالنسبه للجلسه" .tr: null;
                       },
                       decoration: InputDecoration(
-                        labelText: 'رقم العياده'.tr,
+                        labelText: 'مبلغ الكشف بالنسبه للجلسه'.tr,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(

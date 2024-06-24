@@ -23,45 +23,69 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _controller = ScrollController();
   List<Message> messages = [];
+  String audio = "";
   bool isLoading = false;
   final ChatService chatService = ChatService();
   TextEditingController _textEditingController = TextEditingController();
   late String _filePath;
   AudioPlayer _audioPlayer = AudioPlayer();
   bool _isRecording = false;
-  bool _isPlayer =false;
+  bool _isPlayer = false;
+  bool isPause = false;
+  Duration position = Duration.zero;
+  Duration duration = Duration.zero;
   FlutterSoundRecorder _audioRecorder = FlutterSoundRecorder();
+  bool _isRecorderOpen = false;
+
   @override
   void initState() {
     super.initState();
-    _loadMessages();// استرجاع الرسائل عند بدء بناء الشاشة
+    _loadMessages(); // Load saved messages
     _requestPermission();
     openTheRecorder();
+
+    _audioPlayer.onPositionChanged.listen((Duration p) {
+      setState(() {
+        position = p;
+      });
+    });
+
+    _audioPlayer.onDurationChanged.listen((Duration d) {
+      setState(() {
+        duration = d;
+      });
+    });
+
+    _audioPlayer.onPlayerComplete.listen((event) {
+      setState(() {
+        _isPlayer = false;
+        isPause = false;
+        position = Duration.zero;
+      });
+    });
   }
-  void dispose(){
-    super.dispose();
+
+  @override
+  void dispose() {
     _audioRecorder.closeRecorder();
+    _audioPlayer.dispose();
+    super.dispose();
   }
-  // تحميل الرسائل المحفوظة في الذاكرة المحلية
+
   Future<void> _loadMessages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? savedMessages = prefs.getStringList('chat_messages');
 
     if (savedMessages != null) {
       setState(() {
-        messages = savedMessages.map((msg) =>
-            Message.fromJson(msg as Map<String, dynamic>)).toList();
+        messages = savedMessages.map((msg) => Message.fromJson(msg as Map<String, dynamic>)).toList();
       });
     }
   }
 
-  // حفظ الرسالة المرسلة في الذاكرة المحلية
   Future<void> _saveMessage(Message message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> savedMessages =
-    messages.map((msg) => msg.toJson()).toList()
-        .map((e) => e.toString())
-        .toList();
+    List<String> savedMessages = messages.map((msg) => msg.toJson()).toList().map((e) => e.toString()).toList();
     prefs.setStringList('chat_messages', savedMessages);
   }
 
@@ -70,25 +94,21 @@ class _ChatScreenState extends State<ChatScreen> {
       isLoading = true;
     });
 
-    final userMessage = Message(
-        text: message, isUserMessage: true, audio: _filePath);
-    final sendingMessage = Message(
-        text: '.....', isUserMessage: false, audio: _filePath);
+    final userMessage = Message(text: message, isUserMessage: true, audio: _filePath);
+    final sendingMessage = Message(text: '.....', isUserMessage: false, audio: _filePath);
 
     setState(() {
       messages.add(userMessage);
       messages.add(sendingMessage);
     });
 
-    // Delay the response by 2 seconds
     await Future.delayed(Duration(seconds: 3));
 
     try {
       final botResponse = await chatService.getBotResponse(message);
 
       if (message != null && message != botResponse) {
-        final updatedSendingMessage =
-        Message(text: botResponse, isUserMessage: false, audio: _filePath);
+        final updatedSendingMessage = Message(text: botResponse, isUserMessage: false, audio: _filePath);
 
         setState(() {
           messages.remove(sendingMessage);
@@ -98,10 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
       } else {
         setState(() {
           messages.remove(sendingMessage);
-          messages.add(Message(
-              text: 'لا يوجد اجابه حاول مره اخرى'.tr,
-              isUserMessage: false,
-              audio: _filePath));
+          messages.add(Message(text: 'لا يوجد اجابه حاول مره اخرى'.tr, isUserMessage: false, audio: _filePath));
           isLoading = false;
         });
       }
@@ -109,67 +126,59 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         isLoading = false;
         messages.remove(sendingMessage);
-        messages.add(Message(text: 'خطا فى صيغه السؤال'.tr,
-            isUserMessage: false,
-            audio: _filePath));
+        messages.add(Message(text: 'خطا فى صيغه السؤال'.tr, isUserMessage: false, audio: _filePath));
       });
     }
 
-    _saveMessage(userMessage); // حفظ الرسالة المرسلة
+    _saveMessage(userMessage); // Save sent message
   }
 
-  void _requestPermission() async{
+  void _requestPermission() async {
     var status = await Permission.microphone.request();
-    if(!status.isGranted){
+    if (!status.isGranted) {
       throw Exception("Microphone Permission not granted");
     }
-    if(await Permission.storage.isDenied){
+    if (await Permission.storage.isDenied) {
       await Permission.storage.request();
     }
   }
-  Future<void> openTheRecorder() async{
-    await _audioRecorder.openRecorder();
+
+  Future<void> openTheRecorder() async {
+    if (!_isRecorderOpen) {
+      await _audioRecorder.openRecorder();
+      _isRecorderOpen = true;
+    }
   }
 
   Future<String?> _startRecording() async {
     String path = await _getFilePath();
-    await _audioRecorder.openRecorder();
-    await _audioRecorder.startRecorder(toFile: path,codec: Codec.pcm16WAV);
-    try {
-
+    if (!_audioRecorder.isRecording) {
+      await _audioRecorder.startRecorder(toFile: path, codec: Codec.pcm16WAV);
       setState(() {
         _isRecording = true;
         _filePath = path;
       });
       return path;
-
-    } catch (e) {
-      print("Error starting recording: $e");
-      return null;
     }
+    return null;
   }
 
   Future<void> _stopRecording() async {
-    try{
+    if (_audioRecorder.isRecording) {
       await _audioRecorder.stopRecorder();
-      await _audioRecorder.closeRecorder();
       setState(() {
         _isRecording = false;
       });
-      print('Stop recrder. File saved at : $_filePath');
+      print('Stop recorder. File saved at: $_filePath');
+      _uploadFile();
     }
-    catch(e){
-      print("error stopping recording : $e");
-    }
-
-    _uploadFile();
-
   }
-  Future<String> _getFilePath()async{
+
+  Future<String> _getFilePath() async {
     Directory appDir = await getApplicationDocumentsDirectory();
     String appDirPath = appDir.path;
-    String _filePath= "$appDirPath/recrding_${DateTime.now().microsecondsSinceEpoch}.wav";
-    return _filePath;
+    String filePath = "$appDirPath/recording${DateTime.now().microsecondsSinceEpoch}.wav";
+    return filePath;
   }
 
   Future<void> _uploadFile() async {
@@ -180,44 +189,54 @@ class _ChatScreenState extends State<ChatScreen> {
       try {
         var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
         request.files.add(http.MultipartFile(
-          'audio',
+          'Record',
           audioFile.readAsBytes().asStream(),
           audioFile.lengthSync(),
           filename: basename(audioFile.path),
         ));
         var response = await request.send();
 
-        // Check the response status
         if (response.statusCode == 200) {
-          // File uploaded successfully
           print('File uploaded successfully!');
         } else {
-          // Handle error
           print('Failed to upload file. Status code: ${response.statusCode}');
         }
       } catch (error) {
-        // Handle network errors
         print('Error: $error');
       }
-
     }
+    sendMessage(audio);
   }
 
-  play(_filePath)async{
-    await _audioRecorder.openRecorder();
+  play(_filePath) async {
+    await _audioPlayer.play(UrlSource(_filePath));
     setState(() {
-      _isPlayer=true;
+      _isPlayer = true;
+      isPause = false;
     });
     print('audio player');
   }
-  stop()async{
-    await _audioRecorder.stopRecorder();
+
+  stop() async {
+    await _audioPlayer.stop();
     setState(() {
-      _isPlayer=false;
+      _isPlayer = false;
+      isPause = true;
     });
     print('stop audio');
   }
 
+  void resume() async {
+    await _audioPlayer.resume();
+    setState(() {
+      _isPlayer = true;
+      isPause = false;
+    });
+  }
+
+  void seek(double seconds) {
+    _audioPlayer.seek(Duration(seconds: seconds.toInt()));
+  }
 
   String _selectedLanguage = 'ar';
 
@@ -226,22 +245,17 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 75,
-            ),
             Text(
-              "معالج بليس ميت".tr,
+              "معالج Bliss Mate".tr,
               style: Theme.of(context).textTheme.bodyText1,
             ),
-            SizedBox(
-              width: 15,
-            ),
+            SizedBox(width: 15),
             Image(
-              image: AssetImage(
-                "assets/images/img_10.png",
-              ),
-              height: 30,
+              image: AssetImage("assets/images/img_45.png"),
+              height: 42,
+              width: 42,
             ),
           ],
         ),
@@ -249,25 +263,20 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Expanded(
-            child:ListView.builder(
+            child: ListView.builder(
               controller: _controller,
               reverse: false,
               itemCount: messages.length,
               itemBuilder: (BuildContext context, int index) {
                 final message = messages[index];
 
-                // Check if the message is a text message
                 if (message.text != null && message.text.isNotEmpty) {
                   return Container(
                     padding: const EdgeInsets.all(8.0),
-                    alignment: message.isUserMessage
-                        ? Alignment.topRight
-                        : Alignment.topLeft,
+                    alignment: message.isUserMessage ? Alignment.topRight : Alignment.topLeft,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: message.isUserMessage
-                            ? HexColor('00B4D8')
-                            : Colors.grey.shade400,
+                        color: message.isUserMessage ? HexColor('00B4D8') : Colors.grey.shade400,
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: Padding(
@@ -275,9 +284,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: Text(
                           message.text,
                           style: TextStyle(
-                            color: message.isUserMessage
-                                ? Colors.white
-                                : Colors.black,
+                            color: message.isUserMessage ? Colors.white : Colors.black,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -285,139 +292,84 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                   );
-                }
-                // Check if the message is an audio message
-                else if (message.audio != null && message.audio.isNotEmpty) {
-                  // Replace 'BubbleNormalAudio' with your own widget for displaying audio messages
+                } else if (message.audio != null && message.audio.isNotEmpty) {
                   return BubbleNormalAudio(
-                      color: HexColor('00B4D8'),
-                      onSeekChanged: (e){},
-                      isLoading: false,
-                      isPlaying: _isPlayer,
-                      onPlayPauseButtonClick: () {
-                        if (!_isPlayer) {
-                          play(message.audio);
-                        } else {stop();}
+                    color: HexColor('00B4D8'),
+                    isLoading: false,
+                    isPlaying: _isPlayer,
+                    duration: duration.inSeconds.toDouble(),
+                    position: position.inSeconds.toDouble(),
+                    isPause: isPause,
+                    onPlayPauseButtonClick: () {
+                      if (!_isPlayer) {
+                        play(message.audio);
+                      } else if (isPause) {
+                        resume();
+                      } else {
+                        stop();
                       }
+                    },
+                    onSeekChanged: (double seconds) {
+                      seek(seconds);
+                    },
                   );
                 }
-
-                return SizedBox(); // Return an empty SizedBox for other types of messages
+                return SizedBox.shrink();
               },
             ),
-
-
           ),
-          Container(
-            padding: EdgeInsets.all(5.0),
-            child: Directionality(
-              textDirection:
-              _selectedLanguage == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundColor: HexColor('00B4D8'),
-                    child: IconButton(
-                      icon:_isRecording?
-                      Icon(Icons.stop,color: Colors.white,): Icon(Icons.mic,color: Colors.white,),
-                      onPressed: () {
-                        if(!_isRecording){
-                          _startRecording();
-                        }else{
-                          _stopRecording();
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 5,),
-                  Container(
-                    height: 60,
-                    width: 250,
-                    child: Center(
-                      child: TextField(
-                        controller: _textEditingController,
-                        decoration: InputDecoration(
-                          hintText: '...أكتب رسالتك هنا'.tr,
-                          hintStyle: Theme.of(context).textTheme.bodyText1,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        textAlign: TextAlign.right,
+          if (isLoading) CircularProgressIndicator(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textEditingController,
+                    decoration: InputDecoration(
+                      hintText: 'اكتب رسالتك هنا '.tr,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
+                ),
+                SizedBox(width: 8),
+                CircleAvatar(
+                  radius: 22,
+                  backgroundColor: HexColor('00B4D8'),
+                  child: IconButton(
+                    icon: Icon(Icons.send_rounded, color: Colors.white),
+                    onPressed: () {
+                      final message = _textEditingController.text.trim();
+                      if (message.isNotEmpty) {
+                        sendMessage(message);
+                        _textEditingController.clear();
+                        _controller.animateTo(
+                            _controller.position.minScrollExtent,
+                            duration: Duration(milliseconds: 1000),
+                            curve: Curves.easeIn);
+                      }
+                    },
                   ),
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundColor: HexColor('00B4D8'),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.cleaning_services, // أيقونة المكنسة
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        // عند الضغط على الزرار، عرض مربع حوار لتأكيد مسح محتويات الشات
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("تأكيد مسح المحادثة"),
-                              content: Text("هل تريد بالفعل مسح محتويات الشات؟"),
-                              actions: <Widget>[
-                                // زر للتأكيد
-                                TextButton(
-                                  child: Text("نعم"),
-                                  onPressed: () {
-                                    // قم بمسح محتويات الشات وإغلاق مربع الحوار
-                                    setState(() {
-                                      messages.clear(); // مسح جميع الرسائل
-                                    });
-                                    Navigator.of(context).pop(); // إغلاق مربع الحوار
-                                  },
-                                ),
-                                // زر للإلغاء
-                                TextButton(
-                                  child: Text("لا"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(); // إغلاق مربع الحوار
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundColor: HexColor('00B4D8'),
-                    child: IconButton(
-                      icon: Icon(Icons.send_outlined, color: Colors.white),
-                      onPressed: () {
-                        final message = _textEditingController.text.trim();
-                        if (message.isNotEmpty) {
-                          sendMessage(message);
-                          _textEditingController.clear();
-                          _controller.animateTo(
-                              _controller.position.minScrollExtent,
-                              duration: Duration(milliseconds: 1000),
-                              curve: Curves.easeIn);
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                ),
+
+
+
+                IconButton(
+                  icon: Icon(_isRecording ? (Icons.stop)  : Icons.mic),
+                  color:HexColor('00B4D8'),
+                  onPressed: () async {
+                    if (_isRecording) {
+                      await _stopRecording();
+                    } else {
+                      await _startRecording();
+                    }
+                  },
+                ),
+              ],
             ),
-          )
+          ),
         ],
       ),
     );

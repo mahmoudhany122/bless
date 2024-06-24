@@ -60,12 +60,6 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                             Text("تم الإنتهاء من 0 من 0".tr,style: TextStyle(color: Colors.grey,fontSize: 14),)
                           ],
                         ),
-                        Spacer(),
-                        Image(
-                          image: AssetImage(
-                              "assets/images/img_28.png",),
-                          width: 85,height: 85,
-                        )
                       ],
                     ),)
                ),

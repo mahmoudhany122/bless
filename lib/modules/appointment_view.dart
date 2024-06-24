@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../data/data.dart';
 import '../widgets/appointment_date_widget.dart';
 import '../widgets/appointment_time_widget.dart';
@@ -10,7 +11,6 @@ import '../widgets/main_text_form.dart';
 import '../widgets/progress_button.dart';
 import '../widgets/show_bottom_sheet.dart';
 import '../widgets/stars_bar.dart';
-import 'appointment_review_summary_view.dart';
 import 'chat_doc.dart';
 import 'doctor_details_screen.dart';
 import 'package:http/http.dart' as http;
@@ -259,17 +259,22 @@ class _AppointmentViewState extends State<AppointmentView> {
   }
 }
 
+
 class DetailsDocAppontioment extends StatefulWidget {
   final Map<String, dynamic> therapist;
-  final int patientId; // إضافة patientId هنا
-  const DetailsDocAppontioment({Key? key, required this.therapist, required this.patientId, }) : super(key: key);
+  final int patientId;
+
+  const DetailsDocAppontioment({
+    Key? key,
+    required this.therapist,
+    required this.patientId,
+  }) : super(key: key);
 
   @override
   State<DetailsDocAppontioment> createState() => _DetailsDocAppontiomentState();
 }
 
 class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
-
   @override
   Widget build(BuildContext context) {
     final therapist = widget.therapist;
@@ -288,7 +293,8 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      therapist['photoUrl'] ?? 'https://th.bing.com/th/id/R.215c1ff399e961851cc11a7810886a0e?rik=oZfxvnavGwz6cA&riu=http%3a%2f%2fwww.writergirl.com%2fwp-content%2fuploads%2f2014%2f11%2fDoctor-790X1024.jpg&ehk=CmnYm47Si7SLogCKQcVQ9Onueou53ycpcjvFFc3Ej00%3d&risl=&pid=ImgRaw&r=0',
+                      therapist['photoUrl'] ??
+                          'https://th.bing.com/th/id/R.215c1ff399e961851cc11a7810886a0e?rik=oZfxvnavGwz6cA&riu=http%3a%2f%2fwww.writergirl.com%2fwp-content%2fuploads%2f2014%2f11%2fDoctor-790X1024.jpg&ehk=CmnYm47Si7SLogCKQcVQ9Onueou53ycpcjvFFc3Ej00%3d&risl=&pid=ImgRaw&r=0',
                       height: 95,
                       fit: BoxFit.fill,
                       width: 95,
@@ -364,10 +370,15 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                 text: "التحقق من الموعد المتاح",
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
+                  String clinicNumber = therapist['clinicNumber'] ?? 'N/A';
                   mainShowDialog(
                     context: context,
                     height: MediaQuery.of(context).size.height / 1.5,
-                    page:  AppointmentBottomSheet(therapistId: therapist['id'],patientId: widget.patientId ?? 0),
+                    page: AppointmentBottomSheet(
+                      therapistId: therapist['id'],
+                      patientId: widget.patientId,
+                      clinicNumber: clinicNumber,
+                    ),
                   );
                 },
               ),
@@ -470,23 +481,30 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
     );
   }
 }
-class AppointmentBottomSheet extends StatefulWidget {
 
+
+
+
+
+class AppointmentBottomSheet extends StatefulWidget {
   final int therapistId; // تعريف متغير لتخزين معرف المعالج المحدد
   final int patientId; // إضافة patientId هنا
-  const AppointmentBottomSheet({Key? key, required this.therapistId, required this.patientId}) : super(key: key);
+  final String clinicNumber; // تعريف متغير لتخزين رقم العيادة
 
+  const AppointmentBottomSheet({
+    Key? key,
+    required this.therapistId,
+    required this.patientId,
+    required this.clinicNumber,
+  }) : super(key: key);
 
   @override
   State<AppointmentBottomSheet> createState() => _AppointmentBottomSheetState();
 }
 
 class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
-
-
   String? time = "";
   String? date = "";
-
 
   Future<void> makeAppointment() async {
     int therapistId = widget.therapistId;
@@ -521,6 +539,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
             builder: (context) => AppointmentReviewView(
               date: formattedDate,
               time: formattedTime,
+              clinicNumber: widget.clinicNumber, // تمرير رقم العيادة هنا
             ),
           ),
         );
@@ -534,19 +553,10 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
     }
   }
 
-
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-
-        // اختيار التاريخ باستخدام حزمة التاريخ والوقت
         GestureDetector(
           onTap: () async {
             DateTime? selectedDate = await showDatePicker(
@@ -581,18 +591,11 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
             title: "اختر التاريخ",
           ),
         ),
-
-
         const SizedBox(height: 12),
-
-        // عرض قيمة therapistId
         Text("Therapist ID: ${widget.therapistId}"),
-        // عرض قيمة patientId
         Text("Patient ID: ${widget.patientId}"),
-        Text(' الوقت: $date $time'),
-        SizedBox(height: 12),
-        // رسالة التنبيه
-
+        Text('الوقت: $date $time'),
+        const SizedBox(height: 12),
         const Row(
           children: [
             Icon(
@@ -616,16 +619,212 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
         ),
         const SizedBox(height: 20),
         AppProgressButton(
-          text: " لقد اخترت    $date $time",
+          text: "لقد اخترت $date $time",
           width: MediaQuery.of(context).size.width,
           onPressed: (anim) {
-            {
-              makeAppointment();
-            }
+            makeAppointment();
           },
         )
       ],
     );
   }
 }
+
+
+
+
+class AppointmentReviewView extends StatefulWidget {
+  const AppointmentReviewView({
+    Key? key,
+    required this.date,
+    required this.time,
+    required this.clinicNumber, // استلام رقم العيادة هنا
+  }) : super(key: key);
+
+  final String date;
+  final String time;
+  final String clinicNumber; // تعريف متغير لتخزين رقم العيادة
+
+  @override
+  State<AppointmentReviewView> createState() => _AppointmentReviewViewState();
+}
+
+class _AppointmentReviewViewState extends State<AppointmentReviewView> {
+  PaymentMethod checkoutPaymentMethod = paymentMethod.first;
+  void changeCheckOutPaymentMethod(PaymentMethod? val) {
+    setState(() {
+      checkoutPaymentMethod = val!;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "ملخص المراجعة",
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            "التاريخ والساعة",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "${widget.date} | ${widget.time}",
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    const Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "المدة",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "30 دقيقه",
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    Row(
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            "المبلغ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${widget.clinicNumber ?? ""} جنيها "', // Ensure widget.clinicNumber is not null
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                "الطريقة المختارة للدفع",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var e = paymentMethod[index];
+                    return RadioListTile<PaymentMethod>(
+                      contentPadding: EdgeInsets.zero,
+                      value: e,
+                      activeColor: Colors.cyan,
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      groupValue: checkoutPaymentMethod,
+                      title: Row(
+                        children: [
+                          Icon(
+                            e.icon,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 20),
+                          Text(
+                            e.name,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onChanged: changeCheckOutPaymentMethod,
+                    );
+                  },
+                  itemCount: paymentMethod.length,
+                ),
+              ),
+              const SizedBox(height: 30),
+              Center(
+                child: AppProgressButton(
+                  radius: 8,
+                  text: "احجز موعد",
+                  width: MediaQuery.of(context).size.width - 40,
+                  onPressed: (animation) {},
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 

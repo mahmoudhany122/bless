@@ -5,12 +5,13 @@ import 'package:hexcolor/hexcolor.dart';
 ThemeData darkTheme =ThemeData(
   primarySwatch: Colors.grey,
   scaffoldBackgroundColor: HexColor('333739'),
+
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: HexColor('333739'),
       statusBarIconBrightness:Brightness.light,
     ),
-    backgroundColor: HexColor('333739'),
+    backgroundColor:HexColor('333739'),
     elevation: 0.0,
     iconTheme: IconThemeData(
       color: Colors.white,
@@ -21,6 +22,7 @@ ThemeData darkTheme =ThemeData(
       fontWeight: FontWeight.bold,
     ),
   ),
+  backgroundColor:HexColor("566063"),
   iconTheme: IconThemeData(
     color: Colors.white,
   ),
@@ -41,11 +43,11 @@ ThemeData darkTheme =ThemeData(
       fontWeight: FontWeight.bold,
     ),
     headline6: TextStyle(
-      color: Colors.black,
+      color: Colors.white,
       fontSize: 17,
 
     ),
-      headline5  : TextStyle(
+    headline5  : TextStyle(
       color: Colors.white,
       fontSize: 16,
 
@@ -132,6 +134,10 @@ ThemeData lightTheme = ThemeData(
       color:Colors.black,
     ),
   ),
+  iconTheme: IconThemeData(
+      color:Colors.black
+  ),
+  backgroundColor: Colors.grey[200],
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: HexColor('00B4D8'),
   ),
@@ -140,46 +146,46 @@ ThemeData lightTheme = ThemeData(
     unselectedItemColor: Colors.black,
   ),
   textTheme: TextTheme(
-    bodyText1: TextStyle(
-      fontSize: 23.0,
-      fontWeight: FontWeight.bold,
-      color: Colors.black,
+      bodyText1: TextStyle(
+        fontSize: 23.0,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
 
-    ),
-    bodyText2: TextStyle(
-      color: Colors.black,
-      fontSize: 23,
-      fontWeight: FontWeight.bold,
-    ),
-    headline1:TextStyle(
-      fontSize: 30.0,
-      fontWeight: FontWeight.w300,
-      color: HexColor('00B4D8'),
-    ) ,
-    headline2:TextStyle(
-      fontSize:35.0,
-      fontWeight: FontWeight.w300,
-      color: HexColor('00B4D8'),
-    ) ,
-    headline6: TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.w400,
-      fontSize: 17,
-    ),
-    headline5  : TextStyle(
-      color: Colors.black,
-      fontSize: 16,
-      fontWeight: FontWeight.bold
+      ),
+      bodyText2: TextStyle(
+        color: Colors.black,
+        fontSize: 23,
+        fontWeight: FontWeight.bold,
+      ),
+      headline1:TextStyle(
+        fontSize: 30.0,
+        fontWeight: FontWeight.w300,
+        color: HexColor('00B4D8'),
+      ) ,
+      headline2:TextStyle(
+        fontSize:35.0,
+        fontWeight: FontWeight.w300,
+        color: HexColor('00B4D8'),
+      ) ,
+      headline6: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w400,
+        fontSize: 15,
+      ),
+      headline5  : TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+          fontWeight: FontWeight.bold
 
-    ),
-    headlineLarge: TextStyle(
-      fontWeight: FontWeight.w600,
-      fontSize: 23.0,
-      color: Colors.black,
-    ),
-    button:  TextStyle(
-      color: Colors.white,
-      fontSize: 20,
-    ),
-  ),
+      ),
+      headlineLarge: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 23.0,
+        color: Colors.black,
+      ),
+      button:  TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          ),
+      ),
 );
