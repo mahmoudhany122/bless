@@ -1,3 +1,4 @@
+import 'package:blessmate/modules/yogawrites.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,9 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/main_text_form.dart';
 import '../widgets/progress_button.dart';
 import 'appointment_view.dart';
+import 'breathewrites.dart';
 import 'gem.dart';
 import 'imagine.dart';
 import 'musiq.dart';
+import 'musiqwrite.dart';
 import 'yoga.dart';
 
 class All extends StatefulWidget {
@@ -24,6 +27,7 @@ class _AllState extends State<All> {
   late CollectionReference _itemsCollection;
 
   List<Widget> pages = [Gym(), Yoga(), Musiq(), ExerciseScreen()];
+  List<Widget> Writes = [ DeepBreathingBenefitsPage(), YogaBenefitsPage(), MusicTherapyPage()];
 
   TextEditingController searchController = TextEditingController();
 
@@ -44,6 +48,8 @@ class _AllState extends State<All> {
 // تعريف المتغيرات لحفظ بيانات المعالج
   String therapistFirstName = 'Unknown';
   String therapistLastName = 'Therapist';
+  String therapistSpeciality = 'speciliaty un known';
+  String therapistYearsExperience = '5 years';
   String therapistPhotoUrl = '';
 
 
@@ -56,6 +62,9 @@ class _AllState extends State<All> {
       therapistFirstName = prefs.getString('therapistFirstName') ?? '';
       therapistLastName = prefs.getString('therapistLastName') ?? '';
       therapistPhotoUrl = prefs.getString('therapistPhotoUrl') ?? '';
+      therapistSpeciality = prefs.getString('therapistSpeciality') ?? '';
+      therapistYearsExperience = prefs.getString('therapistYearsExperience') ?? '';
+
     });
   }
 
@@ -222,29 +231,60 @@ class _AllState extends State<All> {
                     // عرض صورة المعالج إذا كانت متاحة
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Container(
-                        width: 50,
-                        height: 90,
-                        color: Colors.grey[300], // لون الخلفية للصورة إذا لم تكن متاحة
-                        child: therapistPhotoUrl != null
-                            ? Image.network(
-                          therapistPhotoUrl,
-                          fit: BoxFit.cover,
-                        )
-                            : Icon(Icons.person, size: 30, color: Colors.grey),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          width: 50,
+                          height: 90,
+                          color: Colors.grey[300], // لون الخلفية للصورة إذا لم تكن متاحة
+                          child: therapistPhotoUrl != null
+                              ? Image.network(
+                            therapistPhotoUrl,
+                            fit: BoxFit.cover,
+                          )
+                              : Icon(Icons.person, size: 30, color: Colors.grey),
+                        ),
                       ),
                     ),
                     SizedBox(width: 10),
-                    // عرض اسم المعالج
-                    Text(
-                      '$therapistFirstName $therapistLastName',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            ' $therapistLastName $therapistFirstName',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+
+                            ),
+                          ),
+                          Text(
+                            '$therapistSpeciality',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            "$therapistYearsExperience",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
+
+                          ),
+                        ],
                       ),
                     ),
+                    // عرض اسم المعالج
+
                   ],
                 ),
+
               ),
 
               SizedBox(height: 15),
@@ -262,7 +302,7 @@ class _AllState extends State<All> {
                     return GestureDetector(
                       onTap: () {
                         // Navigate to the appropriate page when the item is tapped
-                        Get.to(() => pages[index]);
+                        Get.to(() => Writes[index]);
                       },
                       child: Container(
                         margin: EdgeInsets.all(3),

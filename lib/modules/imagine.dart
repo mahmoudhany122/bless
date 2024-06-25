@@ -53,48 +53,51 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'تمارين'.tr,
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-            SizedBox(height: 10),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200,
-                viewportFraction: 1.0,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 6),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'تمارين'.tr,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
-              items: itemImages.map((imageUrl) {
-                return Image.network(imageUrl, fit: BoxFit.cover);
-              }).toList(),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'التمارين المتاحة'.tr,
-              style: Theme.of(context).textTheme.headline5,
-            ),
-            SizedBox(height: 10),
-            Obx(() => GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-                childAspectRatio: 0.95,
+              SizedBox(height: 10),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 200,
+                  viewportFraction: 1.0,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 6),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                ),
+                items: itemImages.map((imageUrl) {
+                  return Image.network(imageUrl, fit: BoxFit.cover);
+                }).toList(),
               ),
-              itemCount: itemNames.length,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return buildExerciseGridItem(context, index);
-              },
-            )),
-          ],
+              SizedBox(height: 20),
+              Text(
+                'التمارين المتاحة'.tr,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              SizedBox(height: 10),
+              Obx(() => GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                  childAspectRatio: 0.95,
+                ),
+                itemCount: itemNames.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return buildExerciseGridItem(context, index);
+                },
+              )),
+            ],
+          ),
         ),
       ),
     );

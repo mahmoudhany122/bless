@@ -19,9 +19,9 @@ enum MyThemeMode {
 }
 class ProfileDoctorScreen extends StatefulWidget {
 
-  final int therapistId;
 
-  const ProfileDoctorScreen({Key? key, required this.therapistId}) : super(key: key);
+
+  const ProfileDoctorScreen({Key? key, }) : super(key: key);
 
   @override
   State<ProfileDoctorScreen> createState() => _ProfileDoctorScreenState();
@@ -425,14 +425,7 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
                                                                     child:
                                                                         TextButton(
                                                                       onPressed:
-                                                                          () {
-                                                                        Navigator.pushAndRemoveUntil(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                              builder: (context) => TabBarScreen(therapistId: widget.therapistId),
-                                                                            ),
-                                                                            (route) => false);
-                                                                      },
+                                                                          () {},
                                                                       child:
                                                                           Text(
                                                                         "الغاء"

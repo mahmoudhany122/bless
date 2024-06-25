@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:blessmate/modules/tap_bar_doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:blessmate/modules/doctor_details_screen.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
@@ -120,7 +121,12 @@ class _UploadImagePageState extends State<UploadImagePage> {
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: _uploadImage,
-              child: Text('تأكيد التسجيل'),
+
+              child: Text('تأكيد التسجيل',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),

@@ -22,7 +22,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   final _imagePicker = ImagePicker();
   var descriptionController = TextEditingController();
   var specialityController = TextEditingController();
-  String? imagePath; // Define imagePath as a class variable
+  String? imagePath;
 
   Future<void> pickImageCamera() async {
     final pickedImage = await _imagePicker.pickImage(source: ImageSource.camera);
@@ -122,6 +122,36 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     }
   }
 
+  void _showImageSourceActionSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text('معرض الصور'),
+                onTap: () {
+                  pickImageGallery();
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_camera),
+                title: Text('الكاميرا'),
+                onTap: () {
+                  pickImageCamera();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,14 +193,12 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                         ),
                         IconButton(
                           onPressed: () {
-                            pickImageCamera();
-                            pickImageGallery();
+                            _showImageSourceActionSheet(context);
                           },
                           icon: Icon(
                             Icons.camera_alt_rounded,
                             size: 50,
                             color: Colors.white,
-
                           ),
                         ),
                       ],
@@ -237,8 +265,8 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                     color: HexColor('00B4D8'),
                   ),
                   child: MaterialButton(
-                    child: Text("قم بتحديد مواعيد العمل و الحجز المتاحة".tr,
-                    style: Theme.of(context).textTheme.button),
+                    child: Text("الذهاب الى الصفحه الرئيسيه".tr,
+                        style: Theme.of(context).textTheme.button),
                     onPressed: sendTherapistProfile, // Call sendTherapistProfile method when the button is pressed
                   ),
                 ),
@@ -250,4 +278,3 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     );
   }
 }
-

@@ -80,6 +80,8 @@ class _AppointmentViewState extends State<AppointmentView> {
     await prefs.setString('therapistFirstName', therapist['firstName']);
     await prefs.setString('therapistLastName', therapist['lastName']);
     await prefs.setString('therapistPhotoUrl', therapist['photoUrl']);
+    await prefs.setString('therapistSpeciality', therapist['speciality']);
+    await prefs.setString('therapistYearsExperience', therapist['yearsExperience']);
 
     print('Saved therapist data: ${therapist['firstName']} ${therapist['lastName']}');
   }
@@ -197,7 +199,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                "${therapist['firstName'] ?? 'Unknown'} ${therapist['lastName'] ?? 'Therapist'}",
+                                "${therapist['lastName'] ?? 'Therapist'}${therapist['firstName'] ?? 'Unknown'} ",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
@@ -812,11 +814,43 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
               ),
               const SizedBox(height: 30),
               Center(
-                child: AppProgressButton(
+                child:AppProgressButton(
                   radius: 8,
-                  text: "احجز موعد",
-                  width: MediaQuery.of(context).size.width - 40,
-                  onPressed: (animation) {},
+                  text: "تأكيد",
+                  width: MediaQuery.of(context).size.width,
+                  // داخل onPressed للزر
+                  onPressed: (anim) async {
+                    // بناء الجسم للطلب
+                    Map<String, dynamic> requestBody = {
+                      "SessionPrice": 50,
+                      "Times": 50
+                    };
+
+                    // إرسال الطلب POST
+                    try {
+                      final response = await http.post(
+                        Uri.parse('https://blessmate.onrender.com/Manage/CheckOut'),
+                        body: jsonEncode(requestBody),
+                        headers: <String, String>{
+                          'Content-Type': 'application/json; charset=UTF-8',
+                        },
+                      );
+
+                      if (response.statusCode == 200) {
+                        // الاستجابة ناجحة
+                        // قم بفتح الرابط في متصفح الويب
+                        await launch(response.body);
+                      } else {
+                        // حدث خطأ
+                        print('Error: ${response.statusCode}');
+                        // يمكنك عرض رسالة خطأ للمستخدم هنا
+                      }
+                    } catch (e) {
+                      // حدث استثناء
+                      print('Exception: $e');
+                      // يمكنك عرض رسالة خطأ للمستخدم هنا
+                    }
+                  },
                 ),
               ),
             ],

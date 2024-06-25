@@ -41,7 +41,7 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Messages', style: Theme.of(context).textTheme.bodyText1),
+        title: Text('محادثات المرضى', style: Theme.of(context).textTheme.bodyText1),
         centerTitle: true,
       ),
       body: _isLoading

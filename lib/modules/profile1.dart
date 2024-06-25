@@ -198,7 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                     Text("تحرير الملف الشخصي".tr,style:
                                                     Theme.of(context).textTheme.headline6),
                                                     Spacer(),
-                                                    Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                                                    Icon(Icons.arrow_forward_ios,color: Theme.of(context).iconTheme.color,),
                                                   ],
                                                 ),
                                               ),
@@ -228,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                         style: Theme.of(context).textTheme.headline6),
 
                                                     Spacer(),
-                                                    Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                                                    Icon(Icons.arrow_forward_ios,color:  Theme.of(context).iconTheme.color,),
 
                                                   ],
                                                 ),
@@ -299,7 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                     Text("تغيير كلمة المرور".tr,
                                                         style:  Theme.of(context).textTheme.headline6),
                                                     Spacer(),
-                                                    Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                                                    Icon(Icons.arrow_forward_ios,color: Theme.of(context).iconTheme.color,),
                                                   ],
                                                 ),
                                               ),
@@ -327,7 +327,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                               ),
                                                               RadioListTile<MyThemeMode>(
                                                                 title:  Text('فاتح'.tr,
-                                                                  style: TextStyle(color: Colors.black),
+                                                                  style: Theme.of(context).textTheme.headline6,
                                                                 ),
                                                                 activeColor: HexColor('00B4D8'),
                                                                 value:MyThemeMode .light,
@@ -369,7 +369,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                         style: Theme.of(context).textTheme.headline6),
 
                                                     Spacer(),
-                                                    Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                                                    Icon(Icons.arrow_forward_ios,color: Theme.of(context).iconTheme.color,),
                                                   ],
                                                 ),
                                               ),

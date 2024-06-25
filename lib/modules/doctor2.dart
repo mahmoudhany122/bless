@@ -3,17 +3,19 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Appointment {
   final int id;
-  final String ?firstName;
-  final String ?lastName;
+  final String? firstName;
+  final String? lastName;
   final String? phoneNumber; // Make phone number nullable
-  final String ? email;
+  final String? email;
   final int age;
   final bool isMale;
   final String? photoUrl; // Make photo URL nullable
-  final String ? inTime;
+  final String? inTime;
 
   Appointment({
     required this.id,
@@ -118,6 +120,13 @@ class AppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String formatDate(String? dateStr) {
+      if (dateStr == null) return '';
+      final dateTime = DateTime.parse(dateStr);
+      final formatter = DateFormat('yyyy-MM-dd HH:mm');
+      return formatter.format(dateTime);
+    }
+
     return GestureDetector(
       onTap: () {
         // Handle appointment card tap
@@ -126,7 +135,7 @@ class AppointmentCard extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Container(
           padding: EdgeInsets.only(right: 10, left: 10),
-          height: 90,
+          height: 100,
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -151,11 +160,11 @@ class AppointmentCard extends StatelessWidget {
                     : Placeholder(), // Use placeholder if photo URL is null
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 15),
                   Text(
-                    '${appointment.firstName} ${appointment.lastName}',
+                    ' ${appointment.lastName} ${appointment.firstName}',
                     style: TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
@@ -164,13 +173,78 @@ class AppointmentCard extends StatelessWidget {
                       Icon(Icons.access_time, color: HexColor("00B4D8"), size: 12),
                       SizedBox(width: 2),
                       Text(
-                        "${appointment.inTime}",
+                        formatDate(appointment.inTime),
                         style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                     ],
-                  )
+                  ),
                 ],
-              )
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('تأكيد'),
+                            content: Text('هل قمت بإكمال الجلسة بالفعل؟'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text('لا'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  // Handle "Yes" action
+                                },
+                                child: Text('نعم'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    icon: FaIcon(FontAwesomeIcons.checkCircle, color: Colors.green, size: 30),
+
+                  ),
+                  SizedBox(width: 8),
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('تأكيد'),
+                            content: Text('هل تريد بالفعل إلغاء الجلسة؟'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text('لا'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  // Handle "Yes" action
+                                },
+                                child: Text('نعم'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    icon: FaIcon(FontAwesomeIcons.timesCircle, color: Colors.red, size: 30),
+
+
+                  ),
+                ],
+              ),
             ],
           ),
         ),

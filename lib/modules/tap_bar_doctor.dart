@@ -139,7 +139,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
           ),
           Expanded(
             child: TabBarView(children: [
-              ProfileDoctorScreen(therapistId: widget.therapistId),
+              ProfileDoctorScreen(),
               HomeDoctorScreen(therapistId: widget.therapistId),
             ]),
           ),
