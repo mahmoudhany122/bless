@@ -9,10 +9,6 @@ import 'edit_profile_doctor.dart';
 import 'logres.dart';
 import 'notification_doctor.dart';
 
-enum MyThemeMode {
-  light,
-  dark,
-}
 class ProfileDoctorScreen extends StatefulWidget {
 
 
@@ -27,7 +23,6 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
   String _selectedLanguage = 'ar';
   @override
   Widget build(BuildContext context) {
-    final themeMode = Provider.of<ValueNotifier<MyThemeMode>>(context);
     return Scaffold(
         body: SingleChildScrollView(
             child: Padding(
@@ -186,79 +181,6 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
                                               Get.updateLocale(
                                                   Locale(_selectedLanguage));
                                             },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(0),
-                                    child: TextButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context)=>AlertDialog(
-                                              actions: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(height: 10,),
-                                                    Center(
-                                                      child: Text("الوضع".tr,style: TextStyle(color: HexColor('00B4D8')),),),
-                                                    SizedBox(height: 5,),
-                                                    Divider(height: 1,),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    RadioListTile<MyThemeMode>(
-                                                      title:  Text('فاتح'.tr,
-                                                        style: TextStyle(color: Colors.black),
-                                                      ),
-                                                      activeColor: HexColor('00B4D8'),
-                                                      value:MyThemeMode .light,
-                                                      groupValue: themeMode.value,
-                                                      onChanged: (value) {
-                                                        themeMode.value = value!;
-
-                                                      },
-                                                    ),
-                                                    RadioListTile<MyThemeMode>(
-                                                      title:  Text('غامق'.tr,
-                                                        style: TextStyle(color:Colors.black),
-                                                      ),
-                                                      activeColor: HexColor('00B4D8'),
-                                                      value: MyThemeMode .dark,
-                                                      groupValue: themeMode.value,
-                                                      onChanged: (value) {
-                                                        themeMode.value = value!;
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-
-                                            )
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Icon(
-                                            Icons.dark_mode_outlined,
-                                            color: HexColor('00B4D8'),
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text("الوضع المظلم".tr,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6),
-                                          Spacer(),
-                                          Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.black,
                                           ),
                                         ],
                                       ),

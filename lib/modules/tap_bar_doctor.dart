@@ -119,7 +119,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
             tabs: [
               Tab(
                 child:Text(
-                  "الملف الشخصى",
+                  "الصفحة الرئيسية",
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -128,7 +128,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
               ),
               Tab(
                 child: Text(
-                  "الصفحة الرئيسية".tr,
+                  "الملف الشخصى".tr,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -139,8 +139,9 @@ class _TabBarScreenState extends State<TabBarScreen> {
           ),
           Expanded(
             child: TabBarView(children: [
-              ProfileDoctorScreen(),
+
               HomeDoctorScreen(therapistId: widget.therapistId),
+              ProfileDoctorScreen(),
             ]),
           ),
         ]

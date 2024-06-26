@@ -1,27 +1,12 @@
 import 'package:blessmate/language/translate.dart';
-import 'package:blessmate/modules/chat.dart';
-import 'package:blessmate/modules/login.dart';
-import 'package:blessmate/modules/notification.dart';
-import 'package:blessmate/modules/onboardingscreen.dart';
-import 'package:blessmate/modules/profile1.dart';
-import 'package:blessmate/modules/signindoctor.dart';
 import 'package:blessmate/themes/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'modules/all.dart';
 import 'modules/bottom_nav.dart';
-import 'modules/chat.dart';
-import 'modules/chat_doc.dart';
-import 'modules/chatitem.dart';
-import 'modules/dark.dart';
-import 'modules/explore.dart';
-import 'modules/home_doctor.dart';
-import 'modules/initsreen.dart';
-import 'modules/logindoc.dart';
-import 'modules/signupdoc.dart';
-import 'modules/tap_bar_doctor.dart';
+import 'modules/profile1.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,20 +27,18 @@ class MyApp extends StatelessWidget {
     final themeMode = Provider.of<ValueNotifier<MyThemeMode>>(context).value;
 
     ThemeData selectedTheme;
-    switch (themeMode) {
-      case MyThemeMode.light:
-        selectedTheme = lightTheme;
-        break;
-      case MyThemeMode.dark:
-        selectedTheme = darkTheme;
-        break;
-
+    if (themeMode == MyThemeMode.light) {
+      selectedTheme = lightTheme;
+    } else if (themeMode == MyThemeMode.dark) {
+      selectedTheme = darkTheme;
+    } else {
+      selectedTheme = lightTheme;
     }
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
 
-      home:LogoScreen(),
+      home:BottomNav(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

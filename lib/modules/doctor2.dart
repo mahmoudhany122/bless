@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'doctor1.dart';
 
 class Appointment {
   final int id;
@@ -88,6 +91,12 @@ class _HomeDoctor2State extends State<HomeDoctor2> {
     }
   }
 
+  void removeAppointment(int id) {
+    setState(() {
+      appointments.removeWhere((appointment) => appointment.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,8 +114,12 @@ class _HomeDoctor2State extends State<HomeDoctor2> {
         itemCount: appointments.length,
         itemBuilder: (context, index) {
           final appointment = appointments[index];
-          return AppointmentCard(appointment: appointment);
-        }, separatorBuilder: (context, index) =>SizedBox(height: 10),
+          return AppointmentCard(
+            appointment: appointment,
+            removeAppointment: removeAppointment,
+          );
+        },
+        separatorBuilder: (context, index) => SizedBox(height: 10),
       )
           : Center(child: Text(errorMessage)),
     );
@@ -115,8 +128,22 @@ class _HomeDoctor2State extends State<HomeDoctor2> {
 
 class AppointmentCard extends StatelessWidget {
   final Appointment appointment;
+  final void Function(int) removeAppointment;
 
-  const AppointmentCard({Key? key, required this.appointment}) : super(key: key);
+  const AppointmentCard({Key? key, required this.appointment, required this.removeAppointment}) : super(key: key);
+
+  Future<void> saveAppointmentDetails(Appointment appointment) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('appointment_id', appointment.id);
+    prefs.setString('appointment_firstName', appointment.firstName ?? '');
+    prefs.setString('appointment_lastName', appointment.lastName ?? '');
+    prefs.setString('appointment_phoneNumber', appointment.phoneNumber ?? '');
+    prefs.setString('appointment_email', appointment.email ?? '');
+    prefs.setInt('appointment_age', appointment.age);
+    prefs.setBool('appointment_isMale', appointment.isMale);
+    prefs.setString('appointment_photoUrl', appointment.photoUrl ?? '');
+    prefs.setString('appointment_inTime', appointment.inTime ?? '');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,9 +226,12 @@ class AppointmentCard extends StatelessWidget {
                                 child: Text('لا'),
                               ),
                               TextButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   Navigator.of(context).pop();
-                                  // Handle "Yes" action
+                                  await saveAppointmentDetails(appointment);
+                                  removeAppointment(appointment.id); // Remove the appointment from the list
+                                  Navigator.of(context).pop(); // Pop the current screen
+                                  // Optionally navigate to another screen here
                                 },
                                 child: Text('نعم'),
                               ),
@@ -211,7 +241,6 @@ class AppointmentCard extends StatelessWidget {
                       );
                     },
                     icon: FaIcon(FontAwesomeIcons.checkCircle, color: Colors.green, size: 30),
-
                   ),
                   SizedBox(width: 8),
                   IconButton(
@@ -228,9 +257,11 @@ class AppointmentCard extends StatelessWidget {
                                 child: Text('لا'),
                               ),
                               TextButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   Navigator.of(context).pop();
-                                  // Handle "Yes" action
+                                  removeAppointment(appointment.id); // Remove the appointment from the list
+                                  Navigator.of(context).pop(); // Pop the current screen
+                                  // Optionally navigate to another screen here
                                 },
                                 child: Text('نعم'),
                               ),
@@ -240,8 +271,6 @@ class AppointmentCard extends StatelessWidget {
                       );
                     },
                     icon: FaIcon(FontAwesomeIcons.timesCircle, color: Colors.red, size: 30),
-
-
                   ),
                 ],
               ),
