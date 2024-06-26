@@ -110,7 +110,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
           title: Center(
             child: Text(
               "تعديل الملف الشخصي".tr,
-              style:  Theme.of(context).textTheme.bodyLarge,
+              style:  Theme.of(context).textTheme.bodyText2,
             ),
           ),
           centerTitle: true,
@@ -171,7 +171,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
                           width: 336,
                           height: 379,
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.background,
+                            color: Theme.of(context).backgroundColor,
                             borderRadius: BorderRadius.circular(20),
                             border:  Border.all (color: Colors.grey),
                           ),

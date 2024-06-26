@@ -69,49 +69,6 @@ ThemeData darkTheme =ThemeData(
   ),
 );
 
-ThemeData thirdTheme =ThemeData(
-  primarySwatch: Colors.grey,
-  scaffoldBackgroundColor:Colors.blueGrey[800],
-  appBarTheme: AppBarTheme(
-    systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor:Colors.blueGrey[800],
-      statusBarIconBrightness:Brightness.dark,
-    ),
-    backgroundColor: Colors.blueGrey[800],
-    elevation: 0.0,
-    iconTheme: IconThemeData(
-      color: Colors.grey[350],
-    ),
-    titleTextStyle: TextStyle(
-      color: Colors.grey[350],
-      fontSize: 23.0,
-      fontWeight: FontWeight.bold,
-    ),
-  ),
-  iconTheme: IconThemeData(
-    color: Colors.grey[350],
-  ),
-  textTheme: TextTheme  (
-    bodyText1: TextStyle(
-      fontWeight: FontWeight.w600,
-      fontSize: 20.0,
-      color: Colors.grey[350],
-
-    ),
-    bodyText2: TextStyle(
-      color: Colors.grey[350],
-      fontSize: 30,
-      fontWeight: FontWeight.bold,
-    ),
-    headline6: TextStyle(
-      color: Colors.white,
-    ),
-  ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: Colors.blueGrey[800],
-    unselectedItemColor: Colors.black54,
-  ),
-);
 
 ThemeData lightTheme = ThemeData(
   primarySwatch:Colors.cyan,
@@ -137,7 +94,7 @@ ThemeData lightTheme = ThemeData(
   iconTheme: IconThemeData(
       color:Colors.black
   ),
-  backgroundColor: Colors.grey[200],
+  backgroundColor: Colors.grey[100],
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: HexColor('00B4D8'),
   ),

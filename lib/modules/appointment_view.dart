@@ -115,7 +115,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                     onChange: (value) {
                       search(value);
                     },
-                    fillColor: Colors.white,
+                    fillColor: Theme.of(context).backgroundColor,
                     borderRadius: 21,
                     hint: "دكتور",
                     prefixIcon: Icon(
@@ -158,11 +158,11 @@ class _AppointmentViewState extends State<AppointmentView> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey[300]!,
+                          color:Theme.of(context).backgroundColor!,
                           blurRadius: 10,
                           offset: const Offset(0, 1),
                         )

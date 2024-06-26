@@ -130,9 +130,10 @@ class _AllState extends State<All> {
                     Expanded(
                       child: MainTextField(
                         controller: searchController,
-                        fillColor: Colors.white,
+                        fillColor:Theme.of(context).backgroundColor,
                         borderRadius: 21,
                         hint: "بحث".tr,
+
                         prefixIcon: Icon(
                           Iconsax.search_normal,
                           color: Colors.cyan,
@@ -206,7 +207,7 @@ class _AllState extends State<All> {
               SizedBox(height: 15),
               Text(
                 "افضل اطباء النفس",
-                style: Theme.of(context).textTheme.headlineLarge,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
 // إضافة حقل لعرض بيانات المعالج
               Container(
@@ -214,11 +215,11 @@ class _AllState extends State<All> {
                 height:100 ,
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).backgroundColor,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey[300]!,
+                      color: Theme.of(context).backgroundColor!,
                       blurRadius: 10,
                       offset: const Offset(0, 1),
                     )
@@ -255,26 +256,15 @@ class _AllState extends State<All> {
                         children: [
                           Text(
                             ' $therapistLastName $therapistFirstName',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-
-                            ),
+                            style:  Theme.of(context).textTheme.headline6,
                           ),
                           Text(
                             '$therapistSpeciality',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
+                            style:  Theme.of(context).textTheme.headline6,
                           ),
                           Text(
                             "$therapistYearsExperience",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                            ),
+                            style:  Theme.of(context).textTheme.headline6,
 
                           ),
                         ],
@@ -290,7 +280,7 @@ class _AllState extends State<All> {
               SizedBox(height: 15),
               Text(
                 "المساعدات النفسية",
-                style: Theme.of(context).textTheme.headlineLarge,
+                style:  Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(
                 height: 200,

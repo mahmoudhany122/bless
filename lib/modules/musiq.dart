@@ -230,7 +230,7 @@ class VideoDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title,
-        style: Theme.of(context).textTheme.headline1),
+        style: Theme.of(context).textTheme.bodyText1),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -244,7 +244,7 @@ class VideoDetailPage extends StatelessWidget {
             ),
             Text(
               'ملخص:'.tr,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
             SizedBox(height: 10),
             Text(
@@ -378,7 +378,8 @@ class FavoriteItemsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('الموسيقى المفضلة لديك'.tr),
+        title: Text('الموسيقى المفضلة لديك'.tr,
+        style: Theme.of(context).textTheme.bodyText1),
       ),
       body: ListView.builder(
         itemCount: favoriteItemsDetails.length,

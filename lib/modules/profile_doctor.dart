@@ -1,21 +1,17 @@
-import 'package:blessmate/modules/add_after_signu.dart';
-import 'package:blessmate/modules/change_password.dart';
-import 'package:blessmate/modules/dark.dart';
-import 'package:blessmate/modules/edit_profile_doctor.dart';
-import 'package:blessmate/modules/logres.dart';
-import 'package:blessmate/modules/notification.dart';
-import 'package:blessmate/modules/notification_doctor.dart';
-import 'package:blessmate/modules/tap_bar_doctor.dart';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+
+import 'edit_profile_doctor.dart';
+import 'logres.dart';
+import 'notification_doctor.dart';
+
 enum MyThemeMode {
   light,
   dark,
-  third,
 }
 class ProfileDoctorScreen extends StatefulWidget {
 

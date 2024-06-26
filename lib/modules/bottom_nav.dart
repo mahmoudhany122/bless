@@ -57,7 +57,9 @@ class _BottomNavState extends State<BottomNav> {
             label: "استكشف".tr,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mark_unread_chat_alt_outlined),
+            icon: ImageIcon(AssetImage('assets/images/img_46.png',),
+              size: 23,
+            ),
             label: "المحادثه".tr,
           ),
           BottomNavigationBarItem(

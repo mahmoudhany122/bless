@@ -76,7 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       "مرحبآ".tr,
-                      style: TextStyle(fontSize: 15, color: Colors.black),
+                      style:  Theme.of(context).textTheme.headline6,
+
                     ),
                     SizedBox(
                       width: 5,
@@ -90,13 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-
                 Text(
                   extractUsername(_email),
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                  style:  Theme.of(context).textTheme.headline6,
+
                 ),
 
               ],

@@ -49,15 +49,13 @@ class MyApp extends StatelessWidget {
       case MyThemeMode.dark:
         selectedTheme = darkTheme;
         break;
-      case MyThemeMode.third:
-        selectedTheme = thirdTheme;
-        break;
+
     }
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
 
-      home:BottomNav(),
+      home:LogoScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

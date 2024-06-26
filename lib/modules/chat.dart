@@ -249,7 +249,7 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             Text(
               "معالج Bliss Mate".tr,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(width: 15),
             Image(

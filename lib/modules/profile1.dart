@@ -19,7 +19,6 @@ import 'package:share_plus/share_plus.dart';
 enum MyThemeMode {
   light,
   dark,
-  third,
 }
 var myColor = hex.HexColor('00B4D8');
 
@@ -70,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
           title: Center(
             child: Text(
               "الملف الشخصي".tr,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.right,
             ),
           ),
@@ -313,6 +312,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                   showDialog(
                                                       context: context,
                                                       builder: (context)=>AlertDialog(
+                                                        backgroundColor: Theme.of(context).backgroundColor,
                                                         actions: [
                                                           Column(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -327,7 +327,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                               ),
                                                               RadioListTile<MyThemeMode>(
                                                                 title:  Text('فاتح'.tr,
-                                                                  style: Theme.of(context).textTheme.headline6,
+                                                                  style: Theme.of(context).textTheme.bodyText1,
                                                                 ),
                                                                 activeColor: HexColor('00B4D8'),
                                                                 value:MyThemeMode .light,
@@ -339,7 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                               ),
                                                               RadioListTile<MyThemeMode>(
                                                                 title:  Text('غامق'.tr,
-                                                                  style: TextStyle(color:Colors.black),
+                                                                  style: Theme.of(context).textTheme.bodyText1
                                                                 ),
                                                                 activeColor: HexColor('00B4D8'),
                                                                 value: MyThemeMode .dark,
@@ -421,7 +421,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                         Text("طريقه الدفع".tr,
                                             style: Theme.of(context).textTheme.headline6),
                                         Spacer(),
-                                        Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                                        Icon(Icons.arrow_forward_ios,color: Theme.of(context).iconTheme.color,),
                                       ],
                                     ),
                                   ),
@@ -445,7 +445,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                         Text("مركز الساعده".tr,
                                             style:  Theme.of(context).textTheme.headline6),
                                         Spacer(),
-                                        Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                                        Icon(Icons.arrow_forward_ios,color: Theme.of(context).iconTheme.color,),
                                       ],
                                     ),
                                   ),
@@ -460,6 +460,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                       showDialog(
                                           context: context,
                                           builder: (context)=>AlertDialog(
+                                            backgroundColor: Theme.of(context).backgroundColor,
                                               actions: [
 
                                                 Row(
@@ -563,7 +564,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                         Text("دعوة الأصدقاء".tr,
                                             style:  Theme.of(context).textTheme.headline6),
                                         Spacer(),
-                                        Icon(Icons.arrow_forward_ios,color:Colors.black ,),
+                                        Icon(Icons.arrow_forward_ios,color:Theme.of(context).iconTheme.color ,),
                                       ],
                                     ),
                                   ),
@@ -587,7 +588,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                         Text("سياسة الخصوصية".tr,
                                             style:  Theme.of(context).textTheme.headline6),
                                         Spacer(),
-                                        Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                                        Icon(Icons.arrow_forward_ios,color: Theme.of(context).iconTheme.color,),
                                       ],
                                     ),
                                   ),
@@ -610,7 +611,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                         Text("الشروط و الأحكام".tr,
                                             style:  Theme.of(context).textTheme.headline6),
                                         Spacer(),
-                                        Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                                        Icon(Icons.arrow_forward_ios,color: Theme.of(context).iconTheme.color,),
                                       ],
                                     ),
                                   ),
@@ -663,6 +664,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                 showDialog(
                                     context: context,
                                     builder: (context)=>AlertDialog(
+                                       backgroundColor: Theme.of(context).backgroundColor,
                                         actions: [
 
 
@@ -688,7 +690,7 @@ class _ProfileScreenState extends State<ProfileScreen1> {
                                                 onPressed: (){  Navigator.pushAndRemoveUntil(
                                                     context,MaterialPageRoute(builder: (context) => ProfileScreen1(),),((route) => false));},
                                                 child: Text(
-                                                  "الغاء".tr,style: TextStyle(fontSize:16,color: Colors.black),
+                                                  "الغاء".tr,style:Theme.of(context).textTheme.headline6,
 
                                                 ),
                                               )

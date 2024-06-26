@@ -91,6 +91,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 ),
                 itemCount: itemNames.length,
                 shrinkWrap: true,
+
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return buildExerciseGridItem(context, index);
