@@ -206,7 +206,7 @@ class _AllState extends State<All> {
               ),
               SizedBox(height: 15),
               Text(
-                "افضل اطباء النفس",
+                "افضل اطباء النفس".tr,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
 // إضافة حقل لعرض بيانات المعالج
@@ -279,7 +279,7 @@ class _AllState extends State<All> {
 
               SizedBox(height: 15),
               Text(
-                "المساعدات النفسية",
+                "المساعدات النفسية".tr,
                 style:  Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(

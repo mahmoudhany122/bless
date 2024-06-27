@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -92,7 +93,7 @@ class _AppointmentViewState extends State<AppointmentView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "اختر المعالج الخاص بك",
+          "اختر المعالج الخاص بك".tr,
           style: Theme.of(context).textTheme.bodyText2,
         ),
         centerTitle: true,
@@ -117,7 +118,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                     },
                     fillColor: Theme.of(context).backgroundColor,
                     borderRadius: 21,
-                    hint: "دكتور",
+                    hint: "دكتور".tr,
                     prefixIcon: Icon(
                       Iconsax.search_normal,
                       color: Colors.cyan,
@@ -129,7 +130,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                   height: 38,
                   width: 75,
                   fontSize: 13,
-                  text: "بحث",
+                  text: "بحث".tr,
                   onPressed: (anim) {},
                 ),
               ],
@@ -242,7 +243,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                               height: 38,
                               width: 75,
                               fontSize: 13,
-                              text: "احجز الان",
+                              text: "احجز الان".tr,
                               onPressed: (anim) {},
                             ),
                           ],
@@ -318,7 +319,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          " دكتور : ${therapist['firstName'] ?? 'Unknown'} ${therapist['lastName'] ?? 'Therapist'}",
+                          " دكتور : ${therapist['firstName'] ?? 'Unknown'} ${therapist['lastName'] ?? 'Therapist'}".tr,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: Colors.cyan,
@@ -326,7 +327,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                           ),
                         ),
                         Text(
-                          therapist['speciality'] ?? 'التخصص غير معروف',
+                          therapist['speciality'] ?? 'التخصص غير معروف'.tr,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 17,
@@ -334,7 +335,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                           ),
                         ),
                         Text(
-                          "Years of Experience: ${therapist['yearsExperience'] ?? 'غير معروف'}",
+                          "Years of Experience: ${therapist['yearsExperience'] ?? 'غير معروف'.tr}",
                           style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
@@ -352,7 +353,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
             Center(
               child: AppProgressButton(
                 radius: 8,
-                text: " عمل محادثه مجانيه معى",
+                text: " عمل محادثه مجانيه معى".tr,
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
                   // Extracting the email
@@ -369,7 +370,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
             Center(
               child: AppProgressButton(
                 radius: 8,
-                text: "التحقق من الموعد المتاح",
+                text: "التحقق من الموعد المتاح".tr,
                 width: MediaQuery.of(context).size.width - 40,
                 onPressed: (anim) {
                   String clinicNumber = therapist['clinicNumber'] ?? 'N/A';
@@ -391,7 +392,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "عن الطبيب",
+                    "عن الطبيب".tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -399,7 +400,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                     ),
                   ),
                   Text(
-                    "${therapist['description'] ?? 'الوصف غير معرف'} ",
+                    "${therapist['description'] ?? 'الوصف غير معرف'.tr} ",
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
@@ -408,7 +409,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "التخصص",
+                    "التخصص".tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -416,7 +417,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                     ),
                   ),
                   Text(
-                    "${therapist['speciality'] ?? '" التخصص غير معروف'} ",
+                    "${therapist['speciality'] ?? '" التخصص غير معروف'.tr} ",
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w400,
@@ -425,7 +426,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "عنوان العياده",
+                    "عنوان العياده".tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -442,7 +443,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "رقم العياده",
+                    "رقم العياده".tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -459,7 +460,7 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "بيانات التواصل",
+                    "بيانات التواصل".tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
@@ -588,9 +589,9 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
               }
             }
           },
-          child: const HeaderWidget(
+          child: HeaderWidget(
             icon: Icons.calendar_month,
-            title: "اختر التاريخ",
+            title: "اختر التاريخ".tr,
           ),
         ),
         const SizedBox(height: 12),
@@ -598,7 +599,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
         Text("Patient ID: ${widget.patientId}"),
         Text('الوقت: $date $time'),
         const SizedBox(height: 12),
-        const Row(
+         Row(
           children: [
             Icon(
               Icons.info_outline,
@@ -608,7 +609,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
             SizedBox(width: 8),
             Expanded(
               child: Text(
-                "يمكن إعادة جدولة هذه الجلسة أو إلغاؤها بعد 24 ساعة قبل الجلسة",
+                "يمكن إعادة جدولة هذه الجلسة أو إلغاؤها بعد 24 ساعة قبل الجلسة".tr,
                 maxLines: 3,
                 style: TextStyle(
                   color: Colors.grey,
@@ -621,7 +622,7 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
         ),
         const SizedBox(height: 20),
         AppProgressButton(
-          text: "لقد اخترت $date $time",
+          text: "لقد اخترت $date $time".tr,
           width: MediaQuery.of(context).size.width,
           onPressed: (anim) {
             makeAppointment();
@@ -663,8 +664,8 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "ملخص المراجعة",
+        title:  Text(
+          "ملخص المراجعة".tr,
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 20,
@@ -690,9 +691,9 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                   children: [
                     Row(
                       children: [
-                        const Expanded(
+                         Expanded(
                           child: Text(
-                            "التاريخ والساعة",
+                            "التاريخ والساعة".tr,
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
@@ -711,12 +712,12 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                         ),
                       ],
                     ),
-                    const Divider(),
-                    const Row(
+                     Divider(),
+                     Row(
                       children: [
                         Expanded(
                           child: Text(
-                            "المدة",
+                            "المدة".tr,
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
@@ -725,7 +726,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                         ),
                         Expanded(
                           child: Text(
-                            "30 دقيقه",
+                            "30 دقيقه".tr,
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -738,9 +739,9 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                     const Divider(),
                     Row(
                       children: [
-                        const Expanded(
+                        Expanded(
                           child: Text(
-                            "المبلغ",
+                            "المبلغ".tr,
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               fontSize: 16,
@@ -749,7 +750,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                         ),
                         Expanded(
                           child: Text(
-                            '${widget.clinicNumber ?? ""} جنيها "', // Ensure widget.clinicNumber is not null
+                            '${widget.clinicNumber ?? ""} جنيها "'.tr, // Ensure widget.clinicNumber is not null
                             textAlign: TextAlign.end,
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
@@ -764,8 +765,8 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
                 ),
               ),
               const SizedBox(height: 12),
-              const Text(
-                "الطريقة المختارة للدفع",
+               Text(
+                "الطريقة المختارة للدفع".tr,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -816,7 +817,7 @@ class _AppointmentReviewViewState extends State<AppointmentReviewView> {
               Center(
                 child:AppProgressButton(
                   radius: 8,
-                  text: "تأكيد",
+                  text: "تأكيد".tr,
                   width: MediaQuery.of(context).size.width,
                   // داخل onPressed للزر
                   onPressed: (anim) async {

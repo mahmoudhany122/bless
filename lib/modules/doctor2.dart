@@ -218,8 +218,8 @@ class AppointmentCard extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('تأكيد'),
-                            content: Text('هل قمت بإكمال الجلسة بالفعل؟'),
+                            title: Text('تأكيد'.tr),
+                            content: Text('هل قمت بإكمال الجلسة بالفعل؟'.tr),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(),
@@ -233,7 +233,7 @@ class AppointmentCard extends StatelessWidget {
                                   Navigator.of(context).pop(); // Pop the current screen
                                   // Optionally navigate to another screen here
                                 },
-                                child: Text('نعم'),
+                                child: Text('نعم'.tr),
                               ),
                             ],
                           );
@@ -249,12 +249,12 @@ class AppointmentCard extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('تأكيد'),
-                            content: Text('هل تريد بالفعل إلغاء الجلسة؟'),
+                            title: Text('تأكيد'.tr),
+                            content: Text('هل تريد بالفعل إلغاء الجلسة؟'.tr),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(),
-                                child: Text('لا'),
+                                child: Text('لا'.tr),
                               ),
                               TextButton(
                                 onPressed: () async {
@@ -263,7 +263,7 @@ class AppointmentCard extends StatelessWidget {
                                   Navigator.of(context).pop(); // Pop the current screen
                                   // Optionally navigate to another screen here
                                 },
-                                child: Text('نعم'),
+                                child: Text('نعم'.tr),
                               ),
                             ],
                           );

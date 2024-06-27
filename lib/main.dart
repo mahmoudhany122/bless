@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'modules/bottom_nav.dart';
+import 'modules/initsreen.dart';
 import 'modules/profile1.dart';
 
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: selectedTheme,
 
-      home:BottomNav(),
+      home:LogoScreen(),
       translations: Translation(),
       locale: Locale('ar'),
       fallbackLocale: Locale('ar'),

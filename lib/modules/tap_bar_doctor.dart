@@ -119,7 +119,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
             tabs: [
               Tab(
                 child:Text(
-                  "الصفحة الرئيسية",
+                  "الصفحة الرئيسية".tr,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

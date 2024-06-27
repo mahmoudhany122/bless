@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +39,7 @@ class AppointmentDetailsPage extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text("تاريخ الاستشارات"),
+        title: Text("تاريخ الاستشارات".tr),
       ),
       body: FutureBuilder<Appointment?>(
         future: getSavedAppointmentDetails(),
@@ -46,7 +47,7 @@ class AppointmentDetailsPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (!snapshot.hasData) {
-            return Center(child: Text("ليس هناك استشارات مكتمله بعد"));
+            return Center(child: Text("ليس هناك استشارات مكتمله بعد".tr));
           } else {
             final appointment = snapshot.data!;
             return GestureDetector(
@@ -87,13 +88,13 @@ class AppointmentDetailsPage extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                "ميعاد ",
+                                "ميعاد ".tr,
                                 style: Theme.of(context).textTheme.bodyText1,
 
                               ),
                               SizedBox(width: 4),
                               Text(
-                                "مكتمل ",
+                                "مكتمل ".tr,
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 20,

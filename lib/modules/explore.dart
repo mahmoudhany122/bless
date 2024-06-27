@@ -133,7 +133,7 @@ class _DetailPageState extends State<DetailPage> {
                           _isExpanded = true;
                         });
                       },
-                      child: Text("قراءة المزيد"),
+                      child: Text("قراءة المزيد".tr),
                     ),
 
 
