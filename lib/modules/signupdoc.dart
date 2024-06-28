@@ -32,8 +32,36 @@ class _SignUpDocState extends State<SignUpDoc> {
   IconData suffix1 = Icons.visibility;
   String _signupMessage = '';
   String confirmPassword = '';
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text("جاري التحميل..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _hideLoadingDialog() {
+    Navigator.of(context).pop();
+  }
 
   void _signup() async {
+
+    _showLoadingDialog();
+
     var url = Uri.parse('https://blessmate.onrender.com/Auth/TherapistRegister');
 
     var body = jsonEncode({
@@ -55,11 +83,13 @@ class _SignUpDocState extends State<SignUpDoc> {
       body: body,
     );
 
+    _hideLoadingDialog();
+
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(responseData['messages'] ?? 'تم تسجيل الحساب بنجاح'),
+          content: Text( 'تم تسجيل الحساب بنجاح'),
           duration: Duration(seconds: 5),
           backgroundColor: Colors.green,
         ),

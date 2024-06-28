@@ -29,6 +29,31 @@ class _ResighterScreenState extends State<ResighterScreen> {
   String confirmPassword = '';
   @override
 
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text("جاري التحميل..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _hideLoadingDialog() {
+    Navigator.of(context).pop();
+  }
 
   void _signup() async {
     // التحقق من قيم الحقول قبل إرسال الطلب POST
@@ -42,6 +67,7 @@ class _ResighterScreenState extends State<ResighterScreen> {
       );
       return;
     }
+    _showLoadingDialog();
 
     var url = Uri.parse('https://blessmate.onrender.com/Auth/PatientRegister');
 
@@ -59,13 +85,14 @@ class _ResighterScreenState extends State<ResighterScreen> {
       },
       body: body,
     );
+    _hideLoadingDialog();
 
     if (response.statusCode == 200) {
       // إذا كانت الاستجابة صحيحة، انتقل إلى الشاشة التالية
       var responseData = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(responseData['messages'] ?? 'تم تسجيل الحساب بنجاح'),
+          content: Text('تم تسجيل الحساب بنجاح'),
           duration: Duration(seconds: 5),
           backgroundColor: Colors.green,
         ),

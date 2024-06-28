@@ -85,12 +85,40 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     );
   }
 
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text("جاري التحميل..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _hideLoadingDialog() {
+    Navigator.of(context).pop();
+  }
+
   Future<void> sendTherapistProfile() async {
     try {
       if (imagePath == null) {
         print('Please select an image.');
         return;
       }
+
+      _showLoadingDialog();
 
       var request = http.MultipartRequest(
         'POST',
@@ -110,6 +138,8 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
 
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
+
+      _hideLoadingDialog();
 
       if (response.statusCode == 200) {
         print('Profile updated successfully.');

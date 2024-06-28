@@ -114,7 +114,7 @@ class AgoraManager {
   }
 
   static String get token {
-    return '007eJxTYNCfsTHtpcSuKbZnNPgMU7YpbNXYYb+k9Lfeh9rs1zvl1vsrMCSapRmYWaQkphkbWpoYGqckpgI5xslpJikWpiamyUbTH9SkNQQyMhS/T2ZghEIQn4UhN8PQkIEBAF/mH+g=';
+    return '007eJxTYAh6pmWqxOzK5Mex8xeHyaTst05f113bt195w7u5mwMdb1UrMCSapRmYWaQkphkbWpoYGqckpgI5xslpJikWpiamyUayJnVpDYGMDIGf5jMyMkAgiM/CkJthaMjAAAAYYB6/';
   }
 
   static String get channelName {

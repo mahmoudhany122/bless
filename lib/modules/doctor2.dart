@@ -43,7 +43,7 @@ class HomeDoctor2 extends StatefulWidget {
 }
 
 class _HomeDoctor2State extends State<HomeDoctor2> {
-  late List<Appointment> appointments;
+  List<Appointment> appointments = [];
   bool isLoading = true;
   bool hasData = true;
   String errorMessage = ''; // Error message if data retrieval fails
@@ -92,8 +92,12 @@ class _HomeDoctor2State extends State<HomeDoctor2> {
   }
 
   void removeAppointment(int id) {
+    print('Attempting to remove appointment with ID: $id');
     setState(() {
       appointments.removeWhere((appointment) => appointment.id == id);
+      print('Remaining appointments: ${appointments.map((a) => a.id).toList()}');
+      // Ensure the list is updated
+      hasData = appointments.isNotEmpty;
     });
   }
 
@@ -143,17 +147,18 @@ class AppointmentCard extends StatelessWidget {
     prefs.setBool('appointment_isMale', appointment.isMale);
     prefs.setString('appointment_photoUrl', appointment.photoUrl ?? '');
     prefs.setString('appointment_inTime', appointment.inTime ?? '');
+    print('Appointment details saved for ID: ${appointment.id}');
+  }
+
+  String formatDate(String? dateStr) {
+    if (dateStr == null) return '';
+    final dateTime = DateTime.parse(dateStr);
+    final formatter = DateFormat('yyyy-MM-dd HH:mm');
+    return formatter.format(dateTime);
   }
 
   @override
   Widget build(BuildContext context) {
-    String formatDate(String? dateStr) {
-      if (dateStr == null) return '';
-      final dateTime = DateTime.parse(dateStr);
-      final formatter = DateFormat('yyyy-MM-dd HH:mm');
-      return formatter.format(dateTime);
-    }
-
     return GestureDetector(
       onTap: () {
         // Handle appointment card tap
@@ -184,7 +189,7 @@ class AppointmentCard extends StatelessWidget {
                 ),
                 child: appointment.photoUrl != null
                     ? Image.network(appointment.photoUrl!)
-                    : Placeholder(), // Use placeholder if photo URL is null
+                    : Image.asset("assets/images/IMG_20240219_034656_363.jpg"), // Use placeholder if photo URL is null
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -207,9 +212,7 @@ class AppointmentCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                width: 10,
-              ),
+              SizedBox(width: 10),
               Row(
                 children: [
                   IconButton(
@@ -227,11 +230,9 @@ class AppointmentCard extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () async {
-                                  Navigator.of(context).pop();
                                   await saveAppointmentDetails(appointment);
                                   removeAppointment(appointment.id); // Remove the appointment from the list
-                                  Navigator.of(context).pop(); // Pop the current screen
-                                  // Optionally navigate to another screen here
+                                  Navigator.of(context).pop(); // Close the dialog
                                 },
                                 child: Text('نعم'.tr),
                               ),
@@ -258,10 +259,8 @@ class AppointmentCard extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () async {
-                                  Navigator.of(context).pop();
                                   removeAppointment(appointment.id); // Remove the appointment from the list
-                                  Navigator.of(context).pop(); // Pop the current screen
-                                  // Optionally navigate to another screen here
+                                  Navigator.of(context).pop(); // Close the dialog
                                 },
                                 child: Text('نعم'.tr),
                               ),

@@ -378,8 +378,8 @@ class _DetailsDocAppontiomentState extends State<DetailsDocAppontioment> {
                     context: context,
                     height: MediaQuery.of(context).size.height / 1.5,
                     page: AppointmentBottomSheet(
-                      therapistId: therapist['id'],
-                      patientId: widget.patientId,
+                     therapistId: therapist['id'],
+                     patientId: widget.patientId,
                       clinicNumber: clinicNumber,
                     ),
                   );
@@ -595,9 +595,9 @@ class _AppointmentBottomSheetState extends State<AppointmentBottomSheet> {
           ),
         ),
         const SizedBox(height: 12),
-        Text("Therapist ID: ${widget.therapistId}"),
-        Text("Patient ID: ${widget.patientId}"),
-        Text('الوقت: $date $time'),
+        //Text("Therapist ID: ${widget.therapistId}"),
+      //  Text("Patient ID: ${widget.patientId}"),
+        Text(' الوقت: $date $time'),
         const SizedBox(height: 12),
          Row(
           children: [

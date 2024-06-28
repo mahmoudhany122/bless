@@ -52,9 +52,36 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 */
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text("جاري التحميل..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _hideLoadingDialog() {
+    Navigator.of(context).pop();
+  }
   // Function to handle login
   void _login() async {
     try {
+
+      _showLoadingDialog();
       var url = Uri.parse('https://blessmate.onrender.com/Auth/Login');
       var body = jsonEncode({
         "email": emailController.text.trim(),
@@ -68,6 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         body: body,
       );
+
+      _hideLoadingDialog();
 
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);

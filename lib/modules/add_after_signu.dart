@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'bottom_nav.dart';
 
 class AddInSignUp extends StatefulWidget {
-
   @override
   _AddInSignUpState createState() => _AddInSignUpState();
 }
@@ -24,7 +23,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
 
   Future<void> pickImageCamera() async {
     final pickedImage =
-    await _imagePicker.pickImage(source: ImageSource.camera);
+        await _imagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       if (pickedImage != null) {
         imageSelect = File(pickedImage.path);
@@ -34,7 +33,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
 
   Future<void> pickImageGallery() async {
     final pickedImage =
-    await _imagePicker.pickImage(source: ImageSource.gallery);
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedImage != null) {
         imageSelect = File(pickedImage.path);
@@ -54,7 +53,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
       setState(() {
         _selectedDate = pickedDate.toString().split(' ')[0];
         _ageController.text =
-        _selectedDate!; // Update the text field with the selected date
+            _selectedDate!; // Update the text field with the selected date
       });
     }
   }
@@ -93,6 +92,7 @@ class _AddInSignUpState extends State<AddInSignUp> {
       ),
     );
   }
+
   String _selectedLanguage = 'ar';
   @override
   void dispose() {
@@ -110,149 +110,158 @@ class _AddInSignUpState extends State<AddInSignUp> {
           title: Center(
             child: Text(
               "تعديل الملف الشخصي".tr,
-              style:  Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
           centerTitle: true,
         ),
         body: Center(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child :Directionality(
-                  textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          ClipOval(
-                            child: CircleAvatar(
-                              backgroundColor:  Colors.grey.shade400,
-                              child: imageSelect != null
-                                  ? Image.file(
-                                imageSelect!,
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.fill,
-                              )
-                                  : Image.asset( "assets/images/img_12.png",
-                                width: 800,
-                                height: 800,),
-                              radius: 80,
-                            ),
-                          ),
-                          CircleAvatar(
-                            child: IconButton(
-                              onPressed: () {
-                                pickImageCamera();
-                                pickImageGallery();
-                              },
-                              icon: Icon(
-                                Icons.camera_alt_rounded,
-                                size: 25,
-                                color: Colors.white,
-                              ),
-                            ),
-                            radius: 20,
-                            backgroundColor: HexColor('00B4D8'),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 25.0,
-                      ),
-                      Container(
-
-                          padding: EdgeInsets.all(15),
-                          width: 336,
-                          height: 379,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).backgroundColor,
-                            borderRadius: BorderRadius.circular(20),
-                            border:  Border.all (color: Colors.grey),
-                          ),
-                          child :Directionality(
-                              textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
-                              child:Column (
-                                children: [
-                                  TextField(
-                                    textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
-                                    controller: _nameController,
-                                    keyboardType: TextInputType.text,
-
-                                    decoration: InputDecoration(
-                                      hintText: 'اسم المستخدم'.tr,
-                                    ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Directionality(
+                textDirection: _selectedLanguage == 'ar'
+                    ? TextDirection.rtl
+                    : TextDirection.ltr,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        ClipOval(
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey.shade400,
+                            child: imageSelect != null
+                                ? Image.file(
+                                    imageSelect!,
+                                    width: 50,
+                                    height: 50,
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.asset(
+                                    "assets/images/img_12.png",
+                                    width: 800,
+                                    height: 800,
                                   ),
-                                  TextField(
-                                    textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
-                                    controller: _diseaseController,
-                                    onTap: selectDate,
-                                    decoration: InputDecoration(
-                                      hintText: 'بريد إلكترونى'.tr,
-                                    ),
-                                  ),
-                                  TextField(
-                                    textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
-                                    controller: _countryController,
-                                    onTap: selectDate,
-                                    decoration: InputDecoration(
-                                      hintText: 'هاتف'.tr,
-                                    ),
-                                  ),
-                                  TextField(
-                                    textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
-                                    controller: _ageController,
-                                    onTap: selectDate,
-                                    decoration: InputDecoration(
-                                      hintText: 'تاريخ الميلاد '.tr,
-                                    ),
-                                  ),
-                                  TextField(
-                                    textDirection:  _selectedLanguage =='ar' ? TextDirection.rtl : TextDirection.ltr,
-                                    controller: _diseaseController,
-                                    onTap: selectDate,
-                                    decoration: InputDecoration(
-                                      hintText: 'عنوان'.tr,
-                                    ),
-                                  ),
-
-                                ],)
-
-
-                          )
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadiusDirectional.circular(20),
-                            color: HexColor('00B4D8'),
-                          ),
-                          child: MaterialButton(
-                            child:  Text(
-                              "حفظ".tr,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                              ),
-                            ),
-                            onPressed: saveInformation,
+                            radius: 80,
                           ),
                         ),
+                        CircleAvatar(
+                          child: IconButton(
+                            onPressed: () {
+                              pickImageCamera();
+                              pickImageGallery();
+                            },
+                            icon: Icon(
+                              Icons.camera_alt_rounded,
+                              size: 25,
+                              color: Colors.white,
+                            ),
+                          ),
+                          radius: 20,
+                          backgroundColor: HexColor('00B4D8'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                    Container(
+                        padding: EdgeInsets.all(15),
+                        width: 336,
+                        height: 379,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).backgroundColor,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Directionality(
+                            textDirection: _selectedLanguage == 'ar'
+                                ? TextDirection.rtl
+                                : TextDirection.ltr,
+                            child: Column(
+                              children: [
+                                TextField(
+                                  textDirection: _selectedLanguage == 'ar'
+                                      ? TextDirection.rtl
+                                      : TextDirection.ltr,
+                                  controller: _nameController,
+                                  keyboardType: TextInputType.text,
+                                  decoration: InputDecoration(
+                                    hintText: 'اسم المستخدم'.tr,
+                                  ),
+                                ),
+                                TextField(
+                                  textDirection: _selectedLanguage == 'ar'
+                                      ? TextDirection.rtl
+                                      : TextDirection.ltr,
+                                  controller: _diseaseController,
+                                  onTap: selectDate,
+                                  decoration: InputDecoration(
+                                    hintText: 'بريد إلكترونى'.tr,
+                                  ),
+                                ),
+                                TextField(
+                                  textDirection: _selectedLanguage == 'ar'
+                                      ? TextDirection.rtl
+                                      : TextDirection.ltr,
+                                  controller: _countryController,
+                                  onTap: selectDate,
+                                  decoration: InputDecoration(
+                                    hintText: 'هاتف'.tr,
+                                  ),
+                                ),
+                                TextField(
+                                  textDirection: _selectedLanguage == 'ar'
+                                      ? TextDirection.rtl
+                                      : TextDirection.ltr,
+                                  controller: _ageController,
+                                  onTap: selectDate,
+                                  decoration: InputDecoration(
+                                    hintText: 'تاريخ الميلاد '.tr,
+                                  ),
+                                ),
+                                TextField(
+                                  textDirection: _selectedLanguage == 'ar'
+                                      ? TextDirection.rtl
+                                      : TextDirection.ltr,
+                                  controller: _diseaseController,
+                                  onTap: selectDate,
+                                  decoration: InputDecoration(
+                                    hintText: 'عنوان'.tr,
+                                  ),
+                                ),
+                              ],
+                            ))),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadiusDirectional.circular(20),
+                          color: HexColor('00B4D8'),
+                        ),
+                        child: MaterialButton(
+                          child: Text(
+                            "حفظ".tr,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
+                          ),
+                          onPressed: saveInformation,
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            ));
-   }
+          ),
+        ));
+  }
 }

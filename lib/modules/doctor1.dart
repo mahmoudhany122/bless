@@ -13,9 +13,24 @@ class AppointmentDetailsPage extends StatelessWidget {
 
   Future<Appointment?> getSavedAppointmentDetails() async {
     final prefs = await SharedPreferences.getInstance();
+
     if (!prefs.containsKey('appointment_id')) {
       return null;
     }
+
+    // استرجاع وقت الحفظ والتحقق منه
+    final savedTimeStr = prefs.getString('appointment_savedTime');
+    if (savedTimeStr != null) {
+      final savedTime = DateTime.parse(savedTimeStr);
+      final now = DateTime.now();
+      final difference = now.difference(savedTime);
+      if (difference.inMinutes >= 10) {
+        // مسح البيانات إذا مر أكثر من 10 دقائق
+        await clearSavedAppointmentDetails();
+        return null;
+      }
+    }
+
     return Appointment(
       id: prefs.getInt('appointment_id')!,
       firstName: prefs.getString('appointment_firstName'),
@@ -29,17 +44,36 @@ class AppointmentDetailsPage extends StatelessWidget {
     );
   }
 
+  Future<void> clearSavedAppointmentDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('appointment_id');
+    await prefs.remove('appointment_firstName');
+    await prefs.remove('appointment_lastName');
+    await prefs.remove('appointment_phoneNumber');
+    await prefs.remove('appointment_email');
+    await prefs.remove('appointment_age');
+    await prefs.remove('appointment_isMale');
+    await prefs.remove('appointment_photoUrl');
+    await prefs.remove('appointment_inTime');
+    await prefs.remove('appointment_savedTime');
+  }
+
+  String formatDate(String? dateStr) {
+    if (dateStr == null) return '';
+    final dateTime = DateTime.parse(dateStr);
+    final formatter = DateFormat('yyyy-MM-dd HH:mm');
+    return formatter.format(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
-    String formatDate(String? dateStr) {
-      if (dateStr == null) return '';
-      final dateTime = DateTime.parse(dateStr);
-      final formatter = DateFormat('yyyy-MM-dd HH:mm');
-      return formatter.format(dateTime);
-    }
     return Scaffold(
       appBar: AppBar(
-        title: Text("تاريخ الاستشارات".tr),
+        title: Text(
+          "تاريخ الاستشارات".tr,
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+        ),
+        centerTitle: true,
       ),
       body: FutureBuilder<Appointment?>(
         future: getSavedAppointmentDetails(),
@@ -78,9 +112,11 @@ class AppointmentDetailsPage extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(18),
                         ),
-                        child: appointment.photoUrl != null
-                            ? Image.network(appointment.photoUrl!)
-                            : Placeholder(), // Use placeholder if photo URL is null
+                        child: (appointment.photoUrl != null && appointment.photoUrl!.isNotEmpty)
+                            ? Image.network(appointment.photoUrl!, errorBuilder: (context, error, stackTrace) {
+                          return Image.asset("assets/images/IMG_20240219_034656_363.jpg"); // Placeholder image
+                        })
+                            : Image.asset("assets/images/IMG_20240219_034656_363.jpg"), // Placeholder image
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,7 +126,6 @@ class AppointmentDetailsPage extends StatelessWidget {
                               Text(
                                 "ميعاد ".tr,
                                 style: Theme.of(context).textTheme.bodyText1,
-
                               ),
                               SizedBox(width: 4),
                               Text(
@@ -99,9 +134,7 @@ class AppointmentDetailsPage extends StatelessWidget {
                                   color: Colors.green,
                                   fontSize: 20,
                                 ),
-
                               ),
-
                             ],
                           ),
                           Text(

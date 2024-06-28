@@ -102,7 +102,7 @@ class _SCREENMESSENGERState extends State<SCREENMESSENGER> {
                             SizedBox(width: 10),
                             CircleAvatar(
                               radius: 30,
-                              backgroundImage: AssetImage('assets/avatar.png'),
+                              backgroundImage: AssetImage("assets/images/IMG_20240219_034656_363.jpg"),
                             ),
                           ],
                         ),
