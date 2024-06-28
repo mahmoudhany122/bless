@@ -184,7 +184,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _uploadFile() async {
     if (_filePath != null) {
       File audioFile = File(_filePath);
-      String apiUrl = 'https://blissmate-chatbot.onrender.com/ChatBot/Record';
+      String apiUrl = 'https://blissmate-chatbot.onrender.com/Record';
 
       try {
         var request = http.MultipartRequest('POST', Uri.parse(apiUrl));

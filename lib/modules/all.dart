@@ -211,8 +211,8 @@ class _AllState extends State<All> {
               ),
 // إضافة حقل لعرض بيانات المعالج
               Container(
-                width:220 ,
-                height:100 ,
+                width: 220,
+                height: 100,
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Theme.of(context).backgroundColor,
@@ -229,7 +229,6 @@ class _AllState extends State<All> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    // عرض صورة المعالج إذا كانت متاحة
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Padding(
@@ -248,7 +247,6 @@ class _AllState extends State<All> {
                       ),
                     ),
                     SizedBox(width: 10),
-                    const SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,25 +254,27 @@ class _AllState extends State<All> {
                         children: [
                           Text(
                             ' $therapistLastName $therapistFirstName',
-                            style:  Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.headline6,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             '$therapistSpeciality',
-                            style:  Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.button,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             "$therapistYearsExperience",
-                            style:  Theme.of(context).textTheme.headline6,
-
+                            style: Theme.of(context).textTheme.headline6,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
                     ),
-                    // عرض اسم المعالج
-
                   ],
                 ),
-
               ),
 
               SizedBox(height: 15),
